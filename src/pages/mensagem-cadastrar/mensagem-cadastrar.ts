@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { FormBuilder } from '@angular/forms';
 
 @IonicPage()
 @Component({
@@ -7,12 +8,15 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'mensagem-cadastrar.html',
 })
 export class MensagemCadastrarPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  item:any;
+  constructor(public navCtrl: NavController, public navParams: NavParams, private fb: FormBuilder) {
+    this.item = this.fb.control('');
   }
 
   ionViewDidLoad() {
     
   }
-
+  salvar(texto){
+    console.log(texto.value);
+  }
 }

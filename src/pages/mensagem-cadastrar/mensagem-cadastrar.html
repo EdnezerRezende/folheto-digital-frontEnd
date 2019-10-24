@@ -6,4 +6,6 @@
 
 <ion-content padding>
   <p>Aqui será um provider autenticado para inserir mensagens</p>
+  <rich-text [formControlItem]="item"></rich-text>
+  <button (click)="salvar(item)">Enviar</button>
 </ion-content>

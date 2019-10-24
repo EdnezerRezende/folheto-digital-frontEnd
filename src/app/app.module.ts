@@ -10,6 +10,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { MensagemService } from '../services/domain/mensagem.service';
 import { CommonModule } from '@angular/common';
 import { PGService } from '../services/domain/pg.service';
+import { RichTextModule } from 'ionic-rich-text/dist/rich-text-module';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { PGService } from '../services/domain/pg.service';
       modalLeave: 'modal-slide-out',
       tabsPlacement: 'bottom',
       pageTransition: 'md-transition  ',
-      menuType: 'overlay'
+      menuType: 'overlay',
+      RichTextModule
     }),
     OrderModule
   ],

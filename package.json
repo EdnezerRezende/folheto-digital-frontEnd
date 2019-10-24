@@ -11,8 +11,8 @@
     "lint": "ionic-app-scripts lint"
   },
   "config": {
-    "ionic_copy": "./config/copy.config.js",    
-    "ionic_sass": "./config/sass.config.js"  
+    "ionic_copy": "./config/copy.config.js",
+    "ionic_sass": "./config/sass.config.js"
   },
   "dependencies": {
     "@angular/animations": "5.2.11",
@@ -32,6 +32,7 @@
     "com.telerik.plugins.nativepagetransitions": "^0.6.5",
     "font-awesome": "^4.7.0",
     "ionic-angular": "3.9.5",
+    "ionic-rich-text": "^0.2.7",
     "ionicons": "3.0.0",
     "ngx-order-pipe": "^2.0.4",
     "rxjs": "5.5.11",
