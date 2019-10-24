@@ -21,7 +21,13 @@ export class MyApp {
                       {submenu:'Cadastrar', componente:'MensagemCadastrarPage', iconeSub: 'md-paper'},
                       {submenu:'Listar', componente:'MensagemListarPage', iconeSub:'md-list-box'}
                     ], 
-        icone: 'md-flask', mostra: true}
+        icone: 'md-filing', mostra: true},
+    { titulo: "PG´s", 
+        subTitulo: [
+                    {submenu:'Cadastrar', componente:'PgCadastrarPage', iconeSub: 'md-paper'},
+                    {submenu:'Listar', componente:'PgListarPage', iconeSub:'md-list-box'}
+                  ], 
+      icone: 'md-contacts', mostra: true}
     ];
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,public menuCtrl: MenuController,

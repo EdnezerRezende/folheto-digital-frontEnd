@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Listar</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-searchbar
+    animated="true"
+    placeholder="Pesquisar "
+    (ionInput)="getItems($event)"
+  ></ion-searchbar>
+  <ion-list sliding="true">
+    <ion-item detail-push *ngFor="let pg of pgsSearch">
+      <h4><label>Líder: </label>{{ pg.lider }}</h4>
+      <h2><label>Endereço: </label> {{ pg.endereco.logradouro }} - {{ pg.endereco.cidade.nome }}</h2>
+      <h4><label>Contato: </label>{{ pg.responsavelCasa }}</h4>
+    </ion-item>
+  </ion-list>
+</ion-content>

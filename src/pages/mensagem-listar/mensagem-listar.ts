@@ -8,6 +8,7 @@ import {
 } from 'ionic-angular';
 import { MensagemService } from '../../services/domain/mensagem.service';
 import { MensagemDTO } from '../../models/mensagem.dto';
+import { MensagemDetalharPage } from '../mensagem-detalhar/mensagem-detalhar';
 
 @IonicPage()
 @Component({
@@ -77,5 +78,10 @@ export class MensagemListarPage {
         );
       });
     }
+  }
+
+  detalhar( mensagem: MensagemDTO ){
+    console.log(mensagem);
+    this.navCtrl.push(MensagemDetalharPage.name, {mensagem: mensagem});
   }
 }

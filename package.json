@@ -10,6 +10,10 @@
     "build": "ionic-app-scripts build",
     "lint": "ionic-app-scripts lint"
   },
+  "config": {
+    "ionic_copy": "./config/copy.config.js",    
+    "ionic_sass": "./config/sass.config.js"  
+  },
   "dependencies": {
     "@angular/animations": "5.2.11",
     "@angular/common": "5.2.11",
@@ -26,6 +30,7 @@
     "@ionic-native/status-bar": "~4.20.0",
     "@ionic/storage": "2.2.0",
     "com.telerik.plugins.nativepagetransitions": "^0.6.5",
+    "font-awesome": "^4.7.0",
     "ionic-angular": "3.9.5",
     "ionicons": "3.0.0",
     "ngx-order-pipe": "^2.0.4",

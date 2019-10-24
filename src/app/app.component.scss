@@ -21,14 +21,13 @@ myapp {
         }
     }
     .fundoImagem{
-        background-image: url('../assets/img/policlinica.gif');
+        background-image: url('../assets/img/fundoHome.png');
         background-repeat: no-repeat;
         background-position: center center;
         background-attachment: fixed;
         background-size: contain;
         opacity: 0.2;
         background-color: rgba(245, 248, 248, 0.959) transparent;
-        
     }
     page-home{
         background-color: white;
@@ -67,4 +66,11 @@ myapp {
     .ios.ion-page.show-page.nav-decor{
         background: none;
     }
+    .alinharDireita{
+        text-align: right;
+    }
+   
+    // page-home{
+    //     background-color: white;
+    // }
 }

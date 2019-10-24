@@ -8,6 +8,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { MensagemService } from '../services/domain/mensagem.service';
+import { CommonModule } from '@angular/common';
+import { PGService } from '../services/domain/pg.service';
 
 @NgModule({
   declarations: [
@@ -15,6 +17,7 @@ import { MensagemService } from '../services/domain/mensagem.service';
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     HttpClientModule,
     IonicModule.forRoot(MyApp, {
       backButtonText: 'Voltar',
@@ -32,10 +35,12 @@ import { MensagemService } from '../services/domain/mensagem.service';
     MyApp
   ],
   providers: [
+    CommonModule,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    MensagemService
+    MensagemService,
+    PGService
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

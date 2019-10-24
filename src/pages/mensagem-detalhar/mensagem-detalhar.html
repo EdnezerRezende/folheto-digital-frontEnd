@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Mensagem</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+ <ion-card>
+    <ion-card-header>
+      <ion-card-title><strong>{{ mensagem.titulo }}</strong>
+      </ion-card-title> 
+    </ion-card-header>
+    <ion-card-content>
+      {{ mensagem.mensagem }}
+    </ion-card-content>
+    <h6 class="alinharDireita"> {{ mensagem.autor }}</h6>
+  </ion-card>
+</ion-content>
