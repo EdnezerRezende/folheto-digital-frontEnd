@@ -1,3 +1,43 @@
 page-home {
-
+@media (min-width: 556px) {
+    .positionFixed{
+        margin-left: 10px;
+        margin-top: 130px;
+     }
+     .textoIIgreja{
+         font-size: 25px;
+        font-weight: bold !important;
+        text-transform: uppercase;
+     }
+     
+     .textoITaguatinga{
+        font-size: 20px;
+        text-transform: uppercase;
+        font-family: none;
+        opacity: 0.6;
+     }  
+}
+@media (max-width: 555px) {
+ .positionFixed{
+    margin-left: 10px;
+    margin-top: 280px;
+    // width:30em;
+    // height:40em;
+    // margin-left:auto;
+    // margin-right:auto;
+    // padding:5em;   
+    }
+    .textoIIgreja{
+        font-size: 30px;
+        font-weight: bold !important;
+        text-transform: uppercase;
+    }
+    
+    .textoITaguatinga{
+        font-size: 20px;
+        text-transform: uppercase;
+        font-family: none;
+        opacity: 0.6;
+    }
+    }
 }
