@@ -10,9 +10,10 @@
       <ion-card-title><strong>{{ mensagem.titulo }}</strong>
       </ion-card-title> 
     </ion-card-header>
-    <ion-card-content>
+    <span [innerHTML]="mensagem.mensagem"></span>
+    <!-- <ion-card-content>
       {{ mensagem.mensagem }}
-    </ion-card-content>
+    </ion-card-content> -->
     <h6 class="alinharDireita"> {{ mensagem.autor }}</h6>
   </ion-card>
 </ion-content>

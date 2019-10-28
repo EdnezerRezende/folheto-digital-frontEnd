@@ -40,8 +40,7 @@ export class MensagemListarPage {
       resposta => {
         loading.dismiss();
         this.mensagens = resposta;
-        console.log(this.mensagens);
-
+        
         this.mensagensSearch = this.mensagens;
       },
       error => {

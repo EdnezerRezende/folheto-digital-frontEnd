@@ -1,4 +1,4 @@
-export interface MensagemDTO {
+export class MensagemDTO {
     id: string;
     mensagem: string;
     autor: string;

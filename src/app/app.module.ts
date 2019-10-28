@@ -11,6 +11,7 @@ import { MensagemService } from '../services/domain/mensagem.service';
 import { CommonModule } from '@angular/common';
 import { PGService } from '../services/domain/pg.service';
 import { RichTextModule } from 'ionic-rich-text/dist/rich-text-module';
+import { ErrorInterceptorProvider } from '../interceptors/error-interceptor';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { RichTextModule } from 'ionic-rich-text/dist/rich-text-module';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     MensagemService,
-    PGService
+    PGService,
+    ErrorInterceptorProvider
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
