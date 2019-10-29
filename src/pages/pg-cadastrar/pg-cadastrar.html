@@ -5,5 +5,47 @@
 </ion-header>
 
 <ion-content padding>
-  <p>Em Construção</p>
+    <form  [formGroup]="formulario"  >
+        <ion-item >
+          <ion-label stacked >Líder: </ion-label>
+          <ion-input [(ngModel)]="pg.lider" formControlName="lider" name="lider"  type="text"></ion-input>
+        </ion-item>
+        <h6 class="error" *ngIf="!formulario.controls.lider.valid && (formulario.controls.lider.dirty || formulario.controls.lider.touched)">
+          Por favor, informe o Líder do PG.
+        </h6>
+        <ion-item >
+          <ion-label stacked >Responsável: </ion-label>
+          <ion-input [(ngModel)]="pg.responsavelCasa" formControlName="responsavelCasa" name="responsavelCasa"  type="text"></ion-input>
+        </ion-item>
+        <h6 class="error" *ngIf="!formulario.controls.responsavelCasa.valid && (formulario.controls.responsavelCasa.dirty || formulario.controls.responsavelCasa.touched)">
+          Por favor, informe o Responsável.
+        </h6>
+        <ion-item >
+          <ion-label stacked >Dia da Semana: </ion-label>
+          <ion-select [(ngModel)]="pg.diaSemanaAtividade" formControlName="diaSemanaAtividade" 
+          [compareWith]="compareFn"
+          >
+            <ion-option *ngFor="let dia of diasSemana"  [value]="dia">{{dia}}</ion-option>
+          </ion-select>
+        </ion-item>
+        <h6 class="error" *ngIf="!formulario.controls.diaSemanaAtividade.valid && (formulario.controls.diaSemanaAtividade.dirty || formulario.controls.diaSemanaAtividade.touched)">
+          Por favor, informe o Dia da Semana que ocorrerá.
+        </h6>
+        <ion-item >
+          <ion-label stacked >Hora de Início: </ion-label>
+          <ion-datetime [(ngModel)]="pg.horaAtividade" formControlName="horaAtividade" name="horaAtividade"
+            displayFormat="HH:mm" ></ion-datetime>
+        </ion-item>
+        <h6 class="error" *ngIf="!formulario.controls.horaAtividade.valid && (formulario.controls.horaAtividade.dirty || formulario.controls.horaAtividade.touched)">
+          Por favor, informe a hora de início.
+        </h6>
+
+        
+      </form>
+    
+      <ion-fab top right edge >
+        <button ion-fab (click)="salvar(item)" [disabled]="formulario.invalid">
+          <ion-icon name="send"></ion-icon>
+        </button>
+      </ion-fab>
 </ion-content>

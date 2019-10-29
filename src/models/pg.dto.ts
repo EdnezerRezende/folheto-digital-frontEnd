@@ -1,8 +1,11 @@
 import { EnderecoDTO } from "./endereco.dto";
 
-export interface PgDTO {
-    id: string;
+export class PgDTO {
+    id: number;
     lider: string;
     endereco: EnderecoDTO;
     responsavelCasa:string;
+    diaSemanaAtividade:string;
+    horaAtividade:string;
+    idIgreja:number;
 }

@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 import { PGService } from '../services/domain/pg.service';
 import { RichTextModule } from 'ionic-rich-text/dist/rich-text-module';
 import { ErrorInterceptorProvider } from '../interceptors/error-interceptor';
+import { DominiosService } from '../dominios/dominios.service';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { ErrorInterceptorProvider } from '../interceptors/error-interceptor';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     MensagemService,
     PGService,
-    ErrorInterceptorProvider
+    ErrorInterceptorProvider,
+    DominiosService
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

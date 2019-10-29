@@ -67,7 +67,9 @@ export class PgListarPage {
         return (
           item.lider.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
           item.responsavelCasa.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
-          item.endereco.cidade.nome.toLowerCase().indexOf(val.toLowerCase()) > -1
+          item.endereco.cidade.nome.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
+          item.diaSemanaAtividade.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
+          item.horaAtividade.toLowerCase().indexOf(val.toLowerCase()) > -1
         );
       });
     }

@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content padding>
-    <ion-searchbar
+  <ion-searchbar
     animated="true"
     placeholder="Pesquisar "
     (ionInput)="getItems($event)"
@@ -13,7 +13,8 @@
   <ion-list sliding="true">
     <ion-item detail-push *ngFor="let pg of pgsSearch">
       <h4><label>Líder: </label>{{ pg.lider }}</h4>
-      <h2><label>Endereço: </label> {{ pg.endereco.logradouro }} - {{ pg.endereco.cidade.nome }}</h2>
+      <h4><label>Data: </label>{{ pg.diaSemanaAtividade }} - {{ pg.horaAtividade }}</h4>
+      <h4><label>Endereço: </label> {{ pg.endereco.logradouro }} - {{ pg.endereco.cidade.nome }}</h4>
       <h4><label>Contato: </label>{{ pg.responsavelCasa }}</h4>
     </ion-item>
   </ion-list>

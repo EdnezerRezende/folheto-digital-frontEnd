@@ -5,6 +5,9 @@
 </ion-header>
 
 <ion-content padding>
+  <ion-refresher slot="fixed" pullFactor="0.5" pullMin="100" pullMax="200" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ion-searchbar
     animated="true"
     placeholder="Pesquisar "
@@ -12,9 +15,9 @@
   ></ion-searchbar>
   <ion-list sliding="true">
     <ion-item detail-push *ngFor="let mensagem of mensagensSearch">
-      <h2><label>Título: </label>{{ mensagem.titulo }}</h2>
+      <h2><strong><label>Título: </label>{{ mensagem.titulo }}</strong></h2>
       <h4><label>Autor(a): </label>{{ mensagem.autor }}</h4>
-      <h4><label>Mensagem: </label>{{ mensagem.mensagem.substr(0, 20) + '...' }}</h4>
+      <h4><label>Mensagem: </label><span [innerHTML]="mensagem.mensagem.substr(0, 20) + '...'"></span></h4>
       <ion-icon (click)="detalhar(mensagem)" item-right isActive="true" class="fa-book"></ion-icon>
     </ion-item>
   </ion-list>

@@ -34,32 +34,39 @@ export class MensagemListarPage {
   }
 
   ionViewDidLoad() {
+    this.obterLista();
+  }
+
+  private obterLista() {
     let loading = this.obterLoading();
     loading.present();
-    this.mensagemService.buscaTodos().subscribe(
-      resposta => {
-        loading.dismiss();
-        this.mensagens = resposta;
-        
-        this.mensagensSearch = this.mensagens;
-      },
-      error => {
-        loading.dismiss();
-        console.log(error);
-        this._alertCtrl
-          .create({
-            title: 'Falha',
-            subTitle: 'Não foi possível obter as Mensagens, tente novamente mais tarde!',
-            buttons: [
-              {
-                text: 'Ok'
-              }
-            ]
-          })
-          .present();
-        this.navCtrl.goToRoot;
-      }
-    );
+    this.mensagemService.buscaTodos().subscribe(resposta => {
+      loading.dismiss();
+      this.mensagens = resposta;
+      this.mensagensSearch = this.mensagens;
+    }, error => {
+      loading.dismiss();
+      console.log(error);
+      this._alertCtrl
+        .create({
+          title: 'Falha',
+          subTitle: 'Não foi possível obter as Mensagens, tente novamente mais tarde!',
+          buttons: [
+            {
+              text: 'Ok'
+            }
+          ]
+        })
+        .present();
+      this.navCtrl.goToRoot;
+    });
+  }
+
+  doRefresh(refresher) {
+    this.obterLista();
+    setTimeout(() => {
+      refresher.complete();
+    }, 1000);
   }
 
   copiaListaListaMensagens() {
