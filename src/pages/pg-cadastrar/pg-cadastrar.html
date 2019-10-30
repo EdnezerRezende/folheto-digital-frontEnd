@@ -40,7 +40,55 @@
           Por favor, informe a hora de início.
         </h6>
 
+        <ion-item >
+          <ion-label stacked >Logradouro: </ion-label>
+          <ion-input [(ngModel)]="pg.endereco.logradouro" formControlName="logradouro" name="logradouro"  type="text"></ion-input>
+        </ion-item>
+        <h6 class="error" *ngIf="!formulario.controls.logradouro.valid && (formulario.controls.logradouro.dirty || formulario.controls.logradouro.touched)">
+          Por favor, informe o Logradouro para o endereço do PG.
+        </h6>
         
+        <ion-item >
+          <ion-label stacked >Número: </ion-label>
+          <ion-input [(ngModel)]="pg.endereco.numero" formControlName="numero" name="numero"  type="text"></ion-input>
+        </ion-item>
+        <h6 class="error" *ngIf="!formulario.controls.numero.valid && (formulario.controls.numero.dirty || formulario.controls.numero.touched)">
+          Por favor, informe o Número para o endereço do PG.
+        </h6>
+        <ion-item >
+          <ion-label stacked >Complemento: </ion-label>
+          <ion-input [(ngModel)]="pg.endereco.complemento" formControlName="complemento" name="complemento"  type="text"></ion-input>
+        </ion-item>
+        <h6 class="error" *ngIf="!formulario.controls.complemento.valid && (formulario.controls.complemento.dirty || formulario.controls.complemento.touched)">
+          Por favor, informe o complemento para o endereço do PG.
+        </h6>
+        <ion-item >
+          <ion-label stacked >Bairro: </ion-label>
+          <ion-input [(ngModel)]="pg.endereco.bairro" formControlName="bairro" name="bairro"  type="text"></ion-input>
+        </ion-item>
+        <h6 class="error" *ngIf="!formulario.controls.bairro.valid && (formulario.controls.bairro.dirty || formulario.controls.bairro.touched)">
+          Por favor, informe o bairro para o endereço do PG.
+        </h6>
+        <ion-item >
+          <ion-label stacked >CEP: </ion-label>
+          <ion-input [(ngModel)]="pg.endereco.cep" formControlName="cep" name="cep"  type="text"></ion-input>
+        </ion-item>
+        <h6 class="error" *ngIf="!formulario.controls.cep.valid && (formulario.controls.cep.dirty || formulario.controls.cep.touched)">
+          Por favor, informe o cep para o endereço do PG.
+        </h6>
+
+        <ion-item>
+          <ion-label stacked>Estado*:</ion-label>
+          <ion-select formControlName="estadoId" (ionChange)="updateCidades()">
+            <ion-option *ngFor="let estado of estados; first as f" [value]="estado.id" [selected]="f">{{estado.nome}}</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>Cidade*:</ion-label>
+          <ion-select formControlName="cidadeId">
+            <ion-option *ngFor="let cidade of cidades" [value]="cidade.id">{{cidade.nome}}</ion-option>
+          </ion-select>
+        </ion-item>
       </form>
     
       <ion-fab top right edge >

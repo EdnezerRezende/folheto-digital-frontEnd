@@ -13,6 +13,8 @@ import { PGService } from '../services/domain/pg.service';
 import { RichTextModule } from 'ionic-rich-text/dist/rich-text-module';
 import { ErrorInterceptorProvider } from '../interceptors/error-interceptor';
 import { DominiosService } from '../dominios/dominios.service';
+import { EstadoService } from '../services/domain/estado.service';
+import { CidadeService } from '../services/domain/cidade.service';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,9 @@ import { DominiosService } from '../dominios/dominios.service';
     MensagemService,
     PGService,
     ErrorInterceptorProvider,
-    DominiosService
+    DominiosService,
+    EstadoService,
+    CidadeService
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
