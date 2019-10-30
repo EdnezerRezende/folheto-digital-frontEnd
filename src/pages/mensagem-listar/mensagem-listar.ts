@@ -90,4 +90,8 @@ export class MensagemListarPage {
     console.log(mensagem);
     this.navCtrl.push(MensagemDetalharPage.name, {mensagem: mensagem});
   }
+
+  deletar( mensagem:MensagemDTO ){
+    console.log("Vai deletar");
+  }
 }
