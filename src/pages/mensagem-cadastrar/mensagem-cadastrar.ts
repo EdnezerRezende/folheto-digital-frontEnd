@@ -20,6 +20,10 @@ export class MensagemCadastrarPage {
     private _alertCtrl: AlertController
     ) {
     this.criarFormulario();
+
+    if (this.navParams.get('mensagem')){
+      this.mensagem = this.navParams.get('mensagem');
+    }
   }
 
   private criarFormulario() {
@@ -44,10 +48,11 @@ export class MensagemCadastrarPage {
   salvar(texto){
     let loading = this.obterLoading();
     loading.present();
-
-    this.mensagem.autor = this.formulario.controls.autor.value;
-    this.mensagem.mensagem = this.formulario.controls.texto.value;
-    this.mensagem.titulo = this.formulario.controls.titulo.value;
+    if ( this.mensagem.id == undefined ){
+      this.mensagem.autor = this.formulario.controls.autor.value;
+      this.mensagem.mensagem = this.formulario.controls.texto.value;
+      this.mensagem.titulo = this.formulario.controls.titulo.value;
+    }
 
     this.mensagemService.salvar(this.mensagem).subscribe(
       resposta => {

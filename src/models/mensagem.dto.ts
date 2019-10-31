@@ -1,5 +1,5 @@
 export class MensagemDTO {
-    id: string;
+    id: number;
     mensagem: string;
     autor: string;
     titulo:string;

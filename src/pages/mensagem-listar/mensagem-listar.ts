@@ -9,6 +9,7 @@ import {
 import { MensagemService } from '../../services/domain/mensagem.service';
 import { MensagemDTO } from '../../models/mensagem.dto';
 import { MensagemDetalharPage } from '../mensagem-detalhar/mensagem-detalhar';
+import { MensagemCadastrarPage } from '../mensagem-cadastrar/mensagem-cadastrar';
 
 @IonicPage()
 @Component({
@@ -92,6 +93,55 @@ export class MensagemListarPage {
   }
 
   deletar( mensagem:MensagemDTO ){
-    console.log("Vai deletar");
+    this._alertCtrl
+      .create({
+        title: 'Salvar',
+        subTitle: 'A mensagem será deletada, deseja continuar?',
+        buttons: [
+          {
+            text: 'Sim',
+            handler: ()=> {
+              this.deletarMensagem(mensagem);
+            }
+          },
+          { text: 'Não'
+          }
+        ]
+      })
+      .present();
+  }
+
+  deletarMensagem(mensagem:MensagemDTO){
+    let loading = this.obterLoading();
+    loading.present();
+
+    this.mensagemService.deletarMensagem(mensagem.id).subscribe(() => {
+      loading.dismiss();
+      let listaMensagem = this.mensagens.slice(0);
+      let index = listaMensagem.indexOf(mensagem);
+      if ( index != -1 ){
+        listaMensagem.splice(index, 1);
+        this.mensagens = listaMensagem;
+        this.mensagensSearch = this.copiaListaListaMensagens();
+      }
+    }, error => {
+      loading.dismiss();
+      console.log(error);
+      this._alertCtrl
+        .create({
+          title: 'Falha',
+          subTitle: 'Não foi possível apagar esta Mensagem, tente novamente mais tarde!',
+          buttons: [
+            {
+              text: 'Ok'
+            }
+          ]
+        })
+        .present();
+    });
+  }
+
+  alterarMensagem(mensagem: MensagemDTO){
+    this.navCtrl.push(MensagemCadastrarPage.name, {mensagem: mensagem});
   }
 }
