@@ -5,17 +5,26 @@
 </ion-header>
 
 <ion-content padding>
+  <ion-refresher slot="fixed" pullFactor="0.5" pullMin="100" pullMax="200" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ion-searchbar
     animated="true"
     placeholder="Pesquisar "
     (ionInput)="getItems($event)"
   ></ion-searchbar>
-  <ion-list sliding="true">
-    <ion-item detail-push *ngFor="let pg of pgsSearch">
-      <h4><label>Líder: </label>{{ pg.lider }}</h4>
-      <h4><label>Data: </label>{{ pg.diaSemanaAtividade }} - {{ pg.horaAtividade }}</h4>
-      <h4><label>Endereço: </label> {{ pg.endereco.logradouro }} - {{ pg.endereco.cidade.nome }}</h4>
-      <h4><label>Contato: </label>{{ pg.responsavelCasa }}</h4>
-    </ion-item>
+  <ion-list >
+    <ion-item-sliding *ngFor="let pg of pgsSearch">
+      <ion-item  detail="false" >
+        <h4><label>Líder: </label>{{ pg.lider }}</h4>
+        <h4><label>Data: </label>{{ pg.diaSemanaAtividade }} - {{ pg.horaAtividade }}</h4>
+        <h4><label>Endereço: </label> {{ pg.endereco.logradouro }} - {{ pg.endereco.cidade.nome }}</h4>
+        <h4><label>Contato: </label>{{ pg.responsavelCasa }}</h4>
+      </ion-item>
+      <ion-item-options side="right">
+        <button ion-button color="primary" (click)="alterar(pg)"><ion-icon name="md-create"></ion-icon> Alterar</button>
+        <button ion-button color="danger" (click)="deletar(pg)"><ion-icon name="md-trash"></ion-icon> Deletar</button>
+      </ion-item-options>
+    </ion-item-sliding>
   </ion-list>
 </ion-content>

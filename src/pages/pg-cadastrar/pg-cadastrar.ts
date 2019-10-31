@@ -10,6 +10,8 @@ import { EstadoDTO } from '../../models/estado.dto';
 import { CidadeDTO } from '../../models/cidade.dto';
 import { EstadoService } from '../../services/domain/estado.service';
 import { CidadeService } from '../../services/domain/cidade.service';
+import { PGService } from '../../services/domain/pg.service';
+import { PgNewDTO } from '../../models/pg-new.dto';
 
 @IonicPage()
 @Component({
@@ -19,7 +21,7 @@ import { CidadeService } from '../../services/domain/cidade.service';
 export class PgCadastrarPage {
 
   formulario: FormGroup;
-  pg: PgDTO = new PgDTO();
+  pg: PgNewDTO = new PgNewDTO();
   endereco:EnderecoDTO = new EnderecoDTO();
   diasSemana:any[];
   
@@ -31,9 +33,20 @@ export class PgCadastrarPage {
     private _loadingCtrl: LoadingController,
     private _alertCtrl: AlertController,
     public estadoService: EstadoService,
-    public cidadeService: CidadeService
+    public cidadeService: CidadeService,
+    private _pgService: PGService
     ) {
     this.criarFormulario();
+
+    if (this.navParams.get('item')){
+      this.pg = this.navParams.get('item');
+      this.formulario.value.estadoId = this.pg.endereco.cidade.estado.id;
+      setTimeout( () => {
+        this.updateCidades();
+      });
+
+      this.formulario.value.cidadeId =this.pg.endereco.cidade.id;
+    }
   }
 
   private criarFormulario() {
@@ -50,6 +63,12 @@ export class PgCadastrarPage {
       estadoId : [null, [Validators.required]],
       cidadeId : [null, [Validators.required]],  
       idIgreja: [1, Validators.required]
+    });
+  }
+
+  obterLoading() {
+    return this._loadingCtrl.create({
+      content: 'Carregando...'
     });
   }
 
@@ -78,10 +97,53 @@ export class PgCadastrarPage {
   }
 
   salvar(){
-    console.log("Vai salvar");
+    let loading = this.obterLoading();
+    loading.present();
+    if ( this.pg.id == undefined ){
+      this.pg.lider = this.formulario.controls.lider.value;
+      this.pg.responsavelCasa = this.formulario.controls.responsavelCasa.value;
+      this.pg.diaSemanaAtividade = this.formulario.controls.diaSemanaAtividade.value;
+      this.pg.horaAtividade = this.formulario.controls.horaAtividade.value;
+      this.pg.endereco.logradouro = this.formulario.controls.logradouro.value;
+      this.pg.endereco.numero = this.formulario.controls.numero.value;
+      this.pg.endereco.complemento = this.formulario.controls.complemento.value;
+      this.pg.endereco.bairro = this.formulario.controls.bairro.value;
+      this.pg.endereco.cep = this.formulario.controls.cep.value;
+      this.pg.endereco.cidade.id = this.formulario.controls.cidadeId.value;
+    }
+    
+    this.pg.idIgreja = this.formulario.controls.idIgreja.value;
+
+    this._pgService.salvar(this.pg).subscribe(
+      resposta => {
+        loading.dismiss();
+        this._alertCtrl
+          .create({
+            title: 'Sucesso',
+            subTitle: 'O PG foi adicionado com sucesso, deseja incluir Outro?',
+            buttons: [
+              {
+                text: 'Sim',
+                handler: ()=> {
+                  this.criarFormulario();
+                }
+              },
+              { text: 'Não', 
+                handler: ()=>{
+                  this.navCtrl.setRoot('TabsPage');
+                } 
+              }
+            ]
+          })
+          .present();
+      },
+      error => {
+        loading.dismiss();
+        this.navCtrl.goToRoot;
+      }
+    );
   }
 
-  
   compareFn(e1: string, e2: string): boolean {
     return e1 && e2 ? e1 === e2 : e1 === e2;
   }
