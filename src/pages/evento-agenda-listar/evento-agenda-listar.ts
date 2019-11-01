@@ -1,24 +1,26 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
-import { PgDTO } from '../../models/pg.dto';
-import { PGService } from '../../services/domain/pg.service';
-import { PgCadastrarPage } from '../pg-cadastrar/pg-cadastrar';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { AgendaEventoDTO } from '../../models/agenda-evento.dto';
+import { AlertController } from 'ionic-angular/components/alert/alert-controller';
+import { AgendaEventoService } from '../../services/domain/agenda-evento.service';
+import { EventoAgendaCadastrarPage } from '../evento-agenda-cadastrar/evento-agenda-cadastrar';
+import { EventoAgendaDetalharPage } from '../evento-agenda-detalhar/evento-agenda-detalhar';
 
 @IonicPage()
 @Component({
-  selector: 'page-pg-listar',
-  templateUrl: 'pg-listar.html',
+  selector: 'page-evento-agenda-listar',
+  templateUrl: 'evento-agenda-listar.html',
 })
-export class PgListarPage {
+export class EventoAgendaListarPage {
 
-  pgs: PgDTO[] = new Array<PgDTO>();
-  pgsSearch: PgDTO[] = new Array<PgDTO>();
+  agendasEventos: AgendaEventoDTO[] = new Array<AgendaEventoDTO>();
+  agendasEventosSearch: AgendaEventoDTO[] = new Array<AgendaEventoDTO>();
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     private _loadingCtrl: LoadingController,
     private _alertCtrl: AlertController,
-    private _pgService: PGService) {
+    private _agendaEventoService: AgendaEventoService) {
   }
 
   obterLoading() {
@@ -34,16 +36,16 @@ export class PgListarPage {
   private obterLista() {
     let loading = this.obterLoading();
     loading.present();
-    this._pgService.buscaTodos().subscribe(resposta => {
+    this._agendaEventoService.buscaTodos().subscribe(resposta => {
       loading.dismiss();
-      this.pgs = resposta;
-      this.pgsSearch = this.pgs;
+      this.agendasEventos = resposta;
+      this.agendasEventosSearch = this.agendasEventos;
     }, error => {
       loading.dismiss();
       this._alertCtrl
         .create({
           title: 'Falha',
-          subTitle: 'Não foi possível obter os PG´s, tente novamente mais tarde!',
+          subTitle: 'Não foi possível obter a agenda e ou eventos, tente novamente mais tarde!',
           buttons: [
             {
               text: 'Ok'
@@ -56,18 +58,17 @@ export class PgListarPage {
   }
 
   copiaLista() {
-    return this.pgs;
+    return this.agendasEventos;
   }
   getItems(ev: any) {
-    this.pgsSearch = this.copiaLista();
+    this.agendasEventosSearch = this.copiaLista();
     const val = ev.target.value;
 
     if (val && val.trim() != '') {
-      this.pgsSearch = this.pgsSearch.filter(item => {
+      this.agendasEventosSearch = this.agendasEventosSearch.filter(item => {
         return (
-          item.lider.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
-          item.responsavelCasa.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
-          item.endereco.cidade.nome.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
+          item.titulo.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
+          item.descricao.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
           item.diaSemanaAtividade.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
           item.horaAtividade.toLowerCase().indexOf(val.toLowerCase()) > -1
         );
@@ -82,7 +83,7 @@ export class PgListarPage {
     }, 1000);
   }
 
-  deletar( item:PgDTO ){
+  deletar( item:AgendaEventoDTO ){
     this._alertCtrl
       .create({
         title: 'Salvar',
@@ -101,18 +102,18 @@ export class PgListarPage {
       .present();
   }
 
-  deletarConfirmado(item:PgDTO){
+  deletarConfirmado(item:AgendaEventoDTO){
     let loading = this.obterLoading();
     loading.present();
 
-    this._pgService.deletar(item.id).subscribe(() => {
+    this._agendaEventoService.deletar(item.id).subscribe(() => {
       loading.dismiss();
-      let lista = this.pgs.slice(0);
+      let lista = this.agendasEventos.slice(0);
       let index = lista.indexOf(item);
       if ( index != -1 ){
         lista.splice(index, 1);
-        this.pgs = lista;
-        this.pgsSearch = this.copiaLista();
+        this.agendasEventos = lista;
+        this.agendasEventosSearch = this.copiaLista();
       }
     }, error => {
       loading.dismiss();
@@ -131,7 +132,12 @@ export class PgListarPage {
     });
   }
 
-  alterar(item: PgDTO){
-    this.navCtrl.push(PgCadastrarPage.name, {item: item});
+  alterar(item: AgendaEventoDTO){
+    this.navCtrl.push(EventoAgendaCadastrarPage.name, {item: item});
+  }
+
+  detalhar( item: AgendaEventoDTO ){
+    console.log(item);
+    this.navCtrl.push(EventoAgendaDetalharPage.name, {item: item});
   }
 }

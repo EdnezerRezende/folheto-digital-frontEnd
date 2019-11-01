@@ -1,0 +1,32 @@
+<ion-header>
+    <ion-navbar>
+      <ion-title>Evento e Agenda</ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content padding>
+    <ion-refresher slot="fixed" pullFactor="0.5" pullMin="100" pullMax="200" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <ion-searchbar
+      animated="true"
+      placeholder="Pesquisar "
+      (ionInput)="getItems($event)"
+    ></ion-searchbar>
+    <ion-list >
+      <ion-item-sliding *ngFor="let agenda of agendasEventosSearch">
+        <ion-item  detail="false" >
+          <h4><label>Título: </label>{{ agenda.titulo }}</h4>
+          <h4><label>Data: </label>{{ agenda.diaSemanaAtividade }} - {{ agenda.horaAtividade }}</h4>
+          <h4><label >Descrição: </label>{{ agenda.descricao }}</h4>
+          <h4 *ngIf="agenda.isEvento == true"><label >Período: </label>{{ agenda.dataInicio }} - {{ agenda.dataFim }}</h4>
+          <ion-icon (click)="detalhar(agenda)" item-right isActive="true" class="fa-book"></ion-icon>
+        </ion-item>
+        <ion-item-options side="right">
+          <button ion-button color="primary" (click)="alterar(agenda)"><ion-icon name="md-create"></ion-icon> Alterar</button>
+          <button ion-button color="danger" (click)="deletar(agenda)"><ion-icon name="md-trash"></ion-icon> Deletar</button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </ion-content>
+  

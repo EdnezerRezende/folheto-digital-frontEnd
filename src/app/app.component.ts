@@ -27,7 +27,13 @@ export class MyApp {
                     {submenu:'Cadastrar', componente:'PgCadastrarPage', iconeSub: 'md-paper'},
                     {submenu:'Listar', componente:'PgListarPage', iconeSub:'md-list-box'}
                   ], 
-      icone: 'md-contacts', mostra: true}
+      icone: 'md-home', mostra: true},
+    { titulo: "Agendas e Eventos", 
+      subTitulo: [
+                  {submenu:'Cadastrar', componente:'EventoAgendaCadastrarPage', iconeSub: 'md-paper'},
+                  {submenu:'Listar', componente:'EventoAgendaListarPage', iconeSub:'md-list-box'}
+                ], 
+    icone: 'md-calendar', mostra: true}
     ];
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,public menuCtrl: MenuController,

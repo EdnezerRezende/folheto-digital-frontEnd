@@ -15,6 +15,7 @@ import { ErrorInterceptorProvider } from '../interceptors/error-interceptor';
 import { DominiosService } from '../dominios/dominios.service';
 import { EstadoService } from '../services/domain/estado.service';
 import { CidadeService } from '../services/domain/cidade.service';
+import { AgendaEventoService } from '../services/domain/agenda-evento.service';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { CidadeService } from '../services/domain/cidade.service';
     ErrorInterceptorProvider,
     DominiosService,
     EstadoService,
-    CidadeService
+    CidadeService,
+    AgendaEventoService
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
