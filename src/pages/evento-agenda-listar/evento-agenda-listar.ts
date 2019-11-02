@@ -16,7 +16,7 @@ export class EventoAgendaListarPage {
   agendasEventos: AgendaEventoDTO[] = new Array<AgendaEventoDTO>();
   agendasEventosSearch: AgendaEventoDTO[] = new Array<AgendaEventoDTO>();
 
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private _loadingCtrl: LoadingController,
     private _alertCtrl: AlertController,
@@ -86,7 +86,7 @@ export class EventoAgendaListarPage {
   deletar( item:AgendaEventoDTO ){
     this._alertCtrl
       .create({
-        title: 'Salvar',
+        title: 'Excluir',
         subTitle: 'Este Item será deletado, deseja continuar?',
         buttons: [
           {
