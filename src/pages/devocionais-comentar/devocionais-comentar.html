@@ -6,5 +6,43 @@
 </ion-header>
 
 <ion-content padding>
-  <h2>Comentários a serem cadastrados pela pessoa, ficará guardado localmente</h2>
+  <!-- <ion-list *ngIf="comentario != undefined">
+    <ion-item-sliding >
+      <ion-item detail="false">
+        <h4><strong>{{ comentario.referencia }}</strong></h4>
+        <h4>{{ comentario.texto }}</h4>
+        <ion-icon (click)="comentario(comentario)" item-right isActive="true" class="fa-book"></ion-icon>
+      </ion-item>
+      <ion-item-options side="right">
+        <button ion-button color="primary" (click)="alterar(comentario)">
+          <ion-icon name="md-create"></ion-icon> Alterar
+        </button>
+        <button ion-button color="danger" (click)="deletar(comentario)">
+          <ion-icon name="md-trash"></ion-icon> Deletar
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list> -->
+
+  <form  [formGroup]="formulario" >
+    <ion-item >
+      <ion-label stacked >Referência: {{ comentario.referencia }}</ion-label>
+    </ion-item>
+    <ion-item >
+      <ion-label stacked >Comentário: </ion-label>
+      <ion-input [(ngModel)]="comentario.texto" formControlName="texto" name="texto" ></ion-input>
+    </ion-item>
+    <h6 class="error" *ngIf="!formulario.controls.texto.valid && (formulario.controls.texto.dirty || formulario.controls.texto.touched)">
+      Por favor, informe um comentário.
+    </h6>
+  </form>
+
+  <ion-fab top right edge >
+    <button ion-fab (click)="criar()" [disabled]="formulario.invalid">
+      <ion-icon name="send"></ion-icon>
+    </button>
+  </ion-fab>
+  <button ion-button color="danger" (click)="deletar(comentario)">
+    <ion-icon name="md-trash"></ion-icon> Deletar
+  </button>
 </ion-content>
