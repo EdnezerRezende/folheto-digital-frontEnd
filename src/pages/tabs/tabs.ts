@@ -11,6 +11,7 @@ export class TabsPage {
   tab2Root = 'MensagemListarPage';
   tab3Root = 'ContactPage';
   tab4Root = 'EventoAgendaListarPage';
+  tab5Root = 'DevocionaisListarPage';
 
   constructor() {
 

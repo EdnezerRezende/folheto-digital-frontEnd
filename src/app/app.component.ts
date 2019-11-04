@@ -33,7 +33,13 @@ export class MyApp {
                   {submenu:'Cadastrar', componente:'EventoAgendaCadastrarPage', iconeSub: 'md-paper'},
                   {submenu:'Listar', componente:'EventoAgendaListarPage', iconeSub:'md-list-box'}
                 ], 
-    icone: 'md-calendar', mostra: true}
+    icone: 'md-calendar', mostra: true},
+    { titulo: "Devocionais", 
+      subTitulo: [
+                  {submenu:'Cadastrar', componente:'DevocionaisCadastrarPage', iconeSub: 'md-paper'},
+                  {submenu:'Listar', componente:'DevocionaisListarPage', iconeSub:'md-list-box'}
+                ], 
+    icone: 'md-bookmarks', mostra: true}
     ];
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,public menuCtrl: MenuController,

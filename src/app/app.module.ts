@@ -16,6 +16,7 @@ import { DominiosService } from '../dominios/dominios.service';
 import { EstadoService } from '../services/domain/estado.service';
 import { CidadeService } from '../services/domain/cidade.service';
 import { AgendaEventoService } from '../services/domain/agenda-evento.service';
+import { DevocionalService } from '../services/domain/devocional.service';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { AgendaEventoService } from '../services/domain/agenda-evento.service';
     DominiosService,
     EstadoService,
     CidadeService,
-    AgendaEventoService
+    AgendaEventoService,
+    DevocionalService
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

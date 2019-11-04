@@ -1,0 +1,40 @@
+
+<ion-header>
+  <ion-navbar>
+    <ion-title>Devocionais</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-refresher
+    slot="fixed"
+    pullFactor="0.5"
+    pullMin="100"
+    pullMax="200"
+    (ionRefresh)="doRefresh($event)"
+  >
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-searchbar
+    animated="true"
+    placeholder="Pesquisar "
+    (ionInput)="getItems($event)"
+  ></ion-searchbar>
+  <ion-list>
+    <ion-item-sliding *ngFor="let devocional of devocionaisSearch">
+      <ion-item detail="false">
+        <h4><strong>{{ devocional.referencia }}</strong></h4>
+        <h4>{{ devocional.descricao }}</h4>
+        <ion-icon (click)="comentario(devocional)" item-right isActive="true" class="fa-book"></ion-icon>
+      </ion-item>
+      <ion-item-options side="right">
+        <button ion-button color="primary" (click)="alterar(devocional)">
+          <ion-icon name="md-create"></ion-icon> Alterar
+        </button>
+        <button ion-button color="danger" (click)="deletar(devocional)">
+          <ion-icon name="md-trash"></ion-icon> Deletar
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>
