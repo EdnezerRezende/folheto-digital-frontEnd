@@ -21,11 +21,11 @@
     (ionInput)="getItems($event)"
   ></ion-searchbar>
   <ion-list>
-    <ion-item-sliding *ngFor="let devocional of devocionaisSearch">
-      <ion-item detail="false">
+    <ion-item-sliding *ngFor="let devocional of devocionaisSearch" >
+      <ion-item detail="true" (click)="comentario(devocional)">
         <h4><strong>{{ devocional.referencia }}</strong></h4>
         <h4>{{ devocional.descricao }}</h4>
-        <ion-icon (click)="comentario(devocional)" item-right isActive="true" class="fa-book"></ion-icon>
+        <!-- <ion-icon (click)="comentario(devocional)" item-right isActive="true" class="fa-book"></ion-icon> -->
       </ion-item>
       <ion-item-options side="right">
         <button ion-button color="primary" (click)="alterar(devocional)">

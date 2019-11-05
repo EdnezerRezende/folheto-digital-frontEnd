@@ -15,11 +15,11 @@
   ></ion-searchbar>
   <ion-list >
     <ion-item-sliding *ngFor="let mensagem of mensagensSearch">
-      <ion-item detail="false" >
+      <ion-item detail="true" (click)="detalhar(mensagem)" >
         <h2><strong><label>Título: </label>{{ mensagem.titulo }}</strong></h2>
         <h4><label>Autor(a): </label>{{ mensagem.autor }}</h4>
         <h4><label>Mensagem: </label><span [innerHTML]="mensagem.mensagem.substr(0, 20) + '...'"></span></h4>
-        <ion-icon (click)="detalhar(mensagem)" item-right isActive="true" class="fa-book"></ion-icon>
+        <!-- <ion-icon (click)="detalhar(mensagem)" item-right isActive="true" class="fa-book"></ion-icon> -->
       </ion-item>
 
       <ion-item-options side="right">
