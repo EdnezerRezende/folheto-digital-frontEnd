@@ -37,12 +37,10 @@
     </h6>
   </form>
 
-  <ion-fab top right edge >
-    <button ion-fab (click)="criar()" [disabled]="formulario.invalid">
-      <ion-icon name="send"></ion-icon>
-    </button>
-  </ion-fab>
-  <button ion-button color="danger" (click)="deletar(comentario)">
+  <button  ion-button  (click)="criar()" [disabled]="formulario.invalid">
+    <ion-icon name="send"></ion-icon> Salvar
+  </button>
+  <button ion-button color="danger" (click)="deletar(comentario)" [disabled]="formulario.invalid" >
     <ion-icon name="md-trash"></ion-icon> Deletar
   </button>
 </ion-content>

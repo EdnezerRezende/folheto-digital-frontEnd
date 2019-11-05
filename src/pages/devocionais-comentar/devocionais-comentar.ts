@@ -25,15 +25,23 @@ export class DevocionaisComentarPage {
       private _alertCtrl: AlertController
     ) {
       this.criarFormulario();
+
     if (this.navParams.get('item')) {
       this.devocional = this.navParams.get('item');
       this.comentario = storageComentaService.getComentarios(this.devocional.id);
-    } else{
-      this.comentario.texto = ' ';
-      this.comentario.referencia = this.devocional.referencia;
-      this.comentario.id = this.devocional.id;
+    } 
+    console.log(this.comentario);
+    if ( this.comentario == null ) {
+      this.inicializarComentario();
     }
    }
+
+  private inicializarComentario() {
+    this.comentario = new Comentarios();
+    this.comentario.referencia = this.devocional.referencia;
+    this.comentario.id = this.devocional.id;
+    this.criarFormulario();
+  }
 
   ionViewDidLoad() {
 
@@ -48,6 +56,15 @@ export class DevocionaisComentarPage {
   criar(){
     this.storageComentaService.setComentarios(this.comentario);
     this.comentario = this.storageComentaService.getComentarios(this.comentario.id);
+    this._alertCtrl
+      .create({
+        title: 'Salvo',
+        subTitle: 'Comentário salvo com sucesso',
+        buttons: [
+          { text: 'Ok' }
+        ]
+      })
+      .present();
   }
 
   alterar(item: Comentarios){
@@ -75,6 +92,6 @@ export class DevocionaisComentarPage {
 
   deletarConfirmado(item:Comentarios){
     this.storageComentaService.setRemoveComentarios(item);
-
+    this.inicializarComentario();
   }
 }
