@@ -16,6 +16,9 @@
   <ion-list >
     <ion-item-sliding *ngFor="let pg of pgsSearch">
       <ion-item  detail="false" >
+        <ion-thumbnail item-start>
+          <img [src]="pg.imageUrl || 'assets/imgs/prod.jpg'">
+        </ion-thumbnail>
         <h4><label>Líder: </label>{{ pg.lider }}</h4>
         <h4><label>Data: </label>{{ pg.diaSemanaAtividade }} - {{ pg.horaAtividade }}</h4>
         <h4><label>Endereço: </label> {{ pg.endereco.logradouro }} - {{ pg.endereco.cidade.nome }}</h4>
