@@ -18,6 +18,8 @@ import { CidadeService } from '../services/domain/cidade.service';
 import { AgendaEventoService } from '../services/domain/agenda-evento.service';
 import { DevocionalService } from '../services/domain/devocional.service';
 import { StorageService } from '../services/storage.service';
+import { ImageUtilService } from '../services/image-util.service';
+import { IonicImageViewerModule } from 'ionic-img-viewer';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import { StorageService } from '../services/storage.service';
       menuType: 'overlay',
       RichTextModule
     }),
-    OrderModule
+    OrderModule,
+    IonicImageViewerModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -56,7 +59,8 @@ import { StorageService } from '../services/storage.service';
     CidadeService,
     AgendaEventoService,
     DevocionalService,
-    StorageService
+    StorageService,
+    ImageUtilService
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

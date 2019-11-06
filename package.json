@@ -32,6 +32,7 @@
     "com.telerik.plugins.nativepagetransitions": "^0.6.5",
     "font-awesome": "^4.7.0",
     "ionic-angular": "3.9.5",
+    "ionic-img-viewer": "^2.9.0",
     "ionic-rich-text": "^0.2.7",
     "ionicons": "3.0.0",
     "ngx-order-pipe": "^2.0.4",

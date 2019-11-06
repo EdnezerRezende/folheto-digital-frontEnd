@@ -4,11 +4,12 @@ import { API_CONFIG } from "../../config/api.config";
 import { Observable } from "rxjs/Rx";
 import { PgDTO } from "../../models/pg.dto";
 import { PgNewDTO } from "../../models/pg-new.dto";
+import { ImageUtilService } from "../image-util.service";
 
 @Injectable()
 export class PGService {
 
-    constructor(public http:HttpClient){
+    constructor(public http:HttpClient,private imageUtilService: ImageUtilService){
 
     }
 
@@ -30,5 +31,29 @@ export class PGService {
             observe: 'response', 
             responseType: 'text'
         });
+    }
+
+    getSmallImageFromBucket(id : number) : Observable<any> {
+        let url = `${API_CONFIG.bucketBaseUrl}/Pg${id}.jpg`
+        return this.http.get(url, {responseType : 'blob'});
+    }  
+
+    uploadPicture(picture, idPg:number) {
+        let pictureBlob = this.imageUtilService.dataUriToBlob(picture);
+        let formData : FormData = new FormData();
+        formData.set('file', pictureBlob, 'file.png');
+        return this.http.post(
+            `${API_CONFIG.baseUrl}/pgs/picture/${idPg}`, 
+            formData,
+            { 
+                observe: 'response', 
+                responseType: 'text'
+            }
+        ); 
+    }
+
+    getImageFromBucket(id : number) : Observable<any> {
+        let url = `${API_CONFIG.bucketBaseUrl}/Pg${id}.jpg`
+        return this.http.get(url, {responseType : 'blob'});
     }
 }
