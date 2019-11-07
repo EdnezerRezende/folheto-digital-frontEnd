@@ -6,4 +6,5 @@ export class DevocionalDTO {
     idIgreja:number;
     descricao:string;
     dataCriacao:string;
+    isLido?:boolean;
 }

@@ -1,4 +1,6 @@
 export const STORAGE_KEYS = {
     localUser: "localUser",
-    comentarios: "comentarios"
+    comentarios: "comentarios",
+    referenciaLida: "referenciaLida",
+
 }

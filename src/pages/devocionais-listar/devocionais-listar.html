@@ -20,12 +20,15 @@
     placeholder="Pesquisar "
     (ionInput)="getItems($event)"
   ></ion-searchbar>
-  <ion-list>
-    <ion-item-sliding *ngFor="let devocional of devocionaisSearch" >
-      <ion-item detail="true" (click)="comentario(devocional)">
-        <h4><strong>{{ devocional.referencia }}</strong></h4>
-        <h4>{{ devocional.descricao }}</h4>
-        <!-- <ion-icon (click)="comentario(devocional)" item-right isActive="true" class="fa-book"></ion-icon> -->
+  <ion-list *ngFor="let devocional of devocionaisSearch">
+    <ion-item-sliding  >
+      <ion-item detail>
+        <ion-checkbox color="dark" (ionChange)="verificarLido($event,devocional)" 
+            checked="devocional.isLido" [(ngModel)]="devocional.isLido">
+        </ion-checkbox>
+        <ion-label (click)="comentario(devocional)"><h4><strong>{{ devocional.referencia }}</strong></h4></ion-label>
+        <ion-label (click)="comentario(devocional)" style="white-space: normal">{{ devocional.descricao }}</ion-label>
+
       </ion-item>
       <ion-item-options side="right">
         <button ion-button color="primary" (click)="alterar(devocional)">

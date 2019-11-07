@@ -4,6 +4,7 @@ import { DevocionalDTO } from '../../models/devocional.dto';
 import { DevocionalService } from '../../services/domain/devocional.service';
 import { DevocionaisCadastrarPage } from '../devocionais-cadastrar/devocionais-cadastrar';
 import { DevocionaisComentarPage } from '../devocionais-comentar/devocionais-comentar';
+import { StorageService } from '../../services/storage.service';
 
 
 @IonicPage()
@@ -20,7 +21,9 @@ export class DevocionaisListarPage {
     public navParams: NavParams,
     private _loadingCtrl: LoadingController,
     private _alertCtrl: AlertController,
-    private _devocionalService: DevocionalService) {
+    private _devocionalService: DevocionalService,
+    public storageComentaService:StorageService
+    ) {
   }
 
   obterLoading() {
@@ -40,6 +43,10 @@ export class DevocionaisListarPage {
       loading.dismiss();
       this.devocionais = resposta;
       this.devocionaisSearch = this.devocionais;
+      this.devocionais.forEach(devocional => {
+        let isLido = this.storageComentaService.getReferenciaLida(devocional.id);
+        devocional.isLido = isLido;
+      });
     }, error => {
       loading.dismiss();
       this._alertCtrl
@@ -138,4 +145,17 @@ export class DevocionaisListarPage {
     this.navCtrl.push(DevocionaisComentarPage.name, {item: item});
   }
 
+  verificarLido(e, item: DevocionalDTO){
+    let isChecked = e.value;
+    let checkedGuard = this.storageComentaService.getReferenciaLida(item.id);
+    if( checkedGuard != undefined && checkedGuard != isChecked ){
+      this.storageComentaService.setReferenciaLida(item.id, isChecked);
+      item.isLido=isChecked;
+      return isChecked;
+    }else{
+      checkedGuard ? checkedGuard:this.storageComentaService.setReferenciaLida(item.id, isChecked);
+      item.isLido=isChecked;
+      return isChecked;
+    }
+  }
 }
