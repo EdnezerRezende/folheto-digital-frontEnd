@@ -30,6 +30,14 @@
     "@ionic-native/status-bar": "~4.20.0",
     "@ionic/storage": "2.2.0",
     "com.telerik.plugins.nativepagetransitions": "^0.6.5",
+    "cordova-android": "6.3.0",
+    "cordova-ios": "4.5.5",
+    "cordova-plugin-device": "^2.0.2",
+    "cordova-plugin-ionic-keyboard": "^2.2.0",
+    "cordova-plugin-ionic-webview": "^4.1.3",
+    "cordova-plugin-splashscreen": "^5.0.2",
+    "cordova-plugin-statusbar": "^2.4.2",
+    "cordova-plugin-whitelist": "^1.3.3",
     "font-awesome": "^4.7.0",
     "ionic-angular": "3.9.5",
     "ionic-img-viewer": "^2.9.0",
@@ -47,7 +55,17 @@
   "description": "An Ionic project",
   "cordova": {
     "plugins": {
-      "com.telerik.plugins.nativepagetransitions": {}
-    }
+      "com.telerik.plugins.nativepagetransitions": {},
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-ionic-webview": {},
+      "cordova-plugin-ionic-keyboard": {}
+    },
+    "platforms": [
+      "android",
+      "ios"
+    ]
   }
 }
