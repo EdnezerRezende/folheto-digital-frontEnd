@@ -93,13 +93,13 @@
         <splash height="2436" src="resources/ios/splash/Default-2436h.png" width="1125" />
         <splash height="2732" src="resources/ios/splash/Default@2x~universal~anyany.png" width="2732" />
     </platform>
-    <plugin name="cordova-plugin-whitelist" spec="1.3.3" />
-    <plugin name="cordova-plugin-statusbar" spec="2.4.2" />
-    <plugin name="cordova-plugin-device" spec="2.0.2" />
-    <plugin name="cordova-plugin-splashscreen" spec="5.0.2" />
-    <plugin name="cordova-plugin-ionic-webview" spec="^4.0.0" />
-    <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
+    <engine name="android" spec="6.3.0" />
+    <engine name="ios" spec="4.5.5" />
     <plugin name="com.telerik.plugins.nativepagetransitions" spec="^0.6.5" />
-    <engine name="android" spec="~6.3.0" />
-    <engine name="ios" spec="~4.5.5" />
+    <plugin name="cordova-plugin-whitelist" spec="^1.3.4" />
+    <plugin name="cordova-plugin-statusbar" spec="^2.4.3" />
+    <plugin name="cordova-plugin-device" spec="^2.0.3" />
+    <plugin name="cordova-plugin-splashscreen" spec="^5.0.3" />
+    <plugin name="cordova-plugin-ionic-webview" spec="^4.1.3" />
+    <plugin name="cordova-plugin-ionic-keyboard" spec="^2.2.0" />
 </widget>
