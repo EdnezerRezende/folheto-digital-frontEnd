@@ -3,16 +3,19 @@ import { Platform, App, MenuController, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { NativePageTransitionsOriginal, NativeTransitionOptions } from '@ionic-native/native-page-transitions';
+import { AuthService } from '../services/auth.service';
+import { StorageService } from '../services/storage.service';
+import { LocalUser } from '../models/local_user';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   @ViewChild(Nav) public nav: Nav;
-  rootPage:string = 'TabsPage';
+  rootPage:string = 'LoginPage';
 
   showLevel1 = null;
-
+  usuarioLogado: LocalUser;
   mostraCadUsuario: boolean;
 
   public paginas = [
@@ -43,8 +46,9 @@ export class MyApp {
     ];
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,public menuCtrl: MenuController,
-    private _appCtrl: App
+    private _appCtrl: App, public auth: AuthService, public storage: StorageService
     ) {
+    this.usuarioLogado = this.storage.getLocalUser();
 
     let options: NativeTransitionOptions = {
       direction: 'up',
@@ -68,7 +72,8 @@ export class MyApp {
   }
 
   logoff(){
-    console.log("Logoff");
+    this.auth.logout();
+    this.nav.setRoot('LoginPage');
   }
 
   irPagina(componente){

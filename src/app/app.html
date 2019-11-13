@@ -9,10 +9,10 @@
                     </ion-avatar>
                 </div>
                 <!-- <h2>{{ usuarioLogado.nome }}</h2> -->
-                <!-- <p>{{ usuarioLogado.email }}</p> -->
                 <button menuClose ion-button round (click)="logoff() " icon-start>
                     <ion-icon name="md-exit"></ion-icon> SAIR
                 </button>
+                <p style="color:white">{{ usuarioLogado?.email }}</p>
             </ion-item>
 
             <ion-list sliding="false" id="aberturaMenu" >

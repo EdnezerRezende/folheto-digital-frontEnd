@@ -119,6 +119,7 @@ export class DevocionaisListarPage {
         lista.splice(index, 1);
         this.devocionais = lista;
         this.devocionaisSearch = this.copiaLista();
+        this.storageComentaService.setRemoveReferencia(item.id);
       }
     }, error => {
       loading.dismiss();

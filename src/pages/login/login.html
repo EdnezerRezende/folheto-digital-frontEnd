@@ -1,0 +1,42 @@
+<ion-content padding>
+  <div class="splash-bg"></div>
+  <div class="splash-info">
+    <div class="splash-logo"></div>
+    <div class="splash-intro">
+      Primeira Igreja de Cristo
+    </div>
+  </div>
+  <div padding>
+    <form #form="ngForm" (ngSubmit)="login(form.value)" novalidate>
+      <ion-list>
+        <ion-item>
+          <ion-label floating>E-mail</ion-label>
+          <ion-input type="text" [(ngModel)]="creds.email" name="email">
+        </ion-input>
+        <!-- [class.invalid]="email.errors && email.dirty"> -->
+        </ion-item>
+        <!-- <ion-item class="error-message" *ngIf="email.errors?.required && email.dirty">
+          E-mail é requerido.
+        </ion-item> -->
+
+        <ion-item>
+          <ion-label floating>Senha</ion-label>
+          <ion-input  [(ngModel)]="creds.senha" name="senha" type="password">
+          </ion-input>
+        <!-- [class.invalid]="senha.errors && senha.dirty"> -->
+        </ion-item>
+        <!-- <ion-item class="error-message" *ngIf="senha.errors?.required && senha.dirty">
+          A senha é requerida.
+        </ion-item> -->
+
+        <div padding>
+          <button ion-button color="primary" block type="submit" [disabled]="!form.valid">Login</button>
+        </div>
+
+        <!-- <div padding>
+          <button ion-button color="secondary" block type="button" (click)="signup()">Sign up</button>
+        </div> -->
+      </ion-list>
+    </form>
+  </div>
+</ion-content>

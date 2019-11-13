@@ -39,7 +39,7 @@ export class PgListarPage {
     });
   }
 
-  ionViewWillEnter() {
+  ionViewDidLoad() {
     this.obterLista();
   }
 
@@ -79,23 +79,23 @@ export class PgListarPage {
   }  
 
   //
-  sendPicture(idPg:number) {
-    this._pgService.uploadPicture(this.picture, idPg)
+  sendPicture(item:PgDTO) {
+    this._pgService.uploadPicture(this.picture, item.id)
       .subscribe(response => {
         this.picture = null;
-        this.getImageIfExists(idPg);
+        this.getImageIfExists(item);
       },
       error => {
       });
   }
 
-  getImageIfExists(idPg:number) {
-    this._pgService.getImageFromBucket(idPg)
+  getImageIfExists(item:PgDTO) {
+    this._pgService.getImageFromBucket(item.id)
     .subscribe(response => {
-      this.pgs[0].imageUrl = `${API_CONFIG.bucketBaseUrl}/Pg${idPg}.jpg`;
+      this.pgs[0].imageUrl = `${API_CONFIG.bucketBaseUrl}/Pg${item.id}.jpg`;
       this.blobToDataURL(response).then(dataUrl => {
         let str : string = dataUrl as string;
-        this.profileImage = this.sanitizer.bypassSecurityTrustUrl(str);
+        item.imageUrl = this.sanitizer.bypassSecurityTrustUrl(str);
       });
     },
     error => {

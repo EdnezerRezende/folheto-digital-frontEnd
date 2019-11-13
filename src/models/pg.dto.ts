@@ -8,5 +8,5 @@ export class PgDTO {
     diaSemanaAtividade:string;
     horaAtividade:string;
     idIgreja:number;
-    imageUrl? : string;
+    imageUrl? : any;
 }

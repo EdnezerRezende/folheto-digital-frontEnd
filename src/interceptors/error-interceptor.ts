@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx'; // IMPORTANTE: IMPORT ATUALIZADO
-// import { StorageService } from '../services/storage.service';
 import { AlertController } from 'ionic-angular/components/alert/alert-controller';
 import { FieldMessage } from '../models/fieldmessage';
+import { StorageService } from '../services/storage.service';
 // import { FieldMessage } from '../models/fieldmessage';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
     constructor(
-        // public storage: StorageService, 
+        public storage: StorageService, 
         public alertCtrl: AlertController) {
     }
 
@@ -25,9 +25,6 @@ export class ErrorInterceptor implements HttpInterceptor {
             if (!errorObj.status) {
                 errorObj = JSON.parse(errorObj);
             }
-
-            console.log("Erro detectado pelo interceptor:");
-            console.log(errorObj);
 
             switch(errorObj.status) {
                 case 401:
@@ -51,12 +48,12 @@ export class ErrorInterceptor implements HttpInterceptor {
     }
 
     handle403() {
-        // this.storage.setLocalUser(null);
+        this.storage.setLocalUser(null);
     }
 
     handle401() {
         let alert = this.alertCtrl.create({
-            title: 'Erro 401: falha de autenticação',
+            title: 'Falha de autenticação',
             message: 'Email ou senha incorretos',
             enableBackdropDismiss: false,
             buttons: [

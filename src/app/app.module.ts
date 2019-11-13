@@ -20,6 +20,9 @@ import { DevocionalService } from '../services/domain/devocional.service';
 import { StorageService } from '../services/storage.service';
 import { ImageUtilService } from '../services/image-util.service';
 import { IonicImageViewerModule } from 'ionic-img-viewer';
+import { AuthService } from '../services/auth.service';
+import { AuthInterceptorProvider } from '../interceptors/auth-interceptor';
+import { MembroService } from '../services/domain/membro.service';
 
 @NgModule({
   declarations: [
@@ -53,6 +56,7 @@ import { IonicImageViewerModule } from 'ionic-img-viewer';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     MensagemService,
     PGService,
+    AuthInterceptorProvider,
     ErrorInterceptorProvider,
     DominiosService,
     EstadoService,
@@ -60,7 +64,9 @@ import { IonicImageViewerModule } from 'ionic-img-viewer';
     AgendaEventoService,
     DevocionalService,
     StorageService,
-    ImageUtilService
+    ImageUtilService,
+    AuthService,
+    MembroService
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

@@ -26,7 +26,6 @@ export class DevocionaisCadastrarPage {
       this.devocional = this.navParams.get('item');
     }
 
-    console.log(this.devocional);
   }
 
   ionViewDidLoad() {
@@ -56,6 +55,7 @@ export class DevocionaisCadastrarPage {
     this._devocionalService.salvar(this.devocional).subscribe(
       resposta => {
         loading.dismiss();
+    
         this._alertCtrl
           .create({
             title: 'Sucesso',

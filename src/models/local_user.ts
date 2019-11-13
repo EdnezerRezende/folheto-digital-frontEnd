@@ -1,4 +1,4 @@
-export interface LocalUser {
+export class LocalUser {
     token: string;
     email: string;
 }

@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { STORAGE_KEYS } from "../config/storage_keys.config";
 import { LocalUser } from "../models/local_user";
 import { Comentarios } from "../models/comentarios";
+import { Membro } from "../models/membro";
 
 @Injectable()
 export class StorageService {
@@ -22,6 +23,25 @@ export class StorageService {
         }
         else {
             localStorage.setItem(STORAGE_KEYS.localUser, JSON.stringify(obj));
+        }
+    }
+
+    getMembro() : Membro {
+        let usr = localStorage.getItem(STORAGE_KEYS.membro);
+        if (usr == null) {
+            return null;
+        }
+        else {
+            return JSON.parse(usr);
+        }
+    }
+
+    setMembro(obj : Membro) {
+        if (obj == null) {
+            localStorage.removeItem(STORAGE_KEYS.membro);
+        }
+        else {
+            localStorage.setItem(STORAGE_KEYS.membro, JSON.stringify(obj));
         }
     }
 
@@ -61,5 +81,9 @@ export class StorageService {
         if (id != null) {
             localStorage.setItem(STORAGE_KEYS.referenciaLida+id, JSON.stringify(isChecked));
         } 
+    }
+
+    setRemoveReferencia(id:number){
+        localStorage.removeItem(STORAGE_KEYS.referenciaLida+id);
     }
 }
