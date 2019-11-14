@@ -6,6 +6,7 @@ import { NativePageTransitionsOriginal, NativeTransitionOptions } from '@ionic-n
 import { AuthService } from '../services/auth.service';
 import { StorageService } from '../services/storage.service';
 import { LocalUser } from '../models/local_user';
+import { Membro } from '../models/membro';
 
 @Component({
   templateUrl: 'app.html'
@@ -16,6 +17,7 @@ export class MyApp {
 
   showLevel1 = null;
   usuarioLogado: LocalUser;
+  dadosMembro:Membro = new Membro();
   mostraCadUsuario: boolean;
 
   public paginas = [
@@ -49,7 +51,8 @@ export class MyApp {
     private _appCtrl: App, public auth: AuthService, public storage: StorageService
     ) {
     this.usuarioLogado = this.storage.getLocalUser();
-
+    this.dadosMembro = this.storage.getMembro();
+    
     let options: NativeTransitionOptions = {
       direction: 'up',
       duration: 500,
@@ -73,6 +76,8 @@ export class MyApp {
 
   logoff(){
     this.auth.logout();
+    this.storage.setMembro(null);
+    this.storage.setLocalUser(null);
     this.nav.setRoot('LoginPage');
   }
 

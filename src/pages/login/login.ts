@@ -58,7 +58,7 @@ export class LoginPage {
       this.auth.successfulLogin(response.headers.get('Authorization'));
       let user:LocalUser = this.storage.getLocalUser();
       this.membroService.findByEmail(user.email).subscribe(resposta => {
-        // this.membro = resposta;
+        this.membro = resposta;
         this.storage.setMembro(this.membro);
       }, error => {
         
