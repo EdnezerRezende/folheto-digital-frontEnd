@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, App, MenuController, Nav } from 'ionic-angular';
+import { Platform, App, MenuController, Nav, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { NativePageTransitionsOriginal, NativeTransitionOptions } from '@ionic-native/native-page-transitions';
@@ -19,39 +19,30 @@ export class MyApp {
   usuarioLogado: LocalUser;
   dadosMembro:Membro = new Membro();
   mostraCadUsuario: boolean;
-
-  public paginas = [
-    { titulo: "Mensagens", 
-          subTitulo: [
-                      {submenu:'Cadastrar', componente:'MensagemCadastrarPage', iconeSub: 'md-paper'},
-                      {submenu:'Listar', componente:'MensagemListarPage', iconeSub:'md-list-box'}
-                    ], 
-        icone: 'md-filing', mostra: true},
-    { titulo: "PG´s", 
-        subTitulo: [
-                    {submenu:'Cadastrar', componente:'PgCadastrarPage', iconeSub: 'md-paper'},
-                    {submenu:'Listar', componente:'PgListarPage', iconeSub:'md-list-box'}
-                  ], 
-      icone: 'md-home', mostra: true},
-    { titulo: "Agendas e Eventos", 
-      subTitulo: [
-                  {submenu:'Cadastrar', componente:'EventoAgendaCadastrarPage', iconeSub: 'md-paper'},
-                  {submenu:'Listar', componente:'EventoAgendaListarPage', iconeSub:'md-list-box'}
-                ], 
-    icone: 'md-calendar', mostra: true},
-    { titulo: "Devocionais", 
-      subTitulo: [
-                  {submenu:'Cadastrar', componente:'DevocionaisCadastrarPage', iconeSub: 'md-paper'},
-                  {submenu:'Listar', componente:'DevocionaisListarPage', iconeSub:'md-list-box'}
-                ], 
-    icone: 'md-bookmarks', mostra: true}
-    ];
+  mostraOpcaoCadastro: boolean = false;
+  mostraOpcaoListar: boolean = true;
+  
+  public paginas:any[];
+  
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,public menuCtrl: MenuController,
-    private _appCtrl: App, public auth: AuthService, public storage: StorageService
+    private _appCtrl: App, public auth: AuthService, public storage: StorageService, public events: Events
     ) {
-    this.usuarioLogado = this.storage.getLocalUser();
-    this.dadosMembro = this.storage.getMembro();
+      events.subscribe('user:created', (user, time) => {
+        console.log('Welcome', user, 'at', time);
+        user.perfis.forEach(perfil => {
+          if ( perfil == "ADMIN" || perfil == "LIDER" ){
+            this.mostraOpcaoCadastro = true;
+            this.mostraOpcaoListar = true;
+          }
+        });
+        if ( this.mostraOpcaoCadastro ){
+          this.tratarMenuTela();
+        }else{
+          this.tratarMenuTelaSemCadastro();
+        }
+      });
+    
     
     let options: NativeTransitionOptions = {
       direction: 'up',
@@ -74,10 +65,71 @@ export class MyApp {
     });
   }
 
+  tratarMenuTela(){
+    this.paginas = [
+      { titulo: "Mensagens", 
+            subTitulo: [
+                        {submenu:'Cadastrar', componente:'MensagemCadastrarPage', iconeSub: 'md-paper', mostra: this.mostraOpcaoCadastro },
+                        {submenu:'Listar', componente:'MensagemListarPage', iconeSub:'md-list-box', mostra: this.mostraOpcaoListar }
+                      ], 
+          icone: 'md-filing', mostra: true},
+      { titulo: "PG´s", 
+          subTitulo: [
+                      {submenu:'Cadastrar', componente:'PgCadastrarPage', iconeSub: 'md-paper', mostraCad: this.mostraOpcaoCadastro },
+                      {submenu:'Listar', componente:'PgListarPage', iconeSub:'md-list-box', mostra: this.mostraOpcaoListar}
+                    ], 
+        icone: 'md-home', mostra: true},
+      { titulo: "Agendas e Eventos", 
+        subTitulo: [
+                    {submenu:'Cadastrar', componente:'EventoAgendaCadastrarPage', iconeSub: 'md-paper', mostraCad: this.mostraOpcaoCadastro },
+                    {submenu:'Listar', componente:'EventoAgendaListarPage', iconeSub:'md-list-box', mostra: this.mostraOpcaoListar}
+                  ], 
+      icone: 'md-calendar', mostra: true},
+      { titulo: "Devocionais", 
+        subTitulo: [
+                    {submenu:'Cadastrar', componente:'DevocionaisCadastrarPage', iconeSub: 'md-paper', mostraCad: this.mostraOpcaoCadastro },
+                    {submenu:'Listar', componente:'DevocionaisListarPage', iconeSub:'md-list-box', mostra: this.mostraOpcaoListar}
+                  ], 
+      icone: 'md-bookmarks', mostra: true}
+      ];
+  }
+
+  tratarMenuTelaSemCadastro(){
+    this.paginas = [
+      { titulo: "Mensagens", 
+            subTitulo: [
+                        {submenu:'Listar', componente:'MensagemListarPage', iconeSub:'md-list-box', mostra: this.mostraOpcaoListar }
+                      ], 
+          icone: 'md-filing', mostra: true},
+      { titulo: "PG´s", 
+          subTitulo: [
+                      {submenu:'Listar', componente:'PgListarPage', iconeSub:'md-list-box', mostra: this.mostraOpcaoListar}
+                    ], 
+        icone: 'md-home', mostra: true},
+      { titulo: "Agendas e Eventos", 
+        subTitulo: [
+                    {submenu:'Listar', componente:'EventoAgendaListarPage', iconeSub:'md-list-box', mostra: this.mostraOpcaoListar}
+                  ], 
+      icone: 'md-calendar', mostra: true},
+      { titulo: "Devocionais", 
+        subTitulo: [
+                    {submenu:'Listar', componente:'DevocionaisListarPage', iconeSub:'md-list-box', mostra: this.mostraOpcaoListar}
+                  ], 
+      icone: 'md-bookmarks', mostra: true}
+      ];
+  }
+
+  get membroLogado() {
+    this.dadosMembro = this.storage.getMembro();
+    return this.storage.getMembro();
+  }
+
   logoff(){
     this.auth.logout();
     this.storage.setMembro(null);
     this.storage.setLocalUser(null);
+    this.mostraOpcaoCadastro = false;
+    this.mostraOpcaoListar = true;
     this.nav.setRoot('LoginPage');
   }
 

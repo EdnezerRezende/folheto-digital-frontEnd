@@ -12,10 +12,10 @@
                 <button menuClose ion-button round (click)="logoff() " icon-start>
                     <ion-icon name="md-exit"></ion-icon> SAIR
                 </button>
-                <p style="color:white">{{ usuarioLogado?.email }}</p>
+                <p style="color:white">{{ membroLogado?.email }}</p>
             </ion-item>
 
-            <ion-list sliding="false" id="aberturaMenu" >
+            <ion-list sliding="false" id="aberturaMenu"  >
                 <ion-item no-lines id="aberturaMenu" *ngFor="let pagina of paginas | orderBy:'titulo'; let i=index" text-wrap 
                     [ngClass]="{active: isLevel1Shown('idx'+i)}" 
                     (click)="toggleLevel1('idx'+i)" style="justify-content: space-around " >
@@ -28,8 +28,8 @@
                         [name]="isLevel1Shown('idx'+i) ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
                     </h2>
                     <ion-list showWhen="android,windows" style="margin-bottom: -26px;" *ngIf="isLevel1Shown('idx'+i)" >
-                        <ion-item no-lines menuClose *ngFor="let sub of pagina.subTitulo" text-wrap (click)="irPagina(sub.componente)">
-                            <h3 style="margin-top: -12px;">
+                        <ion-item no-lines menuClose *ngFor="let sub of pagina.subTitulo"   text-wrap (click)="irPagina(sub.componente)">
+                            <h3 style="margin-top: -12px;" >
                                 <ion-icon color="sucess" [name]="sub.iconeSub" item-left ></ion-icon>
                                 {{sub.submenu}}
                             </h3>
@@ -37,7 +37,7 @@
                     </ion-list>
                     <ion-list showWhen="ios" style="margin-bottom: -15px;" *ngIf="isLevel1Shown('idx'+i)" >
                         <ion-item no-lines menuClose *ngFor="let sub of pagina.subTitulo" text-wrap (click)="irPagina(sub.componente)">
-                            <h3 style="margin-top: -10px;">
+                            <h3 style="margin-top: -10px;" >
                                 <ion-icon color="sucess" [name]="sub.iconeSub" item-left ></ion-icon>
                                 {{sub.submenu}}
                             </h3>

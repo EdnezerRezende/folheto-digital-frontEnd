@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, ToastController, MenuController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ToastController, MenuController, Events } from 'ionic-angular';
 import {finalize} from 'rxjs/operators';
 import { AuthService } from '../../services/auth.service';
 import { CredenciaisDTO } from '../../models/credenciais.dto';
@@ -31,8 +31,14 @@ export class LoginPage {
     public menu: MenuController,
     public auth: AuthService,
     public membroService: MembroService,
-    public storage: StorageService
+    public storage: StorageService,
+    public events: Events
     ) {
+  }
+
+  createUser(user) {
+    console.log('User created!')
+    this.events.publish('user:created', user, Date.now());
   }
 
   ionViewWillEnter() {
@@ -60,6 +66,7 @@ export class LoginPage {
       this.membroService.findByEmail(user.email).subscribe(resposta => {
         this.membro = resposta;
         this.storage.setMembro(this.membro);
+        this.createUser(this.membro);
       }, error => {
         
       });

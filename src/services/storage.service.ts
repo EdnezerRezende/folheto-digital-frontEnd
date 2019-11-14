@@ -7,6 +7,7 @@ import { Membro } from "../models/membro";
 @Injectable()
 export class StorageService {
 
+    membro:Membro = new Membro();
     getLocalUser() : LocalUser {
         let usr = localStorage.getItem(STORAGE_KEYS.localUser);
         if (usr == null) {
@@ -85,5 +86,21 @@ export class StorageService {
 
     setRemoveReferencia(id:number){
         localStorage.removeItem(STORAGE_KEYS.referenciaLida+id);
+    }
+
+    temPerfilAdminLider() : boolean {
+        let usr = JSON.parse(localStorage.getItem(STORAGE_KEYS.membro));
+       
+        if (usr == null) {
+            return false;
+        }
+       
+        usr.perfis.forEach(perfil => {
+            if ( perfil == "ADMIN" || perfil == "LIDER" ){
+              return true;
+            } else{
+              return false;
+            }
+        });
     }
 }
