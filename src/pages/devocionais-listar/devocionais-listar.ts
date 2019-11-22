@@ -37,7 +37,7 @@ export class DevocionaisListarPage {
 
   ionViewWillEnter() {
     this.dadosMembro = this.storage.getMembro();
-    
+
     this.obterLista();
   }
 
@@ -164,4 +164,5 @@ export class DevocionaisListarPage {
       return isChecked;
     }
   }
+
 }

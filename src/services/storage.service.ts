@@ -98,9 +98,7 @@ export class StorageService {
         usr.perfis.forEach(perfil => {
             if ( perfil == "ADMIN" || perfil == "LIDER" ){
               return true;
-            } else{
-              return false;
-            }
+            } 
         });
     }
 }
