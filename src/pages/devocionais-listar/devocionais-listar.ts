@@ -18,7 +18,7 @@ export class DevocionaisListarPage {
   devocionais: DevocionalDTO[] = new Array<DevocionalDTO>();
   devocionaisSearch: DevocionalDTO[] = new Array<DevocionalDTO>();
   dadosMembro:Membro = new Membro();
-  
+  isPermite = false;
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private _loadingCtrl: LoadingController,
@@ -27,6 +27,7 @@ export class DevocionaisListarPage {
     public storageComentaService:StorageService,
     public storage: StorageService
     ) {
+
   }
 
   obterLoading() {
@@ -39,6 +40,12 @@ export class DevocionaisListarPage {
     this.dadosMembro = this.storage.getMembro();
 
     this.obterLista();
+    
+    
+  }
+
+  get perfilLogado(){
+    return this.storage.temPerfilAdminLider();
   }
 
   private obterLista() {

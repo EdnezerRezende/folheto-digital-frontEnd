@@ -22,28 +22,18 @@ export class MyApp {
   mostraOpcaoCadastro: boolean = false;
   mostraOpcaoListar: boolean = true;
   
-  public paginas:any[];
+  public paginas:any[] = this.tratarMenuTelaSemCadastro();
   
+
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,public menuCtrl: MenuController,
     private _appCtrl: App, public auth: AuthService, public storage: StorageService, public events: Events
     ) {
       events.subscribe('user:created', (user, time) => {
-        console.log('Welcome', user, 'at', time);
-        user.perfis.forEach(perfil => {
-          if ( perfil == "ADMIN" || perfil == "LIDER" ){
-            this.mostraOpcaoCadastro = true;
-            this.mostraOpcaoListar = true;
-          }
-        });
-        if ( this.mostraOpcaoCadastro ){
-          this.tratarMenuTela();
-        }else{
-          this.tratarMenuTelaSemCadastro();
-        }
+        console.log('Bem Vindo ', user.nome , ' as ', time);
+        
       });
-    
-    
+      
     let options: NativeTransitionOptions = {
       direction: 'up',
       duration: 500,
@@ -65,8 +55,8 @@ export class MyApp {
     });
   }
 
-  tratarMenuTela(){
-    this.paginas = [
+  tratarMenuTela():any[]{
+    return [
       { titulo: "Mensagens", 
             subTitulo: [
                         {submenu:'Cadastrar', componente:'MensagemCadastrarPage', iconeSub: 'md-paper', mostra: this.mostraOpcaoCadastro },
@@ -94,8 +84,8 @@ export class MyApp {
       ];
   }
 
-  tratarMenuTelaSemCadastro(){
-    this.paginas = [
+  tratarMenuTelaSemCadastro():any[]{
+    return [
       { titulo: "Mensagens", 
             subTitulo: [
                         {submenu:'Listar', componente:'MensagemListarPage', iconeSub:'md-list-box', mostra: this.mostraOpcaoListar }
@@ -124,6 +114,15 @@ export class MyApp {
     return this.storage.getMembro();
   }
 
+  get obterMenu(){
+    this.mostraOpcaoCadastro = this.storage.temPerfilAdminLider();
+    if ( this.mostraOpcaoCadastro ){
+      this.paginas = this.tratarMenuTela();
+    }else{
+      this.paginas = this.tratarMenuTelaSemCadastro();
+    }
+    return this.paginas;
+  }
   logoff(){
     this.auth.logout();
     this.storage.setMembro(null);

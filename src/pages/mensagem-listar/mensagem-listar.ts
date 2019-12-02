@@ -10,6 +10,7 @@ import { MensagemService } from '../../services/domain/mensagem.service';
 import { MensagemDTO } from '../../models/mensagem.dto';
 import { MensagemDetalharPage } from '../mensagem-detalhar/mensagem-detalhar';
 import { MensagemCadastrarPage } from '../mensagem-cadastrar/mensagem-cadastrar';
+import { StorageService } from '../../services/storage.service';
 
 @IonicPage()
 @Component({
@@ -25,7 +26,8 @@ export class MensagemListarPage {
     public navParams: NavParams,
     public mensagemService: MensagemService,
     private _loadingCtrl: LoadingController,
-    private _alertCtrl: AlertController
+    private _alertCtrl: AlertController,
+    public storage: StorageService
   ) {}
 
   obterLoading() {
@@ -36,6 +38,10 @@ export class MensagemListarPage {
 
   ionViewDidLoad() {
     this.obterLista();
+  }
+
+  get perfilLogado(){
+    return this.storage.temPerfilAdminLider();
   }
 
   private obterLista() {

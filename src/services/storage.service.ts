@@ -90,15 +90,17 @@ export class StorageService {
 
     temPerfilAdminLider() : boolean {
         let usr = JSON.parse(localStorage.getItem(STORAGE_KEYS.membro));
-       
+        let isPermite = false;
         if (usr == null) {
             return false;
         }
        
         usr.perfis.forEach(perfil => {
             if ( perfil == "ADMIN" || perfil == "LIDER" ){
-              return true;
+                isPermite = true;
             } 
         });
+
+        return isPermite;
     }
 }

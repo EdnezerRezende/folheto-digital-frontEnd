@@ -22,7 +22,7 @@
         <!-- <ion-icon (click)="detalhar(mensagem)" item-right isActive="true" class="fa-book"></ion-icon> -->
       </ion-item>
 
-      <ion-item-options side="right">
+      <ion-item-options side="right" *ngIf="perfilLogado">
         <button ion-button color="primary" (click)="alterarMensagem(mensagem)"><ion-icon name="md-create"></ion-icon> Alterar</button>
         <button ion-button color="danger" (click)="deletar(mensagem)"><ion-icon name="md-trash"></ion-icon> Deletar</button>
       </ion-item-options>

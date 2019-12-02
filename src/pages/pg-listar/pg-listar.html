@@ -24,7 +24,7 @@
         <h4><label>Endereço: </label> {{ pg.endereco.logradouro }} - {{ pg.endereco.cidade.nome }}</h4>
         <h4><label>Contato: </label>{{ pg.responsavelCasa }}</h4>
       </ion-item>
-      <ion-item-options side="right">
+      <ion-item-options side="right" *ngIf="perfilLogado">
         <button ion-button color="primary" (click)="alterar(pg)"><ion-icon name="md-create"></ion-icon> Alterar</button>
         <button ion-button color="danger" (click)="deletar(pg)"><ion-icon name="md-trash"></ion-icon> Deletar</button>
       </ion-item-options>

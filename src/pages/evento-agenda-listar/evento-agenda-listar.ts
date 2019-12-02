@@ -5,6 +5,7 @@ import { AlertController } from 'ionic-angular/components/alert/alert-controller
 import { AgendaEventoService } from '../../services/domain/agenda-evento.service';
 import { EventoAgendaCadastrarPage } from '../evento-agenda-cadastrar/evento-agenda-cadastrar';
 import { EventoAgendaDetalharPage } from '../evento-agenda-detalhar/evento-agenda-detalhar';
+import { StorageService } from '../../services/storage.service';
 
 @IonicPage()
 @Component({
@@ -20,7 +21,9 @@ export class EventoAgendaListarPage {
     public navParams: NavParams,
     private _loadingCtrl: LoadingController,
     private _alertCtrl: AlertController,
-    private _agendaEventoService: AgendaEventoService) {
+    private _agendaEventoService: AgendaEventoService,
+    public storage: StorageService
+    ) {
   }
 
   obterLoading() {
@@ -31,6 +34,10 @@ export class EventoAgendaListarPage {
 
   ionViewWillEnter() {
     this.obterLista();
+  }
+
+  get perfilLogado(){
+    return this.storage.temPerfilAdminLider();
   }
 
   private obterLista() {

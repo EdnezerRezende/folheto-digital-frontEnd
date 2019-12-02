@@ -6,6 +6,7 @@ import { PgCadastrarPage } from '../pg-cadastrar/pg-cadastrar';
 import { API_CONFIG } from '../../config/api.config';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ImageViewerController } from 'ionic-img-viewer';
+import { StorageService } from '../../services/storage.service';
 
 @IonicPage()
 @Component({
@@ -27,7 +28,8 @@ export class PgListarPage {
     private _alertCtrl: AlertController,
     private _pgService: PGService,
     public sanitizer: DomSanitizer,
-    imageViewerCtrl: ImageViewerController
+    imageViewerCtrl: ImageViewerController,
+    public storage: StorageService
     ) {
       this._imageViewerCtrl = imageViewerCtrl;
       this.profileImage = 'assets/imgs/avatar-blank.png';
@@ -41,6 +43,10 @@ export class PgListarPage {
 
   ionViewDidLoad() {
     this.obterLista();
+  }
+
+  get perfilLogado(){
+    return this.storage.temPerfilAdminLider();
   }
 
   private obterLista() {

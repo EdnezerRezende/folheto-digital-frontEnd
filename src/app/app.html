@@ -16,7 +16,7 @@
             </ion-item>
 
             <ion-list sliding="false" id="aberturaMenu"  >
-                <ion-item no-lines id="aberturaMenu" *ngFor="let pagina of paginas | orderBy:'titulo'; let i=index" text-wrap 
+                <ion-item no-lines id="aberturaMenu" *ngFor="let pagina of obterMenu | orderBy:'titulo'; let i=index" text-wrap 
                     [ngClass]="{active: isLevel1Shown('idx'+i)}" 
                     (click)="toggleLevel1('idx'+i)" style="justify-content: space-around " >
                     <h2 >

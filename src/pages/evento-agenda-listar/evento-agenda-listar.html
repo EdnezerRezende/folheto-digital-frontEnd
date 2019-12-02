@@ -29,7 +29,7 @@
         <h4>{{ agenda.diaSemanaAtividade }} - {{ agenda.horaAtividade }}</h4>
         <!-- <ion-icon (click)="detalhar(agenda)" item-right isActive="true" class="fa-book"></ion-icon> -->
       </ion-item>
-      <ion-item-options side="right">
+      <ion-item-options side="right" *ngIf="perfilLogado">
         <button ion-button color="primary" (click)="alterar(agenda)">
           <ion-icon name="md-create"></ion-icon> Alterar
         </button>
@@ -50,7 +50,7 @@
         <!-- <ion-icon (click)="detalhar(agenda)" item-right isActive="true" class="fa-book"></ion-icon> -->
       </ion-item>
 
-      <ion-item-options side="right">
+      <ion-item-options side="right" *ngIf="perfilLogado">
         <button ion-button color="primary" (click)="alterar(agenda)">
           <ion-icon name="md-create"></ion-icon> Alterar
         </button>

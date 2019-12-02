@@ -30,7 +30,7 @@
         <ion-label (click)="comentario(devocional)" style="white-space: normal">{{ devocional.descricao }}</ion-label>
 
       </ion-item>
-      <ion-item-options side="right">
+      <ion-item-options side="right" *ngIf="perfilLogado">
         <button ion-button color="primary" (click)="alterar(devocional)">
           <ion-icon name="md-create"></ion-icon> Alterar
         </button>
