@@ -5,6 +5,7 @@ import { Membro } from "../../models/membro";
 import { API_CONFIG } from "../../config/api.config";
 import { StorageService } from "../storage.service";
 import { ImageUtilService } from "../image-util.service";
+import { MembroInfo } from "../../models/membro-info";
 
 @Injectable()
 export class MembroService {
@@ -19,8 +20,8 @@ export class MembroService {
         return this.http.get(`${API_CONFIG.baseUrl}/membros/${id}`);
     }
     
-    findByEmail(email: string) :Observable<Membro> {
-        return this.http.get<Membro>(`${API_CONFIG.baseUrl}/membros/email?value=${email}`);
+    findByEmail(email: string) :Observable<MembroInfo> {
+        return this.http.get<MembroInfo>(`${API_CONFIG.baseUrl}/membros/email?value=${email}`);
     }
 
     getImageFromBucket(id : string) : Observable<any> {

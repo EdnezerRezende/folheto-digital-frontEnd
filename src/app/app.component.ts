@@ -6,7 +6,7 @@ import { NativePageTransitionsOriginal, NativeTransitionOptions } from '@ionic-n
 import { AuthService } from '../services/auth.service';
 import { StorageService } from '../services/storage.service';
 import { LocalUser } from '../models/local_user';
-import { Membro } from '../models/membro';
+import { MembroInfo } from '../models/membro-info';
 
 @Component({
   templateUrl: 'app.html'
@@ -17,7 +17,7 @@ export class MyApp {
 
   showLevel1 = null;
   usuarioLogado: LocalUser;
-  dadosMembro:Membro = new Membro();
+  dadosMembro:MembroInfo = new MembroInfo();
   mostraCadUsuario: boolean;
   mostraOpcaoCadastro: boolean = false;
   mostraOpcaoListar: boolean = true;

@@ -7,25 +7,25 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
+  <ion-list *ngIf="obterDadosIgreja">
     <ion-item class="ajustesContato">
         <ion-grid>
           <ion-row>
             <ion-col>
               <a (click)="visualizarMap()"><ion-icon name="md-pin"  item-right isActive="true"></ion-icon>
-                QSB 10/11 A.E. 09 CEP: 72.015-600 
-                Taguatinga Sul - DF
+                {{ obterDadosIgreja.endereco.logradouro }} CEP: {{ obterDadosIgreja.endereco.cep }}
+                <p>{{ obterDadosIgreja.endereco.cidade.nome }} / {{ obterDadosIgreja.endereco.cidade.estado.nome }} </p>
               </a>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-icon name="call"></ion-icon> (61) 3563-1865 / Fax: (61) 3563-5788
+              <ion-icon name="call"></ion-icon> {{ obterDadosIgreja.telefones[0] }} / Fax: {{ obterDadosIgreja.telefones[1] }} 
             </ion-col>
             <ion-col>
               <ion-icon name="mail-open"></ion-icon> 
-              <a href="mailto: cristeltagsul@bol.com.br"> 
-                cristeltagsul@bol.com.br
+              <a href="mailto: obterDadosIgreja.email"> 
+                {{obterDadosIgreja.email}}
               </a>
             </ion-col>
           </ion-row>

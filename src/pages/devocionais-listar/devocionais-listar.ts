@@ -5,7 +5,7 @@ import { DevocionalService } from '../../services/domain/devocional.service';
 import { DevocionaisCadastrarPage } from '../devocionais-cadastrar/devocionais-cadastrar';
 import { DevocionaisComentarPage } from '../devocionais-comentar/devocionais-comentar';
 import { StorageService } from '../../services/storage.service';
-import { Membro } from '../../models/membro';
+import { MembroInfo } from '../../models/membro-info';
 
 
 @IonicPage()
@@ -17,15 +17,14 @@ export class DevocionaisListarPage {
 
   devocionais: DevocionalDTO[] = new Array<DevocionalDTO>();
   devocionaisSearch: DevocionalDTO[] = new Array<DevocionalDTO>();
-  dadosMembro:Membro = new Membro();
+  dadosMembro:MembroInfo = new MembroInfo();
   isPermite = false;
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private _loadingCtrl: LoadingController,
     private _alertCtrl: AlertController,
     private _devocionalService: DevocionalService,
-    public storageComentaService:StorageService,
-    public storage: StorageService
+    public storageComentaService:StorageService
     ) {
 
   }
@@ -37,7 +36,7 @@ export class DevocionaisListarPage {
   }
 
   ionViewWillEnter() {
-    this.dadosMembro = this.storage.getMembro();
+    this.dadosMembro = this.storageComentaService.getMembro();
 
     this.obterLista();
     
@@ -45,7 +44,7 @@ export class DevocionaisListarPage {
   }
 
   get perfilLogado(){
-    return this.storage.temPerfilAdminLider();
+    return this.storageComentaService.temPerfilAdminLider();
   }
 
   private obterLista() {

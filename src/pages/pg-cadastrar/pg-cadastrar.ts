@@ -12,6 +12,8 @@ import { EstadoService } from '../../services/domain/estado.service';
 import { CidadeService } from '../../services/domain/cidade.service';
 import { PGService } from '../../services/domain/pg.service';
 import { PgNewDTO } from '../../models/pg-new.dto';
+import { StorageService } from '../../services/storage.service';
+import { MembroInfo } from '../../models/membro-info';
 
 @IonicPage()
 @Component({
@@ -34,7 +36,8 @@ export class PgCadastrarPage {
     private _alertCtrl: AlertController,
     public estadoService: EstadoService,
     public cidadeService: CidadeService,
-    private _pgService: PGService
+    private _pgService: PGService,
+    public storage:StorageService
     ) {
     this.criarFormulario();
     
@@ -112,8 +115,9 @@ export class PgCadastrarPage {
       this.pg.endereco.cep = this.formulario.controls.cep.value;
       this.pg.endereco.cidade.id = this.formulario.controls.cidadeId.value;
     }
-    
-    this.pg.idIgreja = this.formulario.controls.idIgreja.value;
+    let membro:MembroInfo = this.storage.getMembro();
+
+    this.pg.idIgreja = membro.igrejaId;
 
     this._pgService.salvar(this.pg).subscribe(
       resposta => {

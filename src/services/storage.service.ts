@@ -3,11 +3,18 @@ import { STORAGE_KEYS } from "../config/storage_keys.config";
 import { LocalUser } from "../models/local_user";
 import { Comentarios } from "../models/comentarios";
 import { Membro } from "../models/membro";
+import { MembroInfo } from "../models/membro-info";
+import { IgrejaInfoDTO } from "../models/igreja_info.dto";
+import { BrMaskerIonicServices3, BrMaskModel } from "brmasker-ionic-3";
 
 @Injectable()
 export class StorageService {
 
-    membro:Membro = new Membro();
+    membro:MembroInfo = new MembroInfo();
+
+    constructor(private brMasker: BrMaskerIonicServices3){
+    }
+
     getLocalUser() : LocalUser {
         let usr = localStorage.getItem(STORAGE_KEYS.localUser);
         if (usr == null) {
@@ -27,7 +34,7 @@ export class StorageService {
         }
     }
 
-    getMembro() : Membro {
+    getMembro() : MembroInfo {
         let usr = localStorage.getItem(STORAGE_KEYS.membro);
         if (usr == null) {
             return null;
@@ -37,11 +44,20 @@ export class StorageService {
         }
     }
 
-    setMembro(obj : Membro) {
+    setMembro(obj : MembroInfo) {
         if (obj == null) {
             localStorage.removeItem(STORAGE_KEYS.membro);
         }
         else {
+            let config: BrMaskModel = new BrMaskModel();
+            config.phone = true;
+            obj.telefone1 = this.brMasker.writeCreateValue(obj.telefone1, config);
+            
+            config = new BrMaskModel();
+            config.mask = '000.000.000-00';
+
+            obj.cpf = this.brMasker.writeCreateValue(obj.cpf, config);
+
             localStorage.setItem(STORAGE_KEYS.membro, JSON.stringify(obj));
         }
     }
@@ -102,5 +118,41 @@ export class StorageService {
         });
 
         return isPermite;
+    }
+
+    getIgreja(){
+        let igreja = localStorage.getItem(STORAGE_KEYS.igreja);
+
+        if (igreja != null) {
+            return JSON.parse(igreja);
+        }
+        else {
+            return null;
+        }
+    }
+
+    setIgreja(igreja:IgrejaInfoDTO){
+        if( igreja != null ){
+            let config: BrMaskModel = new BrMaskModel();
+            config.mask = '00000-000';
+            igreja.endereco.cep = this.brMasker.writeCreateValue( igreja.endereco.cep, config );
+            config.phone = true;
+            let telefones:string[] = new Array<string>();
+
+            igreja.telefones.forEach(phone => {
+            telefones.push(this.brMasker.writeCreateValue(phone, config));
+            });
+            igreja.telefones = telefones;
+
+            config = new BrMaskModel();
+
+            config.mask = '00.000.000/0000-00';
+
+            igreja.cnpj = this.brMasker.writeCreateValue(igreja.cnpj, config);
+
+            localStorage.setItem(STORAGE_KEYS.igreja, JSON.stringify(igreja));
+        }else{
+            localStorage.removeItem(STORAGE_KEYS.igreja);
+        }
     }
 }

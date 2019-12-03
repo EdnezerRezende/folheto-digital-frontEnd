@@ -3,5 +3,6 @@ export const STORAGE_KEYS = {
     membro: "membro",
     comentarios: "comentarios",
     referenciaLida: "referenciaLida",
+    igreja:"igreja"
 
 }

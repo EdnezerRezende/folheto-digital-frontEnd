@@ -1,15 +1,12 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, ToastController, MenuController, Events } from 'ionic-angular';
-import {finalize} from 'rxjs/operators';
 import { AuthService } from '../../services/auth.service';
 import { CredenciaisDTO } from '../../models/credenciais.dto';
 import { MembroService } from '../../services/domain/membro.service';
 import { StorageService } from '../../services/storage.service';
 import { LocalUser } from '../../models/local_user';
-import { Membro } from '../../models/membro';
-// import { AuthProvider } from '../../providers/auth/auth';
-// import { Usuario } from '../../modelos/usuario';
-// import { UsuariosServiceProvider } from '../../providers/usuarios-service/usuarios-service';
+import { MembroInfo } from '../../models/membro-info';
+import { IgrejaService } from '../../services/domain/igreja.service';
 
 @IonicPage()
 @Component({
@@ -23,16 +20,15 @@ export class LoginPage {
     senha: ""
   };
 
-  membro:Membro = new Membro();
+  membro:MembroInfo = new MembroInfo();
   
   constructor(public navCtrl: NavController, public navParams: NavParams, 
-    private  _loadingCtrl: LoadingController,
-    private _toastCtrl: ToastController,
     public menu: MenuController,
     public auth: AuthService,
     public membroService: MembroService,
     public storage: StorageService,
-    public events: Events
+    public events: Events,
+    public igrejaService:IgrejaService
     ) {
   }
 
@@ -67,6 +63,14 @@ export class LoginPage {
         this.membro = resposta;
         this.storage.setMembro(this.membro);
         this.createUser(this.membro);
+
+        this.igrejaService.obterIgreja(this.membro.igrejaId)
+        .subscribe(resposta =>{
+          this.storage.setIgreja(resposta);
+        }, error => {
+          console.log("Não foi possivel obter a igreja");
+        });
+
       }, error => {
         
       });

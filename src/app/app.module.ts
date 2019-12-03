@@ -23,6 +23,9 @@ import { IonicImageViewerModule } from 'ionic-img-viewer';
 import { AuthService } from '../services/auth.service';
 import { AuthInterceptorProvider } from '../interceptors/auth-interceptor';
 import { MembroService } from '../services/domain/membro.service';
+import { IgrejaService } from '../services/domain/igreja.service';
+import { BrMaskerModule } from 'brmasker-ionic-3';
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
 
 @NgModule({
   declarations: [
@@ -43,7 +46,8 @@ import { MembroService } from '../services/domain/membro.service';
       RichTextModule
     }),
     OrderModule,
-    IonicImageViewerModule
+    IonicImageViewerModule,
+    BrMaskerModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -66,7 +70,9 @@ import { MembroService } from '../services/domain/membro.service';
     StorageService,
     ImageUtilService,
     AuthService,
-    MembroService
+    MembroService,
+    IgrejaService,
+    EmailComposer
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

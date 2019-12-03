@@ -11,6 +11,8 @@ import { AgendaEventoDTO } from '../../models/agenda-evento.dto';
 import { AgendaEventoService } from '../../services/domain/agenda-evento.service';
 import { DominiosService } from '../../dominios/dominios.service';
 import { DiasSemanaEnum } from '../../enuns/dias-semana.enum';
+import { StorageService } from '../../services/storage.service';
+import { MembroInfo } from '../../models/membro-info';
 
 @IonicPage()
 @Component({
@@ -28,7 +30,8 @@ export class EventoAgendaCadastrarPage {
     private fb: FormBuilder,
     private _loadingCtrl: LoadingController,
     private _alertCtrl: AlertController,
-    private _agendaEventoService: AgendaEventoService
+    private _agendaEventoService: AgendaEventoService,
+    private _storage: StorageService
   ) {
     this.criarFormulario();
   }
@@ -63,18 +66,17 @@ export class EventoAgendaCadastrarPage {
   salvar() {
     let loading = this.obterLoading();
     loading.present();
-    console.log(this.formulario.controls.isEvento);
     if (this.agendaEvento.id == undefined) {
       this.agendaEvento.titulo = this.formulario.controls.titulo.value;
       this.agendaEvento.diaSemanaAtividade = this.formulario.controls.diaSemanaAtividade.value;
       this.agendaEvento.horaAtividade = this.formulario.controls.horaAtividade.value;
-      // this.agendaEvento.isEvento = this.formulario.controls.isEvento.value;
       this.agendaEvento.descricao = this.formulario.controls.descricao.value;
       this.agendaEvento.dataInicio = this.formulario.controls.dataInicio.value;
       this.agendaEvento.dataFim = this.formulario.controls.dataFim.value;
     }
 
-    this.agendaEvento.idIgreja = this.formulario.controls.idIgreja.value;
+    let membro: MembroInfo = this._storage.getMembro();
+    this.agendaEvento.idIgreja = membro.igrejaId;
 
     this._agendaEventoService.salvar(this.agendaEvento).subscribe(
       resposta => {
