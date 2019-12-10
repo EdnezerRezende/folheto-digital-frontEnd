@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { DevocionalDTO } from '../../models/devocional.dto';
 import { StorageService } from '../../services/storage.service';
 import { Comentarios } from '../../models/comentarios';
@@ -21,7 +21,6 @@ export class DevocionaisComentarPage {
       public navParams: NavParams, 
       public storageComentaService:StorageService,
       private fb: FormBuilder,
-      private _loadingCtrl: LoadingController,
       private _alertCtrl: AlertController
     ) {
       this.criarFormulario();

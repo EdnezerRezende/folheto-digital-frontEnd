@@ -1,8 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, App, MenuController, Nav, Events } from 'ionic-angular';
+import { Platform, MenuController, Nav, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { NativePageTransitionsOriginal, NativeTransitionOptions } from '@ionic-native/native-page-transitions';
 import { AuthService } from '../services/auth.service';
 import { StorageService } from '../services/storage.service';
 import { LocalUser } from '../models/local_user';
@@ -27,29 +26,28 @@ export class MyApp {
 
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,public menuCtrl: MenuController,
-    private _appCtrl: App, public auth: AuthService, public storage: StorageService, public events: Events
+    public auth: AuthService, public storage: StorageService, public events: Events
     ) {
+      
       events.subscribe('user:created', (user, time) => {
         console.log('Bem Vindo ', user.nome , ' as ', time);
         
       });
       
-    let options: NativeTransitionOptions = {
-      direction: 'up',
-      duration: 500,
-      slowdownfactor: 3,
-      slidePixels: 20,
-      iosdelay: 100,
-      androiddelay: 150,
-      fixedPixelsTop: 0,
-      fixedPixelsBottom: 60
-      };
+    // let options: NativeTransitionOptions = {
+    //   direction: 'up',
+    //   duration: 500,
+    //   slowdownfactor: 3,
+    //   slidePixels: 20,
+    //   iosdelay: 100,
+    //   androiddelay: 150,
+    //   fixedPixelsTop: 0,
+    //   fixedPixelsBottom: 60
+    //   };
   
     // this._nativePageTransitions.slide(options);
     
     platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
     });
@@ -132,13 +130,13 @@ export class MyApp {
   }
 
   irPagina(componente){
-    let options: NativeTransitionOptions={
-      direction: 'left',
-      duration: 400,
-      slowdownfactor: -1,
-      iosdelay: 50
+    // let options: NativeTransitionOptions={
+    //   direction: 'left',
+    //   duration: 400,
+    //   slowdownfactor: -1,
+    //   iosdelay: 50
 
-    };
+    // };
     // this._nativePageTransitions.slide(options);
     this.nav.push(componente);
   }

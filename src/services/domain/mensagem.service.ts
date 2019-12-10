@@ -4,7 +4,6 @@ import { API_CONFIG } from "../../config/api.config";
 import { MensagemDTO } from "../../models/mensagem.dto";
 import { Observable } from "rxjs/Rx";
 import { MensagemNewDTO } from "../../models/mensagem-new.dto";
-import { MensagemCadastrarPage } from "../../pages/mensagem-cadastrar/mensagem-cadastrar";
 
 @Injectable()
 export class MensagemService {

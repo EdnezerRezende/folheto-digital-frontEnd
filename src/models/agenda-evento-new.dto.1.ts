@@ -1,5 +1,3 @@
-import { EnderecoDTO } from "./endereco.dto";
-
 export class AgendaEventoNewDTO {
     id: number;
     titulo: string;

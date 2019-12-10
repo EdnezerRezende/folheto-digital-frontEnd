@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-an
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AlertController } from 'ionic-angular/components/alert/alert-controller';
 import { EnderecoDTO } from '../../models/endereco.dto';
-import { PgDTO } from '../../models/pg.dto';
 import { DiasSemanaEnum } from '../../enuns/dias-semana.enum';
 import { DominiosService } from '../../dominios/dominios.service';
 import { EstadoDTO } from '../../models/estado.dto';

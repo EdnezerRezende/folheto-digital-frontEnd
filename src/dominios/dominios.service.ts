@@ -17,7 +17,8 @@ export class DominiosService {
   }
 
   static getValueDominioKey(enumeracao, valor) {
-    for (let [key, value] of Object(enumeracao)) {
+    console.log(valor);
+    for (let [key] of Object(enumeracao)) {
       return key;
     }
   }

@@ -4,7 +4,6 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { StorageService } from '../../services/storage.service';
 import { MembroInfo } from '../../models/membro-info';
 import { IgrejaInfoDTO } from '../../models/igreja_info.dto';
-import { EmailComposerOptions } from '@ionic-native/email-composer';
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
 
 @IonicPage()

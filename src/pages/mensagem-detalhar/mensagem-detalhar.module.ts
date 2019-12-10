@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { IonicPageModule, IonicModule } from 'ionic-angular';
+import { IonicPageModule } from 'ionic-angular';
 import { MensagemDetalharPage } from './mensagem-detalhar';
 
 @NgModule({

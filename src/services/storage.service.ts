@@ -2,7 +2,6 @@ import { Injectable } from "@angular/core";
 import { STORAGE_KEYS } from "../config/storage_keys.config";
 import { LocalUser } from "../models/local_user";
 import { Comentarios } from "../models/comentarios";
-import { Membro } from "../models/membro";
 import { MembroInfo } from "../models/membro-info";
 import { IgrejaInfoDTO } from "../models/igreja_info.dto";
 import { BrMaskerIonicServices3, BrMaskModel } from "brmasker-ionic-3";
