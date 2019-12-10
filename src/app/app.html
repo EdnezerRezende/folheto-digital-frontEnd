@@ -1,51 +1,88 @@
 <ion-split-pane>
-    <ion-menu [content]="conteudo" id="cabecalho-menu" >
-        <ion-content>
-            
-            <ion-item id="cabecalho-menu" class="cabecalho-menu">
-                <div>
-                    <ion-avatar item-start>
-                        <img [src]="avatar">
-                    </ion-avatar>
-                </div>
-                <!-- <h2>{{ usuarioLogado.nome }}</h2> -->
-                <button menuClose ion-button round (click)="logoff() " icon-start>
-                    <ion-icon name="md-exit"></ion-icon> SAIR
-                </button>
-                <p style="color:white">{{ membroLogado?.email }}</p>
-            </ion-item>
+  <ion-menu [content]="conteudo" id="cabecalho-menu" *ngIf="usuarioLogado">
+    <ion-content>
+      <ion-item id="cabecalho-menu" class="cabecalho-menu">
+        <div>
+          <ion-avatar item-start>
+            <img [src]="avatar" />
+          </ion-avatar>
+        </div>
+        <!-- <h2>{{ usuarioLogado.nome }}</h2> -->
+        <button menuClose ion-button round (click)="logoff() " icon-start>
+          <ion-icon name="md-exit"></ion-icon> SAIR
+        </button>
+        <p style="color:white">{{ membroLogado?.email }}</p>
+      </ion-item>
 
-            <ion-list sliding="false" id="aberturaMenu"  >
-                <ion-item no-lines id="aberturaMenu" *ngFor="let pagina of obterMenu | orderBy:'titulo'; let i=index" text-wrap 
-                    [ngClass]="{active: isLevel1Shown('idx'+i)}" 
-                    (click)="toggleLevel1('idx'+i)" style="justify-content: space-around " >
-                    <h2 >
-                        <ion-icon [name]="pagina.icone" item-left ></ion-icon>
-                        {{ pagina.titulo }}
-                        <ion-icon style="justify-content: flex-end;
+      <ion-list sliding="false" id="aberturaMenu">
+        <ion-item
+          no-lines
+          id="aberturaMenu"
+          *ngFor="let pagina of obterMenu | orderBy:'titulo'; let i=index"
+          text-wrap
+          [ngClass]="{active: isLevel1Shown('idx'+i)}"
+          (click)="toggleLevel1('idx'+i)"
+          style="justify-content: space-around "
+        >
+          <h2>
+            <ion-icon [name]="pagina.icone" item-left></ion-icon>
+            {{ pagina.titulo }}
+            <ion-icon
+              style="justify-content: flex-end;
                         display: flex;
-                        margin-top: -28px;" color="success" item-right 
-                        [name]="isLevel1Shown('idx'+i) ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
-                    </h2>
-                    <ion-list showWhen="android,windows" style="margin-bottom: -26px;" *ngIf="isLevel1Shown('idx'+i)" >
-                        <ion-item no-lines menuClose *ngFor="let sub of pagina.subTitulo"   text-wrap (click)="irPagina(sub.componente)">
-                            <h3 style="margin-top: -12px;" >
-                                <ion-icon color="sucess" [name]="sub.iconeSub" item-left ></ion-icon>
-                                {{sub.submenu}}
-                            </h3>
-                        </ion-item>
-                    </ion-list>
-                    <ion-list showWhen="ios" style="margin-bottom: -15px;" *ngIf="isLevel1Shown('idx'+i)" >
-                        <ion-item no-lines menuClose *ngFor="let sub of pagina.subTitulo" text-wrap (click)="irPagina(sub.componente)">
-                            <h3 style="margin-top: -10px;" >
-                                <ion-icon color="sucess" [name]="sub.iconeSub" item-left ></ion-icon>
-                                {{sub.submenu}}
-                            </h3>
-                        </ion-item>
-                    </ion-list>
-                </ion-item>
-            </ion-list>
-        </ion-content>
-    </ion-menu>
-    <ion-nav [root]="rootPage" main #conteudo swipeBackEnabled="false"></ion-nav>
+                        margin-top: -28px;"
+              color="success"
+              item-right
+              [name]="isLevel1Shown('idx'+i) ? 'arrow-dropdown' : 'arrow-dropright'"
+            ></ion-icon>
+          </h2>
+          <ion-list
+            showWhen="android,windows"
+            style="margin-bottom: -26px;"
+            *ngIf="isLevel1Shown('idx'+i)"
+          >
+            <ion-item
+              no-lines
+              menuClose
+              *ngFor="let sub of pagina.subTitulo"
+              text-wrap
+              (click)="irPagina(sub.componente)"
+            >
+              <h3 style="margin-top: -12px;">
+                <ion-icon
+                  color="sucess"
+                  [name]="sub.iconeSub"
+                  item-left
+                ></ion-icon>
+                {{sub.submenu}}
+              </h3>
+            </ion-item>
+          </ion-list>
+          <ion-list
+            showWhen="ios"
+            style="margin-bottom: -15px;"
+            *ngIf="isLevel1Shown('idx'+i)"
+          >
+            <ion-item
+              no-lines
+              menuClose
+              *ngFor="let sub of pagina.subTitulo"
+              text-wrap
+              (click)="irPagina(sub.componente)"
+            >
+              <h3 style="margin-top: -10px;">
+                <ion-icon
+                  color="sucess"
+                  [name]="sub.iconeSub"
+                  item-left
+                ></ion-icon>
+                {{sub.submenu}}
+              </h3>
+            </ion-item>
+          </ion-list>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-nav [root]="rootPage" main #conteudo swipeBackEnabled="false"></ion-nav>
 </ion-split-pane>
