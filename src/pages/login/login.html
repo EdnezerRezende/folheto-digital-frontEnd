@@ -12,8 +12,8 @@
         <ion-item>
           <ion-label floating>E-mail</ion-label>
           <ion-input type="text" [(ngModel)]="creds.email" name="email">
-        </ion-input>
-        <!-- [class.invalid]="email.errors && email.dirty"> -->
+          </ion-input>
+          <!-- [class.invalid]="email.errors && email.dirty"> -->
         </ion-item>
         <!-- <ion-item class="error-message" *ngIf="email.errors?.required && email.dirty">
           E-mail é requerido.
@@ -21,16 +21,24 @@
 
         <ion-item>
           <ion-label floating>Senha</ion-label>
-          <ion-input  [(ngModel)]="creds.senha" name="senha" type="password">
+          <ion-input [(ngModel)]="creds.senha" name="senha" type="password">
           </ion-input>
-        <!-- [class.invalid]="senha.errors && senha.dirty"> -->
+          <!-- [class.invalid]="senha.errors && senha.dirty"> -->
         </ion-item>
         <!-- <ion-item class="error-message" *ngIf="senha.errors?.required && senha.dirty">
           A senha é requerida.
         </ion-item> -->
 
         <div padding>
-          <button ion-button color="primary" block type="submit" [disabled]="!form.valid">Login</button>
+          <button
+            ion-button
+            color="primary"
+            block
+            type="submit"
+            [disabled]="!form.valid"
+          >
+            Login
+          </button>
         </div>
 
         <!-- <div padding>
