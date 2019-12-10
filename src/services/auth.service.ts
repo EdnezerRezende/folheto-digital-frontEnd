@@ -50,5 +50,7 @@ export class AuthService {
 
     logout() {
         this.storage.setLocalUser(null);
+        this.storage.setIgreja(null);
+        this.storage.setMembro(null);
     }
 }

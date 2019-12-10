@@ -1,6 +1,7 @@
 <ion-split-pane>
-  <ion-menu [content]="conteudo" id="cabecalho-menu" *ngIf="usuarioLogado">
-    <ion-content>
+  <ion-menu [content]="conteudo" id="cabecalho-menu"  >
+      <!-- *ngIf="membroLogado" -->
+    <ion-content *ngIf="membroLogado">
       <ion-item id="cabecalho-menu" class="cabecalho-menu">
         <div>
           <ion-avatar item-start>

@@ -3,8 +3,6 @@ import {
   IonicPage,
   NavController,
   NavParams,
-  LoadingController,
-  ToastController,
   MenuController,
   Events
 } from "ionic-angular";
@@ -38,7 +36,9 @@ export class LoginPage {
     public storage: StorageService,
     public events: Events,
     public igrejaService: IgrejaService
-  ) {}
+  ) {
+    this.creds = new CredenciaisDTO();
+  }
 
   createUser(user) {
     console.log("User created! aqui");

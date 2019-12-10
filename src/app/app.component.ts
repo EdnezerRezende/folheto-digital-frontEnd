@@ -110,7 +110,7 @@ export class MyApp {
   }
 
   get membroLogado() {
-    this.dadosMembro = this.storage.getMembro();
+    // this.dadosMembro = this.storage.getMembro();
     return this.storage.getMembro();
   }
 
@@ -124,12 +124,11 @@ export class MyApp {
     return this.paginas;
   }
   logoff(){
-    this.auth.logout();
-    this.storage.setMembro(null);
-    this.storage.setLocalUser(null);
     this.mostraOpcaoCadastro = false;
     this.mostraOpcaoListar = true;
+    this.auth.logout();
     this.nav.setRoot('LoginPage');
+    
   }
 
   irPagina(componente){
