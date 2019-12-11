@@ -26,6 +26,7 @@ import { MembroService } from '../services/domain/membro.service';
 import { IgrejaService } from '../services/domain/igreja.service';
 import { BrMaskerModule } from 'brmasker-ionic-3';
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
+import { OfertaServicoService } from '../services/domain/oferta-servico.service';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { EmailComposer } from '@ionic-native/email-composer/ngx';
     AuthService,
     MembroService,
     IgrejaService,
-    EmailComposer
+    EmailComposer,
+    OfertaServicoService
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
