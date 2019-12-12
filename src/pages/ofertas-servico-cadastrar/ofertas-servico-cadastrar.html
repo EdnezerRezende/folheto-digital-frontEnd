@@ -27,6 +27,7 @@
           Por favor, informe o E-mail do Serviço.
         </h6>
 
+       
         <ion-item >
           <ion-label stacked >Instagram: </ion-label>
           <ion-input [(ngModel)]="servico.instagram" formControlName="instagram" name="instagram"  type="text"></ion-input>
@@ -42,6 +43,23 @@
           <ion-input [(ngModel)]="servico.endereco" formControlName="endereco" name="endereco"  type="text"></ion-input>
         </ion-item>
 
+        <ion-item >
+          <ion-label stacked >Telefone: </ion-label>
+          <ion-input [(ngModel)]="telefone" [brmasker]="{phone: true}" formControlName="telefone" name="telefone"  type="tel"></ion-input>
+          <button ion-button clear color="blue" type="button" item-right (click)="insereTel(tel)" 
+            [disabled]="telefone == '' || telefone == undefined"
+            style="margin-top: 30px; font-size: 2.2rem !important;">
+              <ion-icon name="md-add-circle" ></ion-icon> 
+          </button>
+          
+        </ion-item>
+        <ion-item-divider color="light" style="text-align:center;">Lista de Telefones</ion-item-divider>
+        <ion-list>
+          <ion-item *ngFor="let tel of servico.telefones" style="text-align:center;">
+            {{ tel }} <ion-icon name="md-trash" (click)="deletaTel(tel)"></ion-icon> 
+          </ion-item>
+        </ion-list>
+        
       </form>
     
       <ion-fab top right edge >

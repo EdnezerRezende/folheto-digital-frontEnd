@@ -14,15 +14,18 @@ export class OfertasServicoDetalharPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private brMasker: BrMaskerIonicServices3) {
     if (this.navParams.get('item')){
       this.servico = this.navParams.get('item');
-      let config: BrMaskModel = new BrMaskModel();
-      config.phone = true;
       let telefones:string[] = new Array<string>();
-
       this.servico.telefones.forEach(telefone => {
-        telefones.push(this.brMasker.writeCreateValue(telefone, config));
+        telefones.push(this.mascaraTelefone(telefone));
       });
       this.servico.telefones = telefones;
     }
+  }
+
+  private mascaraTelefone(tel:string):string {
+    let config: BrMaskModel = new BrMaskModel();
+    config.phone = true;
+    return this.brMasker.writeCreateValue(tel, config);
   }
 
   ionViewDidLoad() {

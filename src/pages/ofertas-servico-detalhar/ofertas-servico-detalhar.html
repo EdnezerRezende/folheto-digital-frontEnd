@@ -14,11 +14,14 @@
       <span [innerHTML]=" servico.descricao "></span>
     </ion-card-content>
     <ion-list>
-      <h6 *ngIf="servico.telefones" ><ion-icon name="md-call" style="color: #55acee"></ion-icon>  {{ servico.telefones }}</h6>
+
       <h6 *ngIf="servico.emailServico"><ion-icon name="md-mail-open"></ion-icon> {{ servico.emailServico }}</h6>
       <h6 *ngIf="servico.instagram"><ion-icon name="logo-instagram"></ion-icon> {{ servico.instagram }}</h6>
       <h6 *ngIf="servico.facebook"><ion-icon name="logo-facebook"></ion-icon> {{ servico.facebook }}</h6>
-      <ion-item-divider *ngIf="servico.endereco"><label>Endereço: </label> {{ servico.endereco }}</ion-item-divider>
+      <h6 *ngIf="servico.endereco" style="text-align:center;" ><label> Endereço: </label> {{ servico.endereco }}</h6>
+      
+      <ion-item-divider *ngIf="servico.telefones" color="light" style="text-align:center;">Lista de Telefones</ion-item-divider>
+      <h6 *ngIf="servico.telefones" ><p *ngFor="let telefone of servico.telefones"> <ion-icon name="md-call" style="color: #55acee"></ion-icon>  {{ telefone }}</p></h6>
     </ion-list>
   </ion-card>
 </ion-content>
