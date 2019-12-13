@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="br.com.igrejacristo.folhetim" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Sistema Informativo da igreja de Cristo</name>
+    <name>PIC</name>
     <description>Aplicação voltada para acompanhamento das atividades da Igreja de Cristo</description>
     <author email="godoirezende@gmail.com" href="http://ionicframework.com/">Ednezer de Godoi Rezende</author>
     <content src="index.html" />
