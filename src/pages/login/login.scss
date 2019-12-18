@@ -26,7 +26,8 @@ page-login {
   }
   .splash-logo {
     margin: auto auto 10px;
-    background: repeat transparent center;
+    background: url("../assets/img/icone_login_new.jpg") repeat transparent
+      center;
     // background-image: url("../assets/img/icone_login_new.jpg");
     background-size: contain;
     max-width: 128px;
@@ -35,7 +36,7 @@ page-login {
     height: auto;
     border-radius: 50%;
   }
-  img{
+  img {
     display: inline-block;
   }
   .splash-intro {
