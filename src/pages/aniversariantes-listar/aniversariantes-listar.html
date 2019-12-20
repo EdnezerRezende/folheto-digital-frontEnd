@@ -1,0 +1,12 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Aniversariantes</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item detail="true" *ngFor="let aniversariante of aniversariantes" >
+    <h2><strong>{{ aniversariante.dataNascimento | date:'dd/MM' }} - {{ aniversariante.nome }}</strong></h2>
+    <h4>{{ aniversariante.email }}</h4>
+  </ion-item>
+</ion-content>

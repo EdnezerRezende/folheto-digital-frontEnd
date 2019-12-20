@@ -90,7 +90,12 @@ export class MyApp {
                         {submenu:'Cadastrar', componente:'MissaoCadastrarPage', iconeSub: 'md-paper', mostra: this.mostraOpcaoCadastro },
                         {submenu:'Listar', componente:'MissaoListarPage', iconeSub:'md-list-box', mostra: this.mostraOpcaoListar }
                       ], 
-          icone: 'md-globe', mostra: true}
+          icone: 'md-globe', mostra: true},
+      { titulo: "Aniversariantes", 
+          subTitulo: [
+                  {submenu:'Listar', componente:'AniversariantesListarPage', iconeSub:'md-list-box', mostra: this.mostraOpcaoListar }
+                ], 
+        icone: 'md-color-wand', mostra: true}
       ];
   }
 
@@ -126,6 +131,11 @@ export class MyApp {
                     {submenu:'Listar', componente:'MissaoListarPage', iconeSub:'md-list-box', mostra: this.mostraOpcaoListar }
                   ], 
           icone: 'md-filing', mostra: true},
+      { titulo: "Aniversariantes", 
+          subTitulo: [
+                  {submenu:'Listar', componente:'AniversariantesListarPage', iconeSub:'md-list-box', mostra: this.mostraOpcaoListar }
+                ], 
+        icone: 'md-color-wand', mostra: true}
       ];
   }
 

@@ -54,4 +54,7 @@ export class MembroService {
         ); 
     }
 
+    buscaTodosAnviversariantes(idIgreja:number): Observable<Membro[]>{
+        return this.http.get<Membro[]>(`${API_CONFIG.baseUrl}/membros/aniversariantes/${idIgreja}`);
+    }
 }
