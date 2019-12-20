@@ -1,28 +1,23 @@
-import { Component } from "@angular/core";
-import {
-  IonicPage,
-  NavController,
-  NavParams,
-  AlertController,
-  LoadingController
-} from "ionic-angular";
-import { MensagemService } from "../../services/domain/mensagem.service";
-import { MensagemDTO } from "../../models/mensagem.dto";
-import { StorageService } from "../../services/storage.service";
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
+import { MissaoDTO } from '../../models/missao.dto';
+import { MissaoService } from '../../services/domain/missao.service';
+import { StorageService } from '../../services/storage.service';
 
 @IonicPage()
 @Component({
-  selector: "page-mensagem-listar",
-  templateUrl: "mensagem-listar.html"
+  selector: 'page-missao-listar',
+  templateUrl: 'missao-listar.html',
 })
-export class MensagemListarPage {
-  mensagens: MensagemDTO[] = new Array<MensagemDTO>();
-  mensagensSearch: MensagemDTO[] = new Array<MensagemDTO>();
+export class MissaoListarPage {
+
+  missoes: MissaoDTO[] = new Array<MissaoDTO>();
+  missoesSearch: MissaoDTO[] = new Array<MissaoDTO>();
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public mensagemService: MensagemService,
+    public missaoService: MissaoService,
     private _loadingCtrl: LoadingController,
     private _alertCtrl: AlertController,
     public storage: StorageService
@@ -45,11 +40,11 @@ export class MensagemListarPage {
   private obterLista() {
     let loading = this.obterLoading();
     loading.present();
-    this.mensagemService.buscaTodos().subscribe(
+    this.missaoService.buscaTodos().subscribe(
       resposta => {
         loading.dismiss();
-        this.mensagens = resposta;
-        this.mensagensSearch = this.mensagens;
+        this.missoes = resposta;
+        this.missoesSearch = this.missoes;
       },
       error => {
         loading.dismiss();
@@ -58,7 +53,7 @@ export class MensagemListarPage {
           .create({
             title: "Falha",
             subTitle:
-              "Não foi possível obter as Mensagens, tente novamente mais tarde!",
+              "Não foi possível obter as missoes, tente novamente mais tarde!",
             buttons: [
               {
                 text: "Ok"
@@ -78,15 +73,15 @@ export class MensagemListarPage {
     }, 1000);
   }
 
-  copiaListaListaMensagens() {
-    return this.mensagens;
+  copiaListaListaMissoes() {
+    return this.missoes;
   }
   getItems(ev: any) {
-    this.mensagensSearch = this.copiaListaListaMensagens();
+    this.missoesSearch = this.copiaListaListaMissoes();
     const val = ev.target.value;
 
     if (val && val.trim() != "") {
-      this.mensagensSearch = this.mensagensSearch.filter(item => {
+      this.missoesSearch = this.missoesSearch.filter(item => {
         return (
           item.autor.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
           item.mensagem.toLowerCase().indexOf(val.toLowerCase()) > -1
@@ -95,21 +90,20 @@ export class MensagemListarPage {
     }
   }
 
-  detalhar(mensagem: MensagemDTO) {
-    console.log(mensagem);
-    this.navCtrl.push("MensagemDetalharPage", { mensagem: mensagem });
+  detalhar(missao: MissaoDTO) {
+    this.navCtrl.push("MissaoDetalharPage", { missao: missao });
   }
 
-  deletar(mensagem: MensagemDTO) {
+  deletar(missao: MissaoDTO) {
     this._alertCtrl
       .create({
         title: "Deletar",
-        subTitle: "A mensagem será deletada, deseja continuar?",
+        subTitle: "A Missão será deletada, deseja continuar?",
         buttons: [
           {
             text: "Sim",
             handler: () => {
-              this.deletarMensagem(mensagem);
+              this.deletarMissao(missao);
             }
           },
           { text: "Não" }
@@ -118,19 +112,19 @@ export class MensagemListarPage {
       .present();
   }
 
-  deletarMensagem(mensagem: MensagemDTO) {
+  deletarMissao(missao: MissaoDTO) {
     let loading = this.obterLoading();
     loading.present();
 
-    this.mensagemService.deletarMensagem(mensagem.id).subscribe(
+    this.missaoService.deletarMissao(missao.id).subscribe(
       () => {
         loading.dismiss();
-        let listaMensagem = this.mensagens.slice(0);
-        let index = listaMensagem.indexOf(mensagem);
+        let listaMissao = this.missoes.slice(0);
+        let index = listaMissao.indexOf(missao);
         if (index != -1) {
-          listaMensagem.splice(index, 1);
-          this.mensagens = listaMensagem;
-          this.mensagensSearch = this.copiaListaListaMensagens();
+          listaMissao.splice(index, 1);
+          this.missoes = listaMissao;
+          this.missoesSearch = this.copiaListaListaMissoes();
         }
       },
       error => {
@@ -140,7 +134,7 @@ export class MensagemListarPage {
           .create({
             title: "Falha",
             subTitle:
-              "Não foi possível apagar esta Mensagem, tente novamente mais tarde!",
+              "Não foi possível apagar esta Missão, tente novamente mais tarde!",
             buttons: [
               {
                 text: "Ok"
@@ -152,7 +146,8 @@ export class MensagemListarPage {
     );
   }
 
-  alterarMensagem(mensagem: MensagemDTO) {
-    this.navCtrl.push("MensagemCadastrarPage", { mensagem: mensagem });
+  alterarMissao(missao: MissaoDTO) {
+    this.navCtrl.push("MissaoCadastrarPage", { missao: missao });
   }
+
 }
