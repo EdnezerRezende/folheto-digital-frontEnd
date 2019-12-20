@@ -89,6 +89,7 @@ export class MensagemListarPage {
       this.mensagensSearch = this.mensagensSearch.filter(item => {
         return (
           item.autor.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
+          item.titulo.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
           item.mensagem.toLowerCase().indexOf(val.toLowerCase()) > -1
         );
       });

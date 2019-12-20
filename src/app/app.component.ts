@@ -84,7 +84,13 @@ export class MyApp {
                     {submenu:'Cadastrar', componente:'OfertasServicoCadastrarPage', iconeSub: 'md-paper', mostraCad: this.mostraOpcaoCadastro },
                     {submenu:'Listar', componente:'OfertasServicoListarPage', iconeSub:'md-list-box', mostra: this.mostraOpcaoListar}
                   ], 
-        icone: 'md-bookmarks', mostra: true}
+        icone: 'md-bookmarks', mostra: true},
+      { titulo: "Missões", 
+            subTitulo: [
+                        {submenu:'Cadastrar', componente:'MissaoCadastrarPage', iconeSub: 'md-paper', mostra: this.mostraOpcaoCadastro },
+                        {submenu:'Listar', componente:'MissaoListarPage', iconeSub:'md-list-box', mostra: this.mostraOpcaoListar }
+                      ], 
+          icone: 'md-globe', mostra: true}
       ];
   }
 
@@ -114,7 +120,12 @@ export class MyApp {
         subTitulo: [
                     {submenu:'Listar', componente:'OfertasServicoListarPage', iconeSub:'md-list-box', mostra: this.mostraOpcaoListar}
                   ], 
-        icone: 'md-bookmarks', mostra: true}
+        icone: 'md-bookmarks', mostra: true},
+      { titulo: "Missões", 
+            subTitulo: [
+                    {submenu:'Listar', componente:'MissaoListarPage', iconeSub:'md-list-box', mostra: this.mostraOpcaoListar }
+                  ], 
+          icone: 'md-filing', mostra: true},
       ];
   }
 
