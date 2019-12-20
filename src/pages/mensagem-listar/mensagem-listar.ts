@@ -8,8 +8,6 @@ import {
 } from "ionic-angular";
 import { MensagemService } from "../../services/domain/mensagem.service";
 import { MensagemDTO } from "../../models/mensagem.dto";
-import { MensagemDetalharPage } from "../mensagem-detalhar/mensagem-detalhar";
-import { MensagemCadastrarPage } from "../mensagem-cadastrar/mensagem-cadastrar";
 import { StorageService } from "../../services/storage.service";
 
 @IonicPage()

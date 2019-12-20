@@ -26,18 +26,12 @@ page-login {
   }
   .splash-logo {
     margin: auto auto 10px;
-    background: url("../assets/img/icone_login_new.jpg") repeat transparent
-      center;
-    // background-image: url("../assets/img/icone_login_new.jpg");
-    background-size: contain;
-    max-width: 128px;
-    max-height: 128px;
-    width: auto;
-    height: auto;
+    background: url("../assets/img/icone_login_new-old.jpg") no-repeat
+      transparent;
+    background-size: 100%;
+    width: 128px;
+    height: 128px;
     border-radius: 50%;
-  }
-  img {
-    display: inline-block;
   }
   .splash-intro {
     font-size: 18px;

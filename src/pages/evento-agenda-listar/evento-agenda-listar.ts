@@ -8,8 +8,6 @@ import {
 import { AgendaEventoDTO } from "../../models/agenda-evento.dto";
 import { AlertController } from "ionic-angular/components/alert/alert-controller";
 import { AgendaEventoService } from "../../services/domain/agenda-evento.service";
-import { EventoAgendaCadastrarPage } from "../evento-agenda-cadastrar/evento-agenda-cadastrar";
-import { EventoAgendaDetalharPage } from "../evento-agenda-detalhar/evento-agenda-detalhar";
 import { StorageService } from "../../services/storage.service";
 
 @IonicPage()

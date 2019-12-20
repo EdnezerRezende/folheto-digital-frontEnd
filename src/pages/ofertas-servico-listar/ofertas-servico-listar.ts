@@ -8,8 +8,6 @@ import {
 } from "ionic-angular";
 import { OfertaServicoDTO } from "../../models/ofertaServico.dto";
 import { StorageService } from "../../services/storage.service";
-import { OfertasServicoCadastrarPage } from "../ofertas-servico-cadastrar/ofertas-servico-cadastrar";
-import { OfertasServicoDetalharPage } from "../ofertas-servico-detalhar/ofertas-servico-detalhar";
 import { OfertaServicoService } from "../../services/domain/oferta-servico.service";
 
 @IonicPage()

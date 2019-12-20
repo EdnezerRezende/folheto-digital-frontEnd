@@ -8,7 +8,6 @@ import {
 } from "ionic-angular";
 import { PgDTO } from "../../models/pg.dto";
 import { PGService } from "../../services/domain/pg.service";
-import { PgCadastrarPage } from "../pg-cadastrar/pg-cadastrar";
 import { API_CONFIG } from "../../config/api.config";
 import { DomSanitizer } from "@angular/platform-browser";
 import { ImageViewerController } from "ionic-img-viewer";

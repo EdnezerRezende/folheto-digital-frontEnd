@@ -8,8 +8,6 @@ import {
 } from "ionic-angular";
 import { DevocionalDTO } from "../../models/devocional.dto";
 import { DevocionalService } from "../../services/domain/devocional.service";
-import { DevocionaisCadastrarPage } from "../devocionais-cadastrar/devocionais-cadastrar";
-import { DevocionaisComentarPage } from "../devocionais-comentar/devocionais-comentar";
 import { StorageService } from "../../services/storage.service";
 import { MembroInfo } from "../../models/membro-info";
 
