@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams, AlertController, LoadingController
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MensagemNewDTO } from '../../models/mensagem-new.dto';
 import { MensagemService } from '../../services/domain/mensagem.service';
+import { MembroInfo } from '../../models/membro-info';
+import { StorageService } from '../../services/storage.service';
 
 @IonicPage()
 @Component({
@@ -17,7 +19,8 @@ export class MensagemCadastrarPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private fb: FormBuilder, 
     public mensagemService: MensagemService,
     private _loadingCtrl: LoadingController,
-    private _alertCtrl: AlertController
+    private _alertCtrl: AlertController,
+    private _localStorage: StorageService
     ) {
     this.criarFormulario();
 
@@ -47,6 +50,9 @@ export class MensagemCadastrarPage {
 
   salvar(texto){
     let loading = this.obterLoading();
+    let membro: MembroInfo = this._localStorage.getMembro();
+    this.mensagem.igrejaId = membro.igrejaId;
+    
     loading.present();
     if ( this.mensagem.id == undefined ){
       this.mensagem.autor = this.formulario.controls.autor.value;

@@ -3,4 +3,5 @@ export class MensagemNewDTO {
     mensagem: string = '';
     autor: string;
     titulo:string;
+    igrejaId:number;
 }
