@@ -90,4 +90,8 @@ export class LoginPage {
       error => {}
     );
   }
+
+  signup() {
+    this.navCtrl.push("SignupPage");
+  }
 }
