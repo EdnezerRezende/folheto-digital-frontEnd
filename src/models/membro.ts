@@ -5,9 +5,9 @@ export class Membro {
   nome: string;
   dataNascimento: string;
   email: string;
-  telefones: string;
+  telefones: string[];
   senha: string;
-  enderecos: EnderecoDTO[];
+  enderecos: EnderecoDTO[] = new Array<EnderecoDTO>();
   cpf: string;
   dataCadastro: Date;
   bloqueado: boolean;

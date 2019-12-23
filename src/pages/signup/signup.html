@@ -47,6 +47,7 @@
         style="display: none;"
       ></ion-input>
       <ion-input
+        [brmasker]="{person: true}"
         [(ngModel)]="membro.cpf"
         formControlName="cpf"
         type="text"
@@ -118,8 +119,8 @@
       <ion-input [(ngModel)]="membro.bairro" formControlName="bairro" type="text"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label stacked>CEP*</ion-label>
-      <ion-input [(ngModel)]="membro.cep" formControlName="cep" type="text"></ion-input>
+      <ion-label stacked>CEP *</ion-label>
+      <ion-input [(ngModel)]="membro.cep" [brmasker]="{mask:'00.000-000', len:10}" formControlName="cep" type="text"></ion-input>
     </ion-item>
     <p
       class="danger"
@@ -130,7 +131,7 @@
     </p>
     <ion-item>
       <ion-label stacked>Telefone </ion-label>
-      <ion-input [(ngModel)]="membro.telefones" formControlName="telefone" type="text"></ion-input>
+      <ion-input [(ngModel)]="membro.telefones" [brmasker]="{phone: true}" formControlName="telefone" type="text"></ion-input>
     </ion-item>
     <p
       class="danger"
@@ -141,7 +142,7 @@
     </p>
     <ion-item>
       <ion-label stacked>Celular</ion-label>
-      <ion-input  formControlName="celular" type="text"></ion-input>
+      <ion-input  formControlName="celular" [brmasker]="{phone: true}" type="text"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>Igreja *</ion-label>

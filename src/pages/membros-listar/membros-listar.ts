@@ -13,6 +13,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { StorageService } from "../../services/storage.service";
 import { IgrejaInfoDTO } from "../../models/igreja_info.dto";
 import { API_CONFIG } from "../../config/api.config";
+import { BrMaskModel, BrMaskerIonicServices3 } from "brmasker-ionic-3";
 
 @IonicPage()
 @Component({
@@ -35,7 +36,8 @@ export class MembrosListarPage {
     private _membroService: MembroService,
     public sanitizer: DomSanitizer,
     imageViewerCtrl: ImageViewerController,
-    public storage: StorageService
+    public storage: StorageService,
+    private brMasker: BrMaskerIonicServices3
   ) {
     this._imageViewerCtrl = imageViewerCtrl;
     this.profileImage = "assets/imgs/avatar-blank.png";
@@ -142,7 +144,6 @@ export class MembrosListarPage {
         return (
           item.nome.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
           item.email.toLowerCase().indexOf(val.toLowerCase()) > -1
-          // item.dataNascimento.toLowerCase().indexOf(val.toLowerCase()) > -1
         );
       });
     }
@@ -208,7 +209,7 @@ export class MembrosListarPage {
   }
 
   alterar(item: Membro) {
-    this.navCtrl.push("SignupPage", { item: item });
+    this.navCtrl.push("MembroAlterarPage", { item: item });
   }
 
   presentImage(myImage) {

@@ -17,6 +17,7 @@ import { MembroNewDTO } from "../../models/membro-new.dto";
 import { IgrejaService } from "../../services/domain/igreja.service";
 import { IgrejaDTO } from "../../models/igreja.dto";
 import { Membro } from "../../models/membro";
+import { BrMaskerIonicServices3 } from "brmasker-ionic-3";
 
 @IonicPage()
 @Component({
@@ -38,48 +39,16 @@ export class SignupPage {
     public cidadeService: CidadeService,
     public estadoService: EstadoService,
     public membroService: MembroService,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    private brMasker: BrMaskerIonicServices3
   ) {
     this.criarFormulario();
-    if (this.navParams.get("item")) {
-      this.membro = this.navParams.get("item");
-      this.membroService.findById(this.membro.id + "").subscribe(
-        response => {
-          let membro: Membro = response;
-          this.membro.cpf = membro.cpf;
-          this.membro.dataNascimento = membro.dataNascimento;
-          this.membro.email = membro.email;
-          this.membro.id = membro.id;
-          this.membro.nome = membro.nome;
-          this.membro.perfis = membro.perfis;
-          this.membro.senha = membro.senha;
-          this.membro.telefones = membro.telefones;
-          this.membro.logradouro = membro.enderecos[0].logradouro;
-          this.membro.numero = membro.enderecos[0].numero;
-          this.membro.complemento = membro.enderecos[0].complemento;
-          this.membro.bairro = membro.enderecos[0].bairro;
-          this.membro.cep = membro.enderecos[0].cep;
-          this.membro.cidadeId = Number(membro.enderecos[0].cidade.id);
-        },
-        error => {
-          let alert = this.alertCtrl.create({
-            title: "ERRO!",
-            message:
-              "Não foi possível obter o membro, tente novamente mais tarde!",
-            enableBackdropDismiss: false,
-            buttons: [
-              {
-                text: "Ok",
-                handler: () => {
-                  this.navCtrl.pop();
-                }
-              }
-            ]
-          });
-          alert.present();
-        }
-      );
-    }
+    
+  }
+
+  private retiraMascaraTelefone(tel:string):string {
+    tel = tel.replace('(','').replace(')', '').replace('-','').replace(' ', '');
+    return tel;
   }
 
   private criarFormulario() {
@@ -169,6 +138,9 @@ export class SignupPage {
   }
 
   signupUser() {
+    this.membro.telefones = this.retiraMascaraTelefone(this.membro.telefones);
+    this.formGroup.controls.celular.setValue(this.retiraMascaraTelefone(this.formGroup.controls.celular.value));
+
     this.membroService.insert(this.formGroup.value).subscribe(
       response => {
         this.showInsertOk();
