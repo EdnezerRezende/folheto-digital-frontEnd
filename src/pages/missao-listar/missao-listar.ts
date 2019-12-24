@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController, ItemSliding } from 'ionic-angular';
 import { MissaoDTO } from '../../models/missao.dto';
 import { MissaoService } from '../../services/domain/missao.service';
 import { StorageService } from '../../services/storage.service';
@@ -91,11 +91,12 @@ export class MissaoListarPage {
     }
   }
 
-  detalhar(missao: MissaoDTO) {
+  detalhar(missao: MissaoDTO, slidingItem: ItemSliding) {
     this.navCtrl.push("MissaoDetalharPage", { missao: missao });
+    slidingItem.close();
   }
 
-  deletar(missao: MissaoDTO) {
+  deletar(missao: MissaoDTO, slidingItem: ItemSliding) {
     this._alertCtrl
       .create({
         title: "Deletar",
@@ -111,6 +112,7 @@ export class MissaoListarPage {
         ]
       })
       .present();
+    slidingItem.close();
   }
 
   deletarMissao(missao: MissaoDTO) {
@@ -147,8 +149,9 @@ export class MissaoListarPage {
     );
   }
 
-  alterarMissao(missao: MissaoDTO) {
+  alterarMissao(missao: MissaoDTO, slidingItem: ItemSliding) {
     this.navCtrl.push("MissaoCadastrarPage", { missao: missao });
+    slidingItem.close();
   }
 
 }

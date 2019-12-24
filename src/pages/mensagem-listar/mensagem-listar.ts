@@ -4,7 +4,8 @@ import {
   NavController,
   NavParams,
   AlertController,
-  LoadingController
+  LoadingController,
+  ItemSliding
 } from "ionic-angular";
 import { MensagemService } from "../../services/domain/mensagem.service";
 import { MensagemDTO } from "../../models/mensagem.dto";
@@ -101,7 +102,7 @@ export class MensagemListarPage {
     this.navCtrl.push("MensagemDetalharPage", { mensagem: mensagem });
   }
 
-  deletar(mensagem: MensagemDTO) {
+  deletar(mensagem: MensagemDTO, slidingItem: ItemSliding) {
     this._alertCtrl
       .create({
         title: "Deletar",
@@ -117,6 +118,7 @@ export class MensagemListarPage {
         ]
       })
       .present();
+      slidingItem.close();
   }
 
   deletarMensagem(mensagem: MensagemDTO) {
@@ -153,7 +155,8 @@ export class MensagemListarPage {
     );
   }
 
-  alterarMensagem(mensagem: MensagemDTO) {
+  alterarMensagem(mensagem: MensagemDTO, slidingItem: ItemSliding) {
     this.navCtrl.push("MensagemCadastrarPage", { mensagem: mensagem });
+    slidingItem.close();
   }
 }

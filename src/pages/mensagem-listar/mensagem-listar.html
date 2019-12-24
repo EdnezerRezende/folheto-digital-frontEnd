@@ -14,7 +14,7 @@
     (ionInput)="getItems($event)"
   ></ion-searchbar>
   <ion-list >
-    <ion-item-sliding *ngFor="let mensagem of mensagensSearch">
+    <ion-item-sliding #slidingCase *ngFor="let mensagem of mensagensSearch">
       <ion-item detail="true" (click)="detalhar(mensagem)" >
         <h2><strong><label>Título: </label>{{ mensagem.titulo }}</strong></h2>
         <h4><label>Autor(a): </label>{{ mensagem.autor }}</h4>
@@ -23,8 +23,8 @@
       </ion-item>
 
       <ion-item-options side="right" *ngIf="perfilLogado">
-        <button ion-button color="primary" (click)="alterarMensagem(mensagem)"><ion-icon name="md-create"></ion-icon> Alterar</button>
-        <button ion-button color="danger" (click)="deletar(mensagem)"><ion-icon name="md-trash"></ion-icon> Deletar</button>
+        <button ion-button color="primary" (click)="alterarMensagem(mensagem,slidingCase)"><ion-icon name="md-create"></ion-icon> Alterar</button>
+        <button ion-button color="danger" (click)="deletar(mensagem,slidingCase)"><ion-icon name="md-trash"></ion-icon> Deletar</button>
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>

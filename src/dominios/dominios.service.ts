@@ -17,12 +17,32 @@ export class DominiosService {
   }
 
   static getValueDominioKey(enumeracao, valor) {
-    console.log(valor);
     for (let [key] of Object(enumeracao)) {
       return key;
     }
   }
 
+  static getValueDominioPassandoKey(enumeracao, entidadeRecebida:any[]) {
+    let lista = [];
+    for( let item of entidadeRecebida){
+      if ( item in enumeracao ){
+        lista.push( enumeracao[item] ); 
+      }
+    };
+    return lista;
+  }
  
+  static getKeyDominioPassandoValor(enumeracao, entidadeRecebida:any[]) {
+    let lista = [];
+
+    for( let item of entidadeRecebida){
+      for (let key in enumeracao){
+        if ( item == enumeracao[key] ){
+          lista.push( key ); 
+        }
+      }
+    };
+    return lista;
+  }
 
 }

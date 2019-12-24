@@ -23,17 +23,17 @@
     <h2 class="text-center" style="text-align: center;">
       <label class="text-center"><strong> Agenda Semanal </strong></label>
     </h2>
-    <ion-item-sliding *ngFor="let agenda of agendasEventosSearch">
+    <ion-item-sliding #slidingCase *ngFor="let agenda of agendasEventosSearch">
       <ion-item detail="true" *ngIf="agenda.isEvento == false" (click)="detalhar(agenda)">
         <h4><strong>{{ agenda.titulo }}</strong></h4>
         <h4>{{ agenda.diaSemanaAtividade }} - {{ agenda.horaAtividade }}</h4>
         <!-- <ion-icon (click)="detalhar(agenda)" item-right isActive="true" class="fa-book"></ion-icon> -->
       </ion-item>
       <ion-item-options side="right" *ngIf="perfilLogado">
-        <button ion-button color="primary" (click)="alterar(agenda)">
+        <button ion-button color="primary" (click)="alterar(agenda,slidingCase)">
           <ion-icon name="md-create"></ion-icon> Alterar
         </button>
-        <button ion-button color="danger" (click)="deletar(agenda)">
+        <button ion-button color="danger" (click)="deletar(agenda,slidingCase)">
           <ion-icon name="md-trash"></ion-icon> Deletar
         </button>
       </ion-item-options>
@@ -42,7 +42,7 @@
     <h2 class="text-center" style="text-align: center;">
       <label class="center"><strong> Tome Nota </strong></label>
     </h2>
-    <ion-item-sliding *ngFor="let agenda of agendasEventosSearch">
+    <ion-item-sliding #slidingCase1 *ngFor="let agenda of agendasEventosSearch">
       <ion-item detail="true" *ngIf="agenda.isEvento == true" (click)="detalhar(agenda)">
         <h4><strong>{{ agenda.titulo }}</strong></h4>
         <h4><label>Descrição: </label>{{ agenda.descricao }}</h4>
@@ -51,10 +51,10 @@
       </ion-item>
 
       <ion-item-options side="right" *ngIf="perfilLogado">
-        <button ion-button color="primary" (click)="alterar(agenda)">
+        <button ion-button color="primary" (click)="alterar(agenda,slidingCase1)">
           <ion-icon name="md-create"></ion-icon> Alterar
         </button>
-        <button ion-button color="danger" (click)="deletar(agenda)">
+        <button ion-button color="danger" (click)="deletar(agenda,slidingCase1)">
           <ion-icon name="md-trash"></ion-icon> Deletar
         </button>
       </ion-item-options>

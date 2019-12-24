@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { Membro } from '../../models/membro';
-import { BrMaskerIonicServices3, BrMaskModel } from 'brmasker-ionic-3';
+import { BrMaskerIonicServices3, BrMaskModel, BrMaskServicesModel } from 'brmasker-ionic-3';
 import { AlertController } from 'ionic-angular/components/alert/alert-controller';
 import { MembroService } from '../../services/domain/membro.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -10,7 +10,6 @@ import { EstadoDTO } from '../../models/estado.dto';
 import { CidadeDTO } from '../../models/cidade.dto';
 import { EstadoService } from '../../services/domain/estado.service';
 import { CidadeService } from '../../services/domain/cidade.service';
-import { PerfisEnum } from '../../enuns/perfis.enum';
 import { DominiosService } from '../../dominios/dominios.service';
 
 
@@ -26,8 +25,7 @@ export class MembroAlterarPage {
   formGroup: FormGroup;
   estados: EstadoDTO[];
   cidades: CidadeDTO[];
-  perfil:string;
-  perfisEnum:string[] = DominiosService.getValueDominioTodosValor(PerfisEnum);
+ 
   
   constructor(public navCtrl: NavController, public navParams: NavParams, 
       private brMasker: BrMaskerIonicServices3,
@@ -47,13 +45,14 @@ export class MembroAlterarPage {
       let membro = this.navParams.get('item');
       this._membroService.findById(membro.id + '').subscribe(resposta => {
         this.membro = resposta;
-        console.log(this.membro);
         this.endereco = this.membro.enderecos[0];
         let tels: string[] = new Array<string>();
         this.membro.telefones.forEach(tel => {
           tels.push(this.mascaraTelefone(tel));
         });
         this.membro.telefones = tels;
+        this.membro.enderecos[0].cep = this.mascaraCep(this.membro.enderecos[0].cep);
+
       }, error => {
         let alert = this.alertCtrl.create({
           title: "ERRO!",
@@ -83,8 +82,7 @@ export class MembroAlterarPage {
       telefones: ["", []],
       cep: ["", [Validators.required]],
       estadoId: [null, [Validators.required]],
-      cidadeId: [null, [Validators.required]],
-      perfil: [null, [Validators.required]]
+      cidadeId: [null, [Validators.required]]
     });
   }
 
@@ -104,6 +102,18 @@ export class MembroAlterarPage {
     return tel;
   }
 
+  private mascaraCep(cep:string):string {
+    let config: BrMaskServicesModel = new BrMaskServicesModel();
+    config.mask = "00.000-000";
+    return this.brMasker.writeCreateValue(cep, config);
+  }
+
+  private retiraMascaraCep(tel:string):string {
+    tel = tel.replace('.','').replace('-','');
+    return tel;
+  }
+
+
   insereTel(){
     this.membro.telefones.push(this.telefone);
     this.telefone = "";
@@ -116,31 +126,6 @@ export class MembroAlterarPage {
       lista.splice(index, 1);
       this.membro.telefones = lista;
     }
-  }
-
-  gravar(){
-    this.perfil = this.formGroup.controls.perfil.value;
-    let lista = DominiosService.getValueDominioTodosValor(this.perfisEnum).slice(0);
-    let index = lista.indexOf(this.perfil);
-    if ( index != -1 ){
-      lista.splice(index, 1);
-      this.perfisEnum = lista;
-    }
-  }
-
-  inserePerfil(){
-    this.membro.perfis.push(this.perfil);
-    this.perfil = "";
-  }
-
-  deletaPerfil(per){
-    let lista = this.membro.perfis.slice(0);
-    let index = lista.indexOf(per);
-    if ( index != -1 ){
-      lista.splice(index, 1);
-      this.membro.perfis = lista;
-    }
-    this.perfisEnum.push(per);
   }
 
   obterLoading() {
@@ -157,7 +142,6 @@ export class MembroAlterarPage {
     this.retirarFormatacaoTelefone();
     this.membro.cpf = this.membro.cpf.replace('.','').replace('.','').replace('-','');
 
-    console.log(this.membro);
     loading.dismiss();
   }
 

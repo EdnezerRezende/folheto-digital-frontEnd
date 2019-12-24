@@ -4,7 +4,8 @@ import {
   NavController,
   NavParams,
   LoadingController,
-  AlertController
+  AlertController,
+  ItemSliding
 } from "ionic-angular";
 import { DevocionalDTO } from "../../models/devocional.dto";
 import { DevocionalService } from "../../services/domain/devocional.service";
@@ -104,7 +105,7 @@ export class DevocionaisListarPage {
     }, 1000);
   }
 
-  deletar(item: DevocionalDTO) {
+  deletar(item: DevocionalDTO, slidingItem: ItemSliding) {
     this._alertCtrl
       .create({
         title: "Excluir",
@@ -120,6 +121,7 @@ export class DevocionaisListarPage {
         ]
       })
       .present();
+      slidingItem.close();
   }
 
   deletarConfirmado(item: DevocionalDTO) {
@@ -157,12 +159,14 @@ export class DevocionaisListarPage {
     );
   }
 
-  alterar(item: DevocionalDTO) {
+  alterar(item: DevocionalDTO, slidingItem: ItemSliding) {
     this.navCtrl.push("DevocionaisCadastrarPage", { item: item });
+    slidingItem.close();
   }
 
-  comentario(item: DevocionalDTO) {
+  comentario(item: DevocionalDTO, slidingItem: ItemSliding) {
     this.navCtrl.push("DevocionaisComentarPage", { item: item });
+    slidingItem.close();
   }
 
   verificarLido(e, item: DevocionalDTO) {

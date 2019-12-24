@@ -4,7 +4,8 @@ import {
   NavController,
   NavParams,
   LoadingController,
-  AlertController
+  AlertController,
+  ItemSliding
 } from "ionic-angular";
 import { Membro } from "../../models/membro";
 import { ImageViewerController } from "ionic-img-viewer";
@@ -156,7 +157,7 @@ export class MembrosListarPage {
     }, 1000);
   }
 
-  deletar(item: Membro) {
+  deletar(item: Membro, slidingItem: ItemSliding) {
     this._alertCtrl
       .create({
         title: "Deletar",
@@ -172,6 +173,7 @@ export class MembrosListarPage {
         ]
       })
       .present();
+    slidingItem.close();
   }
 
   deletarConfirmado(item: Membro) {
@@ -208,12 +210,19 @@ export class MembrosListarPage {
     );
   }
 
-  alterar(item: Membro) {
+  alterar(item: Membro, slidingItem: ItemSliding) {
     this.navCtrl.push("MembroAlterarPage", { item: item });
+    slidingItem.close();
   }
 
   presentImage(myImage) {
     const imageViewer = this._imageViewerCtrl.create(myImage);
     imageViewer.present();
+  }
+
+  mudarPerfil(item:Membro, slidingItem: ItemSliding){
+    this.navCtrl.push("MembroPerfilPage", { item: item });
+    slidingItem.close();
+
   }
 }

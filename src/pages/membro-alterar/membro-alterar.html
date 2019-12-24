@@ -66,7 +66,7 @@
 
   <ion-item>
     <ion-label stacked>CEP *</ion-label>
-    <ion-input [(ngModel)]="endereco.cep" formControlName="cep" type="text"></ion-input>
+    <ion-input [(ngModel)]="endereco.cep" [brmasker]="{mask:'00.000-000', len:10}" formControlName="cep" type="text"></ion-input>
   </ion-item>
   <p
     class="danger"
@@ -114,28 +114,6 @@
     </ion-item>
   </ion-list>
 
-
-  <ion-item >
-    <ion-label stacked >Perfil: </ion-label>
-    <!-- <ion-input [(ngModel)]="perfil" name="perfil"  type="text"
-    formControlName="perfil"></ion-input> -->
-    <ion-select formControlName="perfil" (ionChange)="gravar()">
-      <ion-option *ngFor="let perfil of perfisEnum" [value]="perfil" 
-      >{{ perfil }}</ion-option
-      >
-    </ion-select>
-    <button ion-button clear color="blue" type="button" item-right (click)="inserePerfil()" 
-      [disabled]="perfil == '' || perfil == undefined"
-      style="margin-top: 30px; font-size: 2.2rem !important;">
-        <ion-icon name="md-add-circle" ></ion-icon> 
-    </button>
-  </ion-item>
-  <ion-item-divider color="light" style="text-align:center;">Lista de Perfis</ion-item-divider>
-  <ion-list>
-    <ion-item *ngFor="let per of membro.perfis" style="text-align:center;">
-      {{ per }} <ion-icon name="md-trash" (click)="deletaPerfil(per)"></ion-icon> 
-    </ion-item>
-  </ion-list>
   <button ion-button block type="submit" [disabled]="formGroup.invalid">
     Criar conta
   </button>

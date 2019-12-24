@@ -3,7 +3,8 @@ import {
   IonicPage,
   NavController,
   NavParams,
-  LoadingController
+  LoadingController,
+  ItemSliding
 } from "ionic-angular";
 import { AgendaEventoDTO } from "../../models/agenda-evento.dto";
 import { AlertController } from "ionic-angular/components/alert/alert-controller";
@@ -148,11 +149,13 @@ export class EventoAgendaListarPage {
     );
   }
 
-  alterar(item: AgendaEventoDTO) {
+  alterar(item: AgendaEventoDTO, slidingItem: ItemSliding) {
     this.navCtrl.push("EventoAgendaCadastrarPage", { item: item });
+    slidingItem.close();
   }
 
-  detalhar(item: AgendaEventoDTO) {
+  detalhar(item: AgendaEventoDTO, slidingItem: ItemSliding) {
     this.navCtrl.push("EventoAgendaDetalharPage", { item: item });
+    slidingItem.close();
   }
 }

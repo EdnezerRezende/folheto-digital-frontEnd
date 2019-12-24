@@ -20,7 +20,7 @@
     (ionInput)="getItems($event)"
   ></ion-searchbar>
   <ion-list>
-    <ion-item-sliding *ngFor="let membro of membrosSearch">
+    <ion-item-sliding #slidingCase *ngFor="let membro of membrosSearch">
       <ion-item detail="false">
         <ion-thumbnail item-start>
           <img
@@ -49,10 +49,13 @@
         </h6>
       </ion-item>
       <ion-item-options side="right" *ngIf="perfilLogado">
-        <button ion-button color="primary" (click)="alterar(membro)">
+        <button ion-button color="dark" (click)="mudarPerfil(membro,slidingCase)">
+          <ion-icon name="md-people"></ion-icon> Peril
+        </button>
+        <button ion-button color="primary" (click)="alterar(membro,slidingCase)">
           <ion-icon name="md-create"></ion-icon> Alterar
         </button>
-        <button ion-button color="danger" (click)="deletar(membro)">
+        <button ion-button color="danger" (click)="deletar(membro,slidingCase)">
           <ion-icon name="md-trash"></ion-icon> Deletar
         </button>
       </ion-item-options>
