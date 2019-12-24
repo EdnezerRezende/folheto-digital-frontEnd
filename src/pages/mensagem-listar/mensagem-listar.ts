@@ -97,9 +97,9 @@ export class MensagemListarPage {
     }
   }
 
-  detalhar(mensagem: MensagemDTO) {
-    console.log(mensagem);
+  detalhar(mensagem: MensagemDTO, slidingItem: ItemSliding) {
     this.navCtrl.push("MensagemDetalharPage", { mensagem: mensagem });
+    slidingItem.close();
   }
 
   deletar(mensagem: MensagemDTO, slidingItem: ItemSliding) {
@@ -118,7 +118,7 @@ export class MensagemListarPage {
         ]
       })
       .present();
-      slidingItem.close();
+    slidingItem.close();
   }
 
   deletarMensagem(mensagem: MensagemDTO) {

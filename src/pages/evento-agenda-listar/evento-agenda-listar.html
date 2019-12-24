@@ -24,7 +24,7 @@
       <label class="text-center"><strong> Agenda Semanal </strong></label>
     </h2>
     <ion-item-sliding #slidingCase *ngFor="let agenda of agendasEventosSearch">
-      <ion-item detail="true" *ngIf="agenda.isEvento == false" (click)="detalhar(agenda)">
+      <ion-item detail="true" *ngIf="agenda.isEvento == false" (click)="detalhar(agenda,slidingCase)">
         <h4><strong>{{ agenda.titulo }}</strong></h4>
         <h4>{{ agenda.diaSemanaAtividade }} - {{ agenda.horaAtividade }}</h4>
         <!-- <ion-icon (click)="detalhar(agenda)" item-right isActive="true" class="fa-book"></ion-icon> -->
@@ -43,7 +43,7 @@
       <label class="center"><strong> Tome Nota </strong></label>
     </h2>
     <ion-item-sliding #slidingCase1 *ngFor="let agenda of agendasEventosSearch">
-      <ion-item detail="true" *ngIf="agenda.isEvento == true" (click)="detalhar(agenda)">
+      <ion-item detail="true" *ngIf="agenda.isEvento == true" (click)="detalhar(agenda,slidingCase1)">
         <h4><strong>{{ agenda.titulo }}</strong></h4>
         <h4><label>Descrição: </label>{{ agenda.descricao }}</h4>
         <h4><label>Período: </label>{{ agenda.dataInicio }} - {{ agenda.dataFim }}</h4>

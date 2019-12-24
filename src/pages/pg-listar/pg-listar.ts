@@ -4,7 +4,8 @@ import {
   NavController,
   NavParams,
   AlertController,
-  LoadingController
+  LoadingController,
+  ItemSliding
 } from "ionic-angular";
 import { PgDTO } from "../../models/pg.dto";
 import { PGService } from "../../services/domain/pg.service";
@@ -158,7 +159,7 @@ export class PgListarPage {
     }, 1000);
   }
 
-  deletar(item: PgDTO) {
+  deletar(item: PgDTO, slidingItem: ItemSliding) {
     this._alertCtrl
       .create({
         title: "Salvar",
@@ -174,6 +175,7 @@ export class PgListarPage {
         ]
       })
       .present();
+    slidingItem.close();
   }
 
   deletarConfirmado(item: PgDTO) {
@@ -210,8 +212,9 @@ export class PgListarPage {
     );
   }
 
-  alterar(item: PgDTO) {
+  alterar(item: PgDTO, slidingItem: ItemSliding) {
     this.navCtrl.push("PgCadastrarPage", { item: item });
+    slidingItem.close();
   }
 
   presentImage(myImage) {

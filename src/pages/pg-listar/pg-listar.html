@@ -14,7 +14,7 @@
     (ionInput)="getItems($event)"
   ></ion-searchbar>
   <ion-list >
-    <ion-item-sliding *ngFor="let pg of pgsSearch">
+    <ion-item-sliding #slidingCase *ngFor="let pg of pgsSearch">
       <ion-item  detail="false" >
         <ion-thumbnail item-start>
           <img [src]="pg.imageUrl || profileImage" #myImage (click)="presentImage(myImage)">
@@ -25,8 +25,8 @@
         <h4><label>Contato: </label>{{ pg.responsavelCasa }}</h4>
       </ion-item>
       <ion-item-options side="right" *ngIf="perfilLogado">
-        <button ion-button color="primary" (click)="alterar(pg)"><ion-icon name="md-create"></ion-icon> Alterar</button>
-        <button ion-button color="danger" (click)="deletar(pg)"><ion-icon name="md-trash"></ion-icon> Deletar</button>
+        <button ion-button color="primary" (click)="alterar(pg,slidingCase)"><ion-icon name="md-create"></ion-icon> Alterar</button>
+        <button ion-button color="danger" (click)="deletar(pg,slidingCase)"><ion-icon name="md-trash"></ion-icon> Deletar</button>
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>

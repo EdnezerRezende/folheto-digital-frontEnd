@@ -15,7 +15,7 @@
   ></ion-searchbar>
   <ion-list >
     <ion-item-sliding #slidingCase *ngFor="let mensagem of mensagensSearch">
-      <ion-item detail="true" (click)="detalhar(mensagem)" >
+      <ion-item detail="true" (click)="detalhar(mensagem,slidingCase)" >
         <h2><strong><label>Título: </label>{{ mensagem.titulo }}</strong></h2>
         <h4><label>Autor(a): </label>{{ mensagem.autor }}</h4>
         <h4><label>Mensagem: </label><span [innerHTML]="mensagem.mensagem.substr(0, 20) + '...'"></span></h4>

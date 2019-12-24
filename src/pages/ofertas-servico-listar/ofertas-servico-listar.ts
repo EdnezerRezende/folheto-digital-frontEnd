@@ -4,7 +4,8 @@ import {
   NavController,
   NavParams,
   LoadingController,
-  AlertController
+  AlertController,
+  ItemSliding
 } from "ionic-angular";
 import { OfertaServicoDTO } from "../../models/ofertaServico.dto";
 import { StorageService } from "../../services/storage.service";
@@ -94,7 +95,7 @@ export class OfertasServicoListarPage {
     }
   }
 
-  deletar(item: OfertaServicoDTO) {
+  deletar(item: OfertaServicoDTO, slidingItem: ItemSliding) {
     this._alertCtrl
       .create({
         title: "Excluir",
@@ -110,6 +111,7 @@ export class OfertasServicoListarPage {
         ]
       })
       .present();
+    slidingItem.close();
   }
 
   deletarConfirmado(item: OfertaServicoDTO) {
@@ -145,11 +147,13 @@ export class OfertasServicoListarPage {
     );
   }
 
-  alterar(item: OfertaServicoDTO) {
+  alterar(item: OfertaServicoDTO, slidingItem: ItemSliding) {
     this.navCtrl.push("OfertasServicoCadastrarPage", { item: item });
+    slidingItem.close();
   }
 
-  detalhar(item: OfertaServicoDTO) {
+  detalhar(item: OfertaServicoDTO, slidingItem: ItemSliding) {
     this.navCtrl.push("OfertasServicoDetalharPage", { item: item });
+    slidingItem.close();
   }
 }

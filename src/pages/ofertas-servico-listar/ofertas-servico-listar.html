@@ -16,18 +16,18 @@
     (ionInput)="getItems($event)"
   ></ion-searchbar>
 
-  <ion-list *ngFor="let servico of servicosSearch">
+  <ion-list #slidingCase  *ngFor="let servico of servicosSearch">
     <ion-item-sliding  >
-      <ion-item detail (click)="detalhar(servico)">
+      <ion-item detail (click)="detalhar(servico,slidingCase)">
           <h2><strong><label>{{ servico.nome }}</label></strong></h2>
         <h4><label >{{ servico.descricao }}</label></h4>
 
       </ion-item>
       <ion-item-options side="right" *ngIf="perfilLogado">
-        <button ion-button color="primary" (click)="alterar(servico)">
+        <button ion-button color="primary" (click)="alterar(servico,slidingCase)">
           <ion-icon name="md-create"></ion-icon> Alterar
         </button>
-        <button ion-button color="danger" (click)="deletar(servico)">
+        <button ion-button color="danger" (click)="deletar(servico,slidingCase)">
           <ion-icon name="md-trash"></ion-icon> Deletar
         </button>
       </ion-item-options>
