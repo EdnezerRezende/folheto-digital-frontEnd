@@ -7,6 +7,8 @@ import { StorageService } from "../storage.service";
 import { ImageUtilService } from "../image-util.service";
 import { MembroInfo } from "../../models/membro-info";
 import { MembroNewDTO } from "../../models/membro-new.dto";
+import { MembroAlteraPerfilDTO } from "../../models/membro-altera-perfil.dto";
+import { MembroAlteraDadosDTO } from "../../models/membro-altera-dados.dto";
 
 @Injectable()
 export class MembroService {
@@ -67,6 +69,20 @@ export class MembroService {
 
   deletar(idMembro: number) {
     return this.http.delete(`${API_CONFIG.baseUrl}/membros/${idMembro}`, {
+      observe: "response",
+      responseType: "text"
+    });
+  }
+
+  alterarPerfil(obj:MembroAlteraPerfilDTO){
+    return this.http.put(`${API_CONFIG.baseUrl}/membros/perfil`, obj, {
+      observe: "response",
+      responseType: "text"
+    });
+  }
+
+  alterarDados(obj:MembroAlteraDadosDTO, id){
+    return this.http.put(`${API_CONFIG.baseUrl}/membros/${id}`, obj, {
       observe: "response",
       responseType: "text"
     });

@@ -11,6 +11,7 @@ import { CidadeDTO } from '../../models/cidade.dto';
 import { EstadoService } from '../../services/domain/estado.service';
 import { CidadeService } from '../../services/domain/cidade.service';
 import { DominiosService } from '../../dominios/dominios.service';
+import { MembroAlteraDadosDTO } from '../../models/membro-altera-dados.dto';
 
 
 @IonicPage()
@@ -20,12 +21,13 @@ import { DominiosService } from '../../dominios/dominios.service';
 })
 export class MembroAlterarPage {
   membro:Membro = new Membro();
+  membroAlterar:MembroAlteraDadosDTO = new MembroAlteraDadosDTO();
   endereco:EnderecoDTO = new EnderecoDTO();
   telefone:string;
   formGroup: FormGroup;
   estados: EstadoDTO[];
   cidades: CidadeDTO[];
- 
+  cidade:CidadeDTO;
   
   constructor(public navCtrl: NavController, public navParams: NavParams, 
       private brMasker: BrMaskerIonicServices3,
@@ -108,9 +110,9 @@ export class MembroAlterarPage {
     return this.brMasker.writeCreateValue(cep, config);
   }
 
-  private retiraMascaraCep(tel:string):string {
-    tel = tel.replace('.','').replace('-','');
-    return tel;
+  private retiraMascaraCep(cep:string):string {
+    cep = cep.replace('.','').replace('-','');
+    return cep;
   }
 
 
@@ -135,16 +137,59 @@ export class MembroAlterarPage {
   }
 
   alterar(){
-
     let loading = this.obterLoading();
     loading.present();
 
-    this.retirarFormatacaoTelefone();
-    this.membro.cpf = this.membro.cpf.replace('.','').replace('.','').replace('-','');
+    this.gerarDtoEnvio(this.membroAlterar);
 
-    loading.dismiss();
+    this._membroService.alterarDados(this.membroAlterar, this.membro.id).subscribe(response => {
+      loading.dismiss();
+      this.alertCtrl
+          .create({
+            title: 'Sucesso',
+            subTitle: 'O Perfil do membro ' + this.membro.nome + ' foi alterado com sucesso!',
+            buttons: [
+              { text: 'Ok', 
+                handler: ()=>{
+                  this.navCtrl.pop();
+                } 
+              }
+            ]
+          })
+          .present();
+          
+    }, error => {
+      this.alertCtrl
+          .create({
+            title: 'Error',
+            subTitle: 'O Perfil do membro ' + this.membro.nome + ' não foi alterado, favor tentar mais tarde!',
+            buttons: [
+              { text: 'Ok', 
+                handler: ()=>{
+                  this.navCtrl.pop();
+                } 
+              }
+            ]
+          })
+          .present();
+      loading.dismiss();
+    });
   }
 
+
+  private gerarDtoEnvio(membroAlterar: MembroAlteraDadosDTO) {
+    this.endereco.cep = this.retiraMascaraCep(this.endereco.cep.slice(0));
+    this.retirarFormatacaoTelefone();
+    membroAlterar.email = this.membro.email;
+    let endereco:EnderecoDTO[] = new Array<EnderecoDTO>();
+    this.cidade = this.formGroup.value.cidadeId;
+    this.cidade.estado = new EstadoDTO();
+    this.cidade.estado.id = this.formGroup.value.estadoId;
+    this.endereco.cidade = this.cidade;
+    endereco.push(this.endereco);
+    membroAlterar.enderecos = endereco;
+    membroAlterar.telefones = this.membro.telefones;
+  }
 
   private retirarFormatacaoTelefone() {
     let tels: string[] = new Array<string>();
@@ -175,4 +220,9 @@ export class MembroAlterarPage {
       error => {}
     );
   }
+
+  compareFn = (o1, o2) => {
+    return o1 && o2 ? o1.id === o2.id : o1 === o2;
+  }
+
 }

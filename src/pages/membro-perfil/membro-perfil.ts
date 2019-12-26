@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Membro } from '../../models/membro';
 import { MembroService } from '../../services/domain/membro.service';
 import { AlertController } from 'ionic-angular/components/alert/alert-controller';
+import { MembroAlteraPerfilDTO } from '../../models/membro-altera-perfil.dto';
 
 
 
@@ -107,14 +108,44 @@ export class MembroPerfilPage {
   }
 
   salvarAlteracao(){
-
     let loading = this.obterLoading();
     loading.present();
-    let lista = DominiosService.getKeyDominioPassandoValor(PerfisEnum,this.membro.perfis).slice(0);
-    this.membro.perfis = lista;
-    console.log(this.membro.perfis);
-    this.perfisEnum = DominiosService.getValueDominioTodosValor(PerfisEnum);
-    loading.dismiss();
-    this.navCtrl.pop();
+    let membroPerfil:MembroAlteraPerfilDTO = new MembroAlteraPerfilDTO();
+    membroPerfil.id = this.membro.id;
+    membroPerfil.perfis = DominiosService.getKeyDominioPassandoValor(PerfisEnum,this.membro.perfis).slice(0);;
+    
+    this._membroService.alterarPerfil(membroPerfil).subscribe(response => {
+      loading.dismiss();
+      this.alertCtrl
+          .create({
+            title: 'Sucesso',
+            subTitle: 'O Perfil do membro ' + this.membro.nome + ' foi alterado com sucesso!',
+            buttons: [
+              { text: 'Ok', 
+                handler: ()=>{
+                  this.perfisEnum = DominiosService.getValueDominioTodosValor(PerfisEnum);
+                  this.navCtrl.pop();
+                } 
+              }
+            ]
+          })
+          .present();
+    },error =>{
+      this.alertCtrl
+          .create({
+            title: 'Error',
+            subTitle: 'O Perfil do membro ' + this.membro.nome + ' não foi alterado, favor tentar mais tarde!',
+            buttons: [
+              { text: 'Ok', 
+                handler: ()=>{
+                  this.perfisEnum = DominiosService.getValueDominioTodosValor(PerfisEnum);
+                } 
+              }
+            ]
+          })
+          .present();
+      console.log(error);
+      loading.dismiss();
+    });
   }
 }

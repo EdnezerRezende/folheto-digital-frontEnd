@@ -1,6 +1,6 @@
 import { EstadoDTO } from "./estado.dto";
 
-export interface CidadeDTO {
+export class CidadeDTO {
     id: string;
     nome: string;
     estado: EstadoDTO;

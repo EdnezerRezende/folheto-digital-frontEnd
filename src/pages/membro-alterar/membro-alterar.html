@@ -7,6 +7,7 @@
 
 <ion-content padding>
   <p><strong>{{ membro.nome }}</strong></p>
+  
   <form
     [formGroup]="formGroup"
     (ngSubmit)="alterar(); $event.preventDefault()"
@@ -78,7 +79,7 @@
 
   <ion-item>
     <ion-label stacked>Estado *</ion-label>
-    <ion-select formControlName="estadoId" (ionChange)="updateCidades()">
+    <ion-select formControlName="estadoId"  (ionChange)="updateCidades()" >
       <ion-option
         *ngFor="let estado of estados; first as f"
         [value]="estado.id"
@@ -90,7 +91,8 @@
   <ion-item>
     <ion-label stacked>Cidade *</ion-label>
     <ion-select formControlName="cidadeId">
-      <ion-option *ngFor="let cidade of cidades" [value]="cidade.id"
+      <ion-option 
+        *ngFor="let cidade of cidades" [value]="cidade"
         >{{cidade.nome}}</ion-option
       >
     </ion-select>
