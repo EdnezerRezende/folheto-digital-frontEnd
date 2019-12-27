@@ -28,6 +28,7 @@ export class MembroAlterarPage {
   estados: EstadoDTO[];
   cidades: CidadeDTO[];
   cidade:CidadeDTO;
+  estado:EstadoDTO;
   
   constructor(public navCtrl: NavController, public navParams: NavParams, 
       private brMasker: BrMaskerIonicServices3,
@@ -54,6 +55,8 @@ export class MembroAlterarPage {
         });
         this.membro.telefones = tels;
         this.membro.enderecos[0].cep = this.mascaraCep(this.membro.enderecos[0].cep);
+        this.estado = this.membro.enderecos[0].cidade.estado;
+        this.cidade = this.membro.enderecos[0].cidade;
 
       }, error => {
         let alert = this.alertCtrl.create({
@@ -89,8 +92,8 @@ export class MembroAlterarPage {
   }
 
   ionViewDidLoad() {
-    this.obterEstados();
     this.obterMembro();
+    this.obterEstados();
   }
 
   private mascaraTelefone(tel:string):string {
@@ -203,7 +206,9 @@ export class MembroAlterarPage {
     this.estadoService.findAll().subscribe(
       response => {
         this.estados = response;
-        this.formGroup.controls.estadoId.setValue(this.estados[0].id);
+        let estadoTemp = this.estado != undefined ? this.estado : this.estados[0];
+        console.log(estadoTemp);
+        this.formGroup.controls.estadoId.setValue(estadoTemp);
         this.updateCidades();
       },
       error => {}
@@ -212,17 +217,21 @@ export class MembroAlterarPage {
 
   updateCidades() {
     let estado_id = this.formGroup.value.estadoId;
-    this.cidadeService.findAll(estado_id).subscribe(
+
+    this.cidadeService.findAll(estado_id.id).subscribe(
       response => {
         this.cidades = response;
-        this.formGroup.controls.cidadeId.setValue(null);
+        this.formGroup.controls.cidadeId.setValue(this.cidade);
       },
       error => {}
     );
   }
 
-  compareFn = (o1, o2) => {
+  compareEstado = (o1:EstadoDTO, o2:EstadoDTO) => {
     return o1 && o2 ? o1.id === o2.id : o1 === o2;
   }
 
+  compareCidade= (o1:CidadeDTO, o2:CidadeDTO) => {
+    return o1 && o2 ? o1.id === o2.id : o1 === o2;
+  }
 }

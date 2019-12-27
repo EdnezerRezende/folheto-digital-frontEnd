@@ -79,18 +79,17 @@
 
   <ion-item>
     <ion-label stacked>Estado *</ion-label>
-    <ion-select formControlName="estadoId"  (ionChange)="updateCidades()" >
+    <ion-select [(ngModel)]="estado" formControlName="estadoId" [compareWith]="compareEstado" (ionChange)="updateCidades()" >
       <ion-option
         *ngFor="let estado of estados; first as f"
-        [value]="estado.id"
-        [selected]="f"
+        [value]="estado"
         >{{ estado.nome }}
       </ion-option>
     </ion-select>
   </ion-item>
   <ion-item>
     <ion-label stacked>Cidade *</ion-label>
-    <ion-select formControlName="cidadeId">
+    <ion-select [(ngModel)]="cidade" formControlName="cidadeId" [compareWith]="compareCidade">
       <ion-option 
         *ngFor="let cidade of cidades" [value]="cidade"
         >{{cidade.nome}}</ion-option
