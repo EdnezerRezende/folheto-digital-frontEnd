@@ -4,6 +4,9 @@ import { Validators, FormBuilder, FormGroup } from "@angular/forms";
 import { StorageService } from "../../services/storage.service";
 import { MembroInfo } from "../../models/membro-info";
 import { IgrejaInfoDTO } from "../../models/igreja_info.dto";
+import { ContatoDTO } from "../../models/contato.dto";
+import { EmailService } from "../../services/domain/email.service";
+import { AlertController } from "ionic-angular/components/alert/alert-controller";
 
 @IonicPage()
 @Component({
@@ -20,7 +23,9 @@ export class ContactPage {
     public navCtrl: NavController,
     public formBuilder: FormBuilder,
     public storage: StorageService,
-    private _loadingCtrl: LoadingController
+    private _loadingCtrl: LoadingController,
+    private _alertCtrl: AlertController,
+    private _emailService:EmailService
   ) {
     this.membro = this.storage.getMembro();
     this.criarFormulario();
@@ -70,16 +75,44 @@ export class ContactPage {
     console.log("E-mail enviado");
     console.log(this.formGroup);
 
-    let email = {
-      to: "godoirezende@gmail.com",
-      cc: this.membro.email,
-      attachments: [],
-      subject: this.formGroup.value.assunto,
-      body: this.formGroup.value.mensagem,
-      isHtml: true
-    };
+    let contato:ContatoDTO = new ContatoDTO();
+    contato.to = "godoirezende@gmail.com";
+    contato.email = this.membro.email;
+    contato.assunto = this.formGroup.value.assunto;
+    contato.mensagem = this.formGroup.value.mensagem;
 
-    // this.emailComposer.open(email);
+    this._emailService.enviarContato(contato).subscribe(response => {
+      this._alertCtrl
+          .create({
+            title: 'Sucesso',
+            subTitle: 'O E-mail foi enviado com sucesso, aguarde contato!',
+            buttons: [
+              {
+                text: 'Sim',
+                handler: () => {
+                  this.navCtrl.pop();
+                }
+              }
+            ]
+          })
+          .present();
+    }, erro => {
+      this._alertCtrl
+          .create({
+            title: 'Error',
+            subTitle: 'Não foi possível enviar o E-mail, tente novamente mais tarde!',
+            buttons: [
+              {
+                text: 'Sim',
+                handler: () => {
+                  this.navCtrl.pop();
+                }
+              }
+            ]
+          })
+          .present();
+
+    })
   }
 
   visualizarMap() {

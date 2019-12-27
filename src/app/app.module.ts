@@ -27,6 +27,7 @@ import { IgrejaService } from "../services/domain/igreja.service";
 import { BrMaskerModule } from "brmasker-ionic-3";
 import { OfertaServicoService } from "../services/domain/oferta-servico.service";
 import { MissaoService } from "../services/domain/missao.service";
+import { EmailService } from "../services/domain/email.service";
 
 @NgModule({
   declarations: [MyApp],
@@ -70,7 +71,8 @@ import { MissaoService } from "../services/domain/missao.service";
     MembroService,
     IgrejaService,
     OfertaServicoService,
-    MissaoService
+    MissaoService,
+    EmailService
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
