@@ -72,16 +72,19 @@ export class ContactPage {
   }
 
   enviarEmail() {
-    console.log("E-mail enviado");
-    console.log(this.formGroup);
+    let loading = this.obterLoading();
+    loading.present();
 
     let contato:ContatoDTO = new ContatoDTO();
     contato.to = "godoirezende@gmail.com";
     contato.email = this.membro.email;
     contato.assunto = this.formGroup.value.assunto;
     contato.mensagem = this.formGroup.value.mensagem;
+    contato.nome = this.membro.nome;
+    contato.telefone = this.formGroup.value.telefone;
 
     this._emailService.enviarContato(contato).subscribe(response => {
+      loading.dismiss();
       this._alertCtrl
           .create({
             title: 'Sucesso',
@@ -90,13 +93,14 @@ export class ContactPage {
               {
                 text: 'Sim',
                 handler: () => {
-                  this.navCtrl.pop();
+                  this.navCtrl.goToRoot;
                 }
               }
             ]
           })
           .present();
     }, erro => {
+      loading.dismiss();
       this._alertCtrl
           .create({
             title: 'Error',
@@ -105,7 +109,7 @@ export class ContactPage {
               {
                 text: 'Sim',
                 handler: () => {
-                  this.navCtrl.pop();
+                  this.navCtrl.setRoot('TabsPage');
                 }
               }
             ]
