@@ -6,6 +6,9 @@ import { AuthService } from "../services/auth.service";
 import { StorageService } from "../services/storage.service";
 import { LocalUser } from "../models/local_user";
 import { MembroInfo } from "../models/membro-info";
+import { MembroService } from "../services/domain/membro.service";
+import { API_CONFIG } from "../config/api.config";
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   templateUrl: "app.html"
@@ -20,7 +23,8 @@ export class MyApp {
   mostraCadUsuario: boolean;
   mostraOpcaoCadastro: boolean = false;
   mostraOpcaoListar: boolean = true;
-
+  picture: any;
+  avatar = "assets/img/avatar-padrao.jpg";
   public paginas: any[] = this.tratarMenuTelaSemCadastro();
 
   constructor(
@@ -30,7 +34,9 @@ export class MyApp {
     public menuCtrl: MenuController,
     public auth: AuthService,
     public storage: StorageService,
-    public events: Events
+    public events: Events,
+    public sanitizer: DomSanitizer,
+    public membroService:MembroService
   ) {
     events.subscribe("user:created", (user, time) => {
       console.log("Bem Vindo ", user.nome, " as ", time);
@@ -202,6 +208,19 @@ export class MyApp {
         ],
         icone: "md-people",
         mostra: true
+      },
+      {
+        titulo: "Perfil",
+        subTitulo: [
+          {
+            submenu: "Alterar",
+            componente: "ProfilePage",
+            iconeSub: "md-list-box",
+            mostra: this.mostraOpcaoListar
+          }
+        ],
+        icone: "md-person",
+        mostra: true
       }
     ];
   }
@@ -298,13 +317,41 @@ export class MyApp {
         ],
         icone: "md-color-wand",
         mostra: true
+      },
+      {
+        titulo: "Perfil",
+        subTitulo: [
+          {
+            submenu: "Alterar",
+            componente: "ProfilePage",
+            iconeSub: "md-list-box",
+            mostra: this.mostraOpcaoListar
+          }
+        ],
+        icone: "md-person",
+        mostra: true
       }
     ];
   }
 
   get membroLogado() {
-    // this.dadosMembro = this.storage.getMembro();
     return this.storage.getMembro();
+  }
+
+  imagemTratada() {
+    this.blobToDataURL(this.dadosMembro.imageUrl).then(dataUrl => {
+      let str: string = dataUrl as string;
+      this.picture = this.sanitizer.bypassSecurityTrustUrl(str);
+    });
+    return this.picture;
+  }
+  blobToDataURL(blob) {
+    return new Promise((fulfill, reject) => {
+      let reader = new FileReader();
+      reader.onerror = reject;
+      reader.onload = e => fulfill(reader.result);
+      reader.readAsDataURL(blob);
+    });
   }
 
   get obterMenu() {
@@ -316,6 +363,7 @@ export class MyApp {
     }
     return this.paginas;
   }
+
   logoff() {
     this.mostraOpcaoCadastro = false;
     this.mostraOpcaoListar = true;
@@ -324,18 +372,8 @@ export class MyApp {
   }
 
   irPagina(componente) {
-    // let options: NativeTransitionOptions={
-    //   direction: 'left',
-    //   duration: 400,
-    //   slowdownfactor: -1,
-    //   iosdelay: 50
-
-    // };
-    // this._nativePageTransitions.slide(options);
     this.nav.push(componente);
   }
-
-  avatar = "assets/img/avatar-padrao.jpg";
 
   toggleLevel1(idx) {
     if (this.isLevel1Shown(idx)) {
@@ -347,5 +385,26 @@ export class MyApp {
 
   isLevel1Shown(idx) {
     return this.showLevel1 === idx;
+  }
+
+  get obterImagem(){
+    setTimeout(()=>{
+      if (this.dadosMembro && this.dadosMembro.id){
+        this.membroService.getImageFromBucket(this.dadosMembro.id + "").subscribe(
+          response => {
+            this.dadosMembro.imageUrl = `${API_CONFIG.bucketBaseUrl}/membro${this.dadosMembro.id}.jpg`;
+            this.blobToDataURL(response).then(dataUrl => {
+              let str: string = dataUrl as string;
+              return this.sanitizer.bypassSecurityTrustUrl(str);
+            });
+          },
+          error => {
+            return "assets/imgs/avatar-blank. png";
+          }
+        );
+      }
+
+    },2000);
+    return "assets/imgs/avatar-blank. png";
   }
 }

@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Perfil</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-avatar>
+    <img class="circle" [src]="profileImage" />
+  </ion-avatar>
+  <h2 text-center>{{membro?.nome}}</h2>
+  <p text-center>{{membro?.email}}</p>
+
+  <ion-card>
+    <ion-card-header>
+      Enviar imagem de perfil
+    </ion-card-header>
+    <ion-item *ngIf="picture">
+      <img [src]="picture" />
+    </ion-item>
+    <ion-item>
+      <button
+        ion-button
+        block
+        (click)="getCameraPicture()"
+        [disabled]="cameraOn"
+      >
+        Camera
+      </button>
+      <button
+        ion-button
+        block
+        (click)="getGalleryPicture()"
+        [disabled]="cameraOn"
+      >
+        Galeria
+      </button>
+      <button *ngIf="picture" ion-button outline block (click)="sendPicture()">
+        Enviar imagem
+      </button>
+      <button *ngIf="picture" ion-button outline block (click)="cancel()">
+        Descartar imagem
+      </button>
+    </ion-item>
+  </ion-card>
+</ion-content>

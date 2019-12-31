@@ -100,7 +100,7 @@ export class MembrosListarPage {
   }
 
   sendPicture(item: Membro) {
-    this._membroService.uploadPicture(this.picture).subscribe(
+    this._membroService.uploadPicture(this.picture, item.id).subscribe(
       response => {
         this.picture = null;
         this.getImageIfExists(item);
@@ -220,9 +220,8 @@ export class MembrosListarPage {
     imageViewer.present();
   }
 
-  mudarPerfil(item:Membro, slidingItem: ItemSliding){
+  mudarPerfil(item: Membro, slidingItem: ItemSliding) {
     this.navCtrl.push("MembroPerfilPage", { item: item });
     slidingItem.close();
-
   }
 }

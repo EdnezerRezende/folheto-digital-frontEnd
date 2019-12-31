@@ -13,6 +13,8 @@ import { StorageService } from "../../services/storage.service";
 import { LocalUser } from "../../models/local_user";
 import { MembroInfo } from "../../models/membro-info";
 import { IgrejaService } from "../../services/domain/igreja.service";
+import { API_CONFIG } from "../../config/api.config";
+import { DomSanitizer } from "@angular/platform-browser";
 
 @IonicPage()
 @Component({
@@ -35,7 +37,8 @@ export class LoginPage {
     public membroService: MembroService,
     public storage: StorageService,
     public events: Events,
-    public igrejaService: IgrejaService
+    public igrejaService: IgrejaService,
+    public sanitizer: DomSanitizer
   ) {
     this.creds = new CredenciaisDTO();
   }
@@ -82,6 +85,24 @@ export class LoginPage {
                 console.log("Não foi possivel obter a igreja");
               }
             );
+            this.membroService
+              .getImageFromBucket(this.membro.id + "")
+              .subscribe(
+                response => {
+                  this.membro.imageUrl = `${API_CONFIG.bucketBaseUrl}/membro${this.membro.id}.jpg`;
+                  this.blobToDataURL(response).then(dataUrl => {
+                    let str: string = dataUrl as string;
+                    this.membro.imageUrl = this.sanitizer.bypassSecurityTrustUrl(
+                      str
+                    );
+
+
+                  });
+                },
+                error => {
+                  return "assets/imgs/avatar-blank.png";
+                }
+              );
           },
           error => {}
         );
@@ -93,5 +114,29 @@ export class LoginPage {
 
   signup() {
     this.navCtrl.push("SignupPage");
+  }
+
+  getImageIfExists(membro: MembroInfo) {
+    this.membroService.getImageFromBucket(this.membro.id + "").subscribe(
+      response => {
+        this.membro.imageUrl = `${API_CONFIG.bucketBaseUrl}/membro${this.membro.id}.jpg`;
+        this.blobToDataURL(response).then(dataUrl => {
+          let str: string = dataUrl as string;
+          return this.sanitizer.bypassSecurityTrustUrl(str);
+        });
+      },
+      error => {
+        return "assets/imgs/avatar-blank.png";
+      }
+    );
+  }
+
+  blobToDataURL(blob) {
+    return new Promise((fulfill, reject) => {
+      let reader = new FileReader();
+      reader.onerror = reject;
+      reader.onload = e => fulfill(reader.result);
+      reader.readAsDataURL(blob);
+    });
   }
 }

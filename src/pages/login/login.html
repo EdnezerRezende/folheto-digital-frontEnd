@@ -29,21 +29,17 @@
           A senha é requerida.
         </ion-item> -->
 
-        <div padding>
-          <button
-            ion-button
-            color="primary"
-            block
-            type="submit"
-            [disabled]="!form.valid"
-          >
-            Login
-          </button>
-        </div>
+        <button
+          ion-button
+          color="primary"
+          block
+          type="submit"
+          [disabled]="!form.valid"
+        >
+          Login
+        </button>
       </ion-list>
     </form>
-    <div padding>
-      <button ion-button block outline (click)="signup()">Registrar</button>
-    </div>
+    <button ion-button block outline (click)="signup()">Registrar</button>
   </div>
 </ion-content>

@@ -45,14 +45,18 @@ export class MembroService {
     });
   }
 
-  uploadPicture(picture) {
+  uploadPicture(picture, idMembro: number) {
     let pictureBlob = this.imageUtilService.dataUriToBlob(picture);
     let formData: FormData = new FormData();
     formData.set("file", pictureBlob, "file.png");
-    return this.http.post(`${API_CONFIG.baseUrl}/membros/picture`, formData, {
-      observe: "response",
-      responseType: "text"
-    });
+    return this.http.post(
+      `${API_CONFIG.baseUrl}/membros/picture/${idMembro}`,
+      formData,
+      {
+        observe: "response",
+        responseType: "text"
+      }
+    );
   }
 
   buscaTodosAnviversariantes(idIgreja: number): Observable<Membro[]> {
@@ -74,14 +78,14 @@ export class MembroService {
     });
   }
 
-  alterarPerfil(obj:MembroAlteraPerfilDTO){
+  alterarPerfil(obj: MembroAlteraPerfilDTO) {
     return this.http.put(`${API_CONFIG.baseUrl}/membros/perfil`, obj, {
       observe: "response",
       responseType: "text"
     });
   }
 
-  alterarDados(obj:MembroAlteraDadosDTO, id){
+  alterarDados(obj: MembroAlteraDadosDTO, id) {
     return this.http.put(`${API_CONFIG.baseUrl}/membros/${id}`, obj, {
       observe: "response",
       responseType: "text"

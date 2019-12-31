@@ -95,7 +95,6 @@ export class PgListarPage {
     });
   }
 
-  //
   sendPicture(item: PgDTO) {
     this._pgService.uploadPicture(this.picture, item.id).subscribe(
       response => {
@@ -109,7 +108,7 @@ export class PgListarPage {
   getImageIfExists(item: PgDTO) {
     this._pgService.getImageFromBucket(item.id).subscribe(
       response => {
-        this.pgs[0].imageUrl = `${API_CONFIG.bucketBaseUrl}/Pg${item.id}.jpg`;
+        item.imageUrl = `${API_CONFIG.bucketBaseUrl}/Pg${item.id}.jpg`;
         this.blobToDataURL(response).then(dataUrl => {
           let str: string = dataUrl as string;
           item.imageUrl = this.sanitizer.bypassSecurityTrustUrl(str);
@@ -220,5 +219,10 @@ export class PgListarPage {
   presentImage(myImage) {
     const imageViewer = this._imageViewerCtrl.create(myImage);
     imageViewer.present();
+  }
+
+  detalhar(item: PgDTO, slidingItem: ItemSliding) {
+    this.navCtrl.push("PgDetalharPage", { item: item });
+    slidingItem.close();
   }
 }

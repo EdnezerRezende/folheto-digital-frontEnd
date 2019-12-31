@@ -4,26 +4,41 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title class="alinharLabel"> Seja Bem Vindo </ion-title>
+
+    <ion-icon name="md-exit" (click)="logoff() "></ion-icon>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding  class="fundoImagem" >
-    <ion-grid class="positionFixed">
-      <ion-row>
-        <ion-col class="textoIIgreja" >
-          <div>1ª Igreja de Cristo</div>
-        </ion-col>
-        <ion-col >
-
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col  class="textoITaguatinga" align-self-start>
-          <div>Taguatinga</div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  <!-- <p class="textoIIgreja">1ª Igreja 
+<ion-content padding class="fundoImagem">
+  <!-- <ion-fab top right edge>
+    <button ion-button icon-only>
+      <button ion-fab mini>
+        <ion-icon name="md-person"></ion-icon>
+      </button>
+    </button>
+    <ion-fab-list>
+      <button ion-fab>
+        <ion-icon name="md-person" (click)="perfil() "></ion-icon>
+      </button>
+      <button ion-fab>
+        <ion-icon name="md-exit" (click)="logoff()"></ion-icon>
+      </button>
+    </ion-fab-list>
+  </ion-fab> -->
+  <ion-grid class="positionFixed">
+    <ion-row>
+      <ion-col class="textoIIgreja">
+        <div>1ª Igreja de Cristo</div>
+      </ion-col>
+      <ion-col> </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="textoITaguatinga" align-self-start>
+        <div>Taguatinga</div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- <p class="textoIIgreja">1ª Igreja
     de Cristo </p>
   <p class="">Taguatinga</p> -->
 </ion-content>

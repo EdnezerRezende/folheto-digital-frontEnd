@@ -1,14 +1,13 @@
 <ion-split-pane>
-  <ion-menu [content]="conteudo" id="cabecalho-menu"  >
-      <!-- *ngIf="membroLogado" -->
+  <ion-menu [content]="conteudo" id="cabecalho-menu">
+    <!-- *ngIf="membroLogado" -->
     <ion-content *ngIf="membroLogado">
       <ion-item id="cabecalho-menu" class="cabecalho-menu">
-        <div>
+        <div  >
           <ion-avatar item-start>
             <img [src]="avatar" />
           </ion-avatar>
         </div>
-        <!-- <h2>{{ usuarioLogado.nome }}</h2> -->
         <button menuClose ion-button round (click)="logoff() " icon-start>
           <ion-icon name="md-exit"></ion-icon> SAIR
         </button>
@@ -40,6 +39,7 @@
           <ion-list
             showWhen="android,windows"
             style="margin-bottom: -26px;"
+            menuClose
             *ngIf="isLevel1Shown('idx'+i)"
           >
             <ion-item
@@ -53,6 +53,7 @@
                 <ion-icon
                   color="sucess"
                   [name]="sub.iconeSub"
+                  menuClose
                   item-left
                 ></ion-icon>
                 {{sub.submenu}}
@@ -62,6 +63,7 @@
           <ion-list
             showWhen="ios"
             style="margin-bottom: -15px;"
+            menuClose
             *ngIf="isLevel1Shown('idx'+i)"
           >
             <ion-item
@@ -75,6 +77,7 @@
                 <ion-icon
                   color="sucess"
                   [name]="sub.iconeSub"
+                  menuClose
                   item-left
                 ></ion-icon>
                 {{sub.submenu}}
