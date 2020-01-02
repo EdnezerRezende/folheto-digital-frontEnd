@@ -5,9 +5,6 @@ import { Comentarios } from "../models/comentarios";
 import { MembroInfo } from "../models/membro-info";
 import { IgrejaInfoDTO } from "../models/igreja_info.dto";
 import { BrMaskerIonicServices3, BrMaskModel } from "brmasker-ionic-3";
-import { API_CONFIG } from "../config/api.config";
-import { MembroService } from "./domain/membro.service";
-import { DomSanitizer } from "@angular/platform-browser";
 
 @Injectable()
 export class StorageService {

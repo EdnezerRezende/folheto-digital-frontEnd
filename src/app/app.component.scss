@@ -73,4 +73,7 @@ myapp {
     // page-home{
     //     background-color: white;
     // }
+    .menu.menu-right{
+        width: calc(50% - 70px) !important;
+    }
 }

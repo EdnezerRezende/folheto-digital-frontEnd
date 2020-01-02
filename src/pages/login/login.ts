@@ -90,14 +90,7 @@ export class LoginPage {
               .subscribe(
                 response => {
                   this.membro.imageUrl = `${API_CONFIG.bucketBaseUrl}/membro${this.membro.id}.jpg`;
-                  this.blobToDataURL(response).then(dataUrl => {
-                    let str: string = dataUrl as string;
-                    this.membro.imageUrl = this.sanitizer.bypassSecurityTrustUrl(
-                      str
-                    );
-
-
-                  });
+                  this.storage.setMembro(this.membro);
                 },
                 error => {
                   return "assets/imgs/avatar-blank.png";

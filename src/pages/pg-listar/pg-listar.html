@@ -24,7 +24,7 @@
       <ion-item detail="false">
         <ion-thumbnail item-start>
           <img
-            [src]="pg.imageUrl || profileImage"
+            [src]="obterImagem ? obterImagem || profileImage"
             #myImage
             (click)="presentImage(myImage)"
           />

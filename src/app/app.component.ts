@@ -25,6 +25,7 @@ export class MyApp {
   mostraOpcaoListar: boolean = true;
   picture: any;
   avatar = "assets/img/avatar-padrao.jpg";
+
   public paginas: any[] = this.tratarMenuTelaSemCadastro();
 
   constructor(
@@ -38,6 +39,7 @@ export class MyApp {
     public sanitizer: DomSanitizer,
     public membroService:MembroService
   ) {
+  
     events.subscribe("user:created", (user, time) => {
       console.log("Bem Vindo ", user.nome, " as ", time);
     });
@@ -60,6 +62,13 @@ export class MyApp {
       splashScreen.hide();
     });
   }
+
+  // ionViewDidLeave(){
+  //     console.log("entrei aqui, com id = " + this.dadosMembro.id);
+  //     this.obterImagem();
+  //     console.log(this.dadosMembro.imageUrl);
+      
+  // }
 
   tratarMenuTela(): any[] {
     return [
@@ -208,19 +217,6 @@ export class MyApp {
         ],
         icone: "md-people",
         mostra: true
-      },
-      {
-        titulo: "Perfil",
-        subTitulo: [
-          {
-            submenu: "Alterar",
-            componente: "ProfilePage",
-            iconeSub: "md-list-box",
-            mostra: this.mostraOpcaoListar
-          }
-        ],
-        icone: "md-person",
-        mostra: true
       }
     ];
   }
@@ -317,34 +313,57 @@ export class MyApp {
         ],
         icone: "md-color-wand",
         mostra: true
-      },
-      {
-        titulo: "Perfil",
-        subTitulo: [
-          {
-            submenu: "Alterar",
-            componente: "ProfilePage",
-            iconeSub: "md-list-box",
-            mostra: this.mostraOpcaoListar
-          }
-        ],
-        icone: "md-person",
-        mostra: true
       }
     ];
   }
 
   get membroLogado() {
+    this.dadosMembro = this.storage.getMembro();
     return this.storage.getMembro();
   }
 
-  imagemTratada() {
-    this.blobToDataURL(this.dadosMembro.imageUrl).then(dataUrl => {
-      let str: string = dataUrl as string;
-      this.picture = this.sanitizer.bypassSecurityTrustUrl(str);
-    });
+  private paginasPerfil = [
+    {titulo: 'Perfil', componente: 'ProfilePage' }
+
+  ];
+
+  abrePagina(pagina): void {
+    if (pagina.titulo == 'Sair'){
+      this.logoff();
+    }else{
+      this.nav.push(pagina.componente);
+      this.menuCtrl.close();
+    }
+  }
+
+  get imagemTratada() {
+    if(!this.picture ){
+      console.log("ImagemTratada Antes");
+      console.log(this.dadosMembro.imageUrl);
+      
+      this.membroService
+      .getImageFromBucket(this.dadosMembro.id + "")
+      .subscribe(
+        response => {
+          this.dadosMembro.imageUrl = `${API_CONFIG.bucketBaseUrl}/membro${this.dadosMembro.id}.jpg`;
+          this.blobToDataURL(response).then(dataUrl => {
+              let str: string = dataUrl as string;
+              console.log("ImagemTratada Depois");
+              console.log(this.dadosMembro.imageUrl);
+              this.picture = this.sanitizer.bypassSecurityTrustUrl(str);
+              return this.picture;
+            });
+          },
+          error => {
+            this.picture = "assets/img/avatar-padrao.jpg";
+            return this.picture;
+          }
+        );
+
+    }
     return this.picture;
   }
+
   blobToDataURL(blob) {
     return new Promise((fulfill, reject) => {
       let reader = new FileReader();
@@ -367,11 +386,14 @@ export class MyApp {
   logoff() {
     this.mostraOpcaoCadastro = false;
     this.mostraOpcaoListar = true;
+    this.picture = undefined;
     this.auth.logout();
+    this.menuCtrl.close();
     this.nav.setRoot("LoginPage");
   }
 
   irPagina(componente) {
+    this.menuCtrl.close();
     this.nav.push(componente);
   }
 
@@ -387,24 +409,4 @@ export class MyApp {
     return this.showLevel1 === idx;
   }
 
-  get obterImagem(){
-    setTimeout(()=>{
-      if (this.dadosMembro && this.dadosMembro.id){
-        this.membroService.getImageFromBucket(this.dadosMembro.id + "").subscribe(
-          response => {
-            this.dadosMembro.imageUrl = `${API_CONFIG.bucketBaseUrl}/membro${this.dadosMembro.id}.jpg`;
-            this.blobToDataURL(response).then(dataUrl => {
-              let str: string = dataUrl as string;
-              return this.sanitizer.bypassSecurityTrustUrl(str);
-            });
-          },
-          error => {
-            return "assets/imgs/avatar-blank. png";
-          }
-        );
-      }
-
-    },2000);
-    return "assets/imgs/avatar-blank. png";
-  }
 }
