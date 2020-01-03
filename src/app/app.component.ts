@@ -37,9 +37,8 @@ export class MyApp {
     public storage: StorageService,
     public events: Events,
     public sanitizer: DomSanitizer,
-    public membroService:MembroService
+    public membroService: MembroService
   ) {
-  
     events.subscribe("user:created", (user, time) => {
       console.log("Bem Vindo ", user.nome, " as ", time);
     });
@@ -67,7 +66,7 @@ export class MyApp {
   //     console.log("entrei aqui, com id = " + this.dadosMembro.id);
   //     this.obterImagem();
   //     console.log(this.dadosMembro.imageUrl);
-      
+
   // }
 
   tratarMenuTela(): any[] {
@@ -322,44 +321,38 @@ export class MyApp {
     return this.storage.getMembro();
   }
 
-  private paginasPerfil = [
-    {titulo: 'Perfil', componente: 'ProfilePage' }
-
-  ];
+  private paginasPerfil = [{ titulo: "Perfil", componente: "ProfilePage" }];
 
   abrePagina(pagina): void {
-    if (pagina.titulo == 'Sair'){
+    if (pagina.titulo == "Sair") {
       this.logoff();
-    }else{
+    } else {
       this.nav.push(pagina.componente);
       this.menuCtrl.close();
     }
   }
 
   get imagemTratada() {
-    if(!this.picture ){
+    if (!this.picture) {
       console.log("ImagemTratada Antes");
       console.log(this.dadosMembro.imageUrl);
-      
-      this.membroService
-      .getImageFromBucket(this.dadosMembro.id + "")
-      .subscribe(
+
+      this.membroService.getImageFromBucket(this.dadosMembro.id + "").subscribe(
         response => {
           this.dadosMembro.imageUrl = `${API_CONFIG.bucketBaseUrl}/membro${this.dadosMembro.id}.jpg`;
           this.blobToDataURL(response).then(dataUrl => {
-              let str: string = dataUrl as string;
-              console.log("ImagemTratada Depois");
-              console.log(this.dadosMembro.imageUrl);
-              this.picture = this.sanitizer.bypassSecurityTrustUrl(str);
-              return this.picture;
-            });
-          },
-          error => {
-            this.picture = "assets/img/avatar-padrao.jpg";
+            let str: string = dataUrl as string;
+            console.log("ImagemTratada Depois");
+            console.log(this.dadosMembro.imageUrl);
+            this.picture = this.sanitizer.bypassSecurityTrustUrl(str);
             return this.picture;
-          }
-        );
-
+          });
+        },
+        error => {
+          this.picture = "assets/img/avatar-padrao.jpg";
+          return this.picture;
+        }
+      );
     }
     return this.picture;
   }
@@ -408,5 +401,4 @@ export class MyApp {
   isLevel1Shown(idx) {
     return this.showLevel1 === idx;
   }
-
 }
