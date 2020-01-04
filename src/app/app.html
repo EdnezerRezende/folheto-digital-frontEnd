@@ -89,7 +89,7 @@
     </ion-content>
   </ion-menu>
 
-  <ion-menu side="right"  [content]="conteudo" >
+  <ion-menu side="right"  [content]="conteudo" *ngIf="membroLogado" >
     <ion-content >
       <ion-item id="cabecalho-menu" class="cabecalho-menu">
         <div  >
@@ -103,14 +103,14 @@
         <p style="color:white">Olá {{ membroLogado?.nome }}</p>
       </ion-item>
       <ion-list>
-        <button menuClose ion-item 
-          *ngFor="let pagina of paginasPerfil" 
+        <button menuClose ion-item
+          *ngFor="let pagina of paginasPerfil"
           (click)="abrePagina(pagina)">
           {{pagina.titulo}}
         </button>
       </ion-list>
     </ion-content>
   </ion-menu>
-    
+
   <ion-nav [root]="rootPage" main #conteudo swipeBackEnabled="false"></ion-nav>
 </ion-split-pane>

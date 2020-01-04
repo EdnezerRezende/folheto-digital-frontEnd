@@ -321,7 +321,7 @@ export class MyApp {
     return this.storage.getMembro();
   }
 
-  private paginasPerfil = [{ titulo: "Perfil", componente: "ProfilePage" }];
+  paginasPerfil = [{ titulo: "Perfil", componente: "ProfilePage" }];
 
   abrePagina(pagina): void {
     if (pagina.titulo == "Sair") {
