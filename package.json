@@ -33,7 +33,8 @@
     "angular2-jwt": "^0.2.3",
     "brmasker-ionic-3": "^1.6.3",
     "com.telerik.plugins.nativepagetransitions": "^0.6.5",
-    "cordova-android": "6.3.0",
+    "cordova-android": "8.1.0",
+    "cordova-android-support-gradle-release": "^3.0.1",
     "cordova-browser": "5.0.4",
     "cordova-plugin-camera": "^4.1.0",
     "cordova-plugin-device": "^2.0.3",
@@ -68,11 +69,14 @@
       "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-camera": {
         "ANDROID_SUPPORT_V4_VERSION": "27.+"
+      },
+      "cordova-android-support-gradle-release": {
+        "ANDROID_SUPPORT_VERSION": "27.+"
       }
     },
     "platforms": [
-      "android",
-      "browser"
+      "browser",
+      "android"
     ]
   }
 }

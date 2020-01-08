@@ -106,8 +106,7 @@ export class ProfilePage {
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.PNG,
-      mediaType: this.camera.MediaType.PICTURE,
-      allowEdit: true
+      mediaType: this.camera.MediaType.PICTURE
     };
 
     this.camera.getPicture(options).then(
