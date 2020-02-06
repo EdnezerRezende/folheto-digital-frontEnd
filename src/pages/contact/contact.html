@@ -24,16 +24,18 @@
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col>
-            <ion-icon name="call"></ion-icon> {{ obterDadosIgreja.telefones[0]
-            }} / Fax: {{ obterDadosIgreja.telefones[1] }}
-          </ion-col>
-          <ion-col>
-            <ion-icon name="mail-open"></ion-icon>
-            <a href="mailto: obterDadosIgreja.email">
-              {{obterDadosIgreja.email}}
-            </a>
-          </ion-col>
+          <p>
+            <ion-col>
+              <ion-icon name="call"></ion-icon> {{
+              obterDadosIgreja.telefones[0]}}
+            </ion-col>
+            <ion-col>
+              <ion-icon name="mail-open"></ion-icon>
+              <a href="mailto: obterDadosIgreja.email">
+                {{obterDadosIgreja.email}}
+              </a>
+            </ion-col>
+          </p>
         </ion-row>
       </ion-grid>
     </ion-item>
@@ -45,7 +47,7 @@
     *ngIf="!mostrarMap"
   >
     <ion-item>
-      <ion-label stacked>Nome*</ion-label> 
+      <ion-label stacked>Nome*</ion-label>
       <ion-input formControlName="nome" type="text"></ion-input>
     </ion-item>
 
