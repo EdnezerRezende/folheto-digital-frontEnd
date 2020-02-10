@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, IonicPage, NavParams } from 'ionic-angular';
+import { NavController, IonicPage, NavParams, ToastController } from 'ionic-angular';
 import { AuthService } from '../../services/auth.service';
 import { MenuController } from 'ionic-angular/components/app/menu-controller';
 
@@ -13,7 +13,8 @@ export class HomePage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public auth: AuthService,
-    public menuCtrl: MenuController
+    public menuCtrl: MenuController,
+    private toastCtrl: ToastController
   ) {}
 
   logoff(){
@@ -25,6 +26,6 @@ export class HomePage {
   }
 
   toggleRightMenu() {
-    this.menuCtrl.toggle('right');
+   this.menuCtrl.toggle('right');
   }
 }
