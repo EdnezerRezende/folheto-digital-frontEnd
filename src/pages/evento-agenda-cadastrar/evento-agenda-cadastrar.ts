@@ -73,6 +73,7 @@ export class EventoAgendaCadastrarPage {
       this.agendaEvento.descricao = this.formulario.controls.descricao.value;
       this.agendaEvento.dataInicio = this.formulario.controls.dataInicio.value;
       this.agendaEvento.dataFim = this.formulario.controls.dataFim.value;
+      this.agendaEvento.isEvento = this.formulario.controls.isEvento.value == true? true:false;
     }
 
     let membro: MembroInfo = this._storage.getMembro();
