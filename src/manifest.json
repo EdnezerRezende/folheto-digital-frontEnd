@@ -1,10 +1,10 @@
 {
-  "name": "Ionic",
-  "short_name": "Ionic",
+  "name": "PIC Taguatinga",
+  "short_name": "PIC",
   "start_url": "index.html",
   "display": "standalone",
   "icons": [{
-    "src": "assets/imgs/logo.png",
+    "src": "assets/img/icone_login_new-old.jpg",
     "sizes": "512x512",
     "type": "image/png"
   }],
