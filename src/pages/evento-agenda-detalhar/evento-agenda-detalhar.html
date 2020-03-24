@@ -13,7 +13,7 @@
       <ion-card-content>
         {{ agendaEvento.descricao }}
       </ion-card-content>
-      <h6 class="alinharDireita" *ngIf="agendaEvento.isEvento"> Período: {{ agendaEvento.dataInicio }} até {{ agendaEvento.dataFim }}</h6>
+      <h6 class="alinharDireita" *ngIf="agendaEvento.isEvento"> Período: {{ agendaEvento.dataInicio | date:'dd/MM/yyyy' }} até {{ agendaEvento.dataFim | date:'dd/MM/yyyy' }}</h6>
       <h6 class="alinharDireita" *ngIf="!agendaEvento.isEvento"> Data: {{ agendaEvento.diaSemanaAtividade }} - {{ agendaEvento.horaAtividade }}</h6>
     </ion-card>
   </ion-content>
