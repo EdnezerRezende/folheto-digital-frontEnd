@@ -25,7 +25,7 @@ export class ContactPage {
     public storage: StorageService,
     private _loadingCtrl: LoadingController,
     private _alertCtrl: AlertController,
-    private _emailService:EmailService
+    private _emailService: EmailService
   ) {
     this.membro = this.storage.getMembro();
     this.criarFormulario();
@@ -75,7 +75,7 @@ export class ContactPage {
     let loading = this.obterLoading();
     loading.present();
 
-    let contato:ContatoDTO = new ContatoDTO();
+    let contato: ContatoDTO = new ContatoDTO();
     contato.to = "godoirezende@gmail.com";
     contato.email = this.membro.email;
     contato.assunto = this.formGroup.value.assunto;
@@ -83,15 +83,16 @@ export class ContactPage {
     contato.nome = this.membro.nome;
     contato.telefone = this.formGroup.value.telefone;
 
-    this._emailService.enviarContato(contato).subscribe(response => {
-      loading.dismiss();
-      this._alertCtrl
+    this._emailService.enviarContato(contato).subscribe(
+      response => {
+        loading.dismiss();
+        this._alertCtrl
           .create({
-            title: 'Sucesso',
-            subTitle: 'O E-mail foi enviado com sucesso, aguarde contato!',
+            title: "Sucesso",
+            subTitle: "O E-mail foi enviado com sucesso, aguarde contato!",
             buttons: [
               {
-                text: 'Sim',
+                text: "Sim",
                 handler: () => {
                   this.navCtrl.goToRoot;
                 }
@@ -99,24 +100,11 @@ export class ContactPage {
             ]
           })
           .present();
-    }, erro => {
-      loading.dismiss();
-      this._alertCtrl
-          .create({
-            title: 'Error',
-            subTitle: 'Não foi possível enviar o E-mail, tente novamente mais tarde!',
-            buttons: [
-              {
-                text: 'Sim',
-                handler: () => {
-                  this.navCtrl.setRoot('TabsPage');
-                }
-              }
-            ]
-          })
-          .present();
-
-    })
+      },
+      erro => {
+        loading.dismiss();
+      }
+    );
   }
 
   visualizarMap() {

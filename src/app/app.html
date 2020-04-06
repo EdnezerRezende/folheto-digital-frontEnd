@@ -3,8 +3,8 @@
     <!-- *ngIf="membroLogado" -->
     <ion-content *ngIf="membroLogado">
       <ion-item id="cabecalho-menu" class="cabecalho-menu">
-        <div >
-          <ion-avatar item-start >
+        <div>
+          <ion-avatar item-start>
             <img [src]="imagemTratada" />
           </ion-avatar>
         </div>
@@ -37,7 +37,7 @@
             ></ion-icon>
           </h2>
           <ion-list
-            showWhen="android,windows,browser"
+            hideWhen="ios"
             style="margin-bottom: -26px;"
             menuClose
             *ngIf="isLevel1Shown('idx'+i)"
@@ -89,10 +89,10 @@
     </ion-content>
   </ion-menu>
 
-  <ion-menu side="right"  [content]="conteudo" *ngIf="membroLogado" >
-    <ion-content >
+  <ion-menu side="right" [content]="conteudo" *ngIf="membroLogado">
+    <ion-content>
       <ion-item id="cabecalho-menu" class="cabecalho-menu">
-        <div  >
+        <div>
           <ion-avatar item-start>
             <img [src]="imagemTratada" />
           </ion-avatar>
@@ -103,9 +103,12 @@
         <p style="color:white">Olá {{ membroLogado?.nome }}</p>
       </ion-item>
       <ion-list>
-        <button menuClose ion-item
+        <button
+          menuClose
+          ion-item
           *ngFor="let pagina of paginasPerfil"
-          (click)="abrePagina(pagina)">
+          (click)="abrePagina(pagina)"
+        >
           {{pagina.titulo}}
         </button>
       </ion-list>
