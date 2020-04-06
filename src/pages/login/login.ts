@@ -4,7 +4,8 @@ import {
   NavController,
   NavParams,
   MenuController,
-  Events
+  Events,
+  LoadingController,
 } from "ionic-angular";
 import { AuthService } from "../../services/auth.service";
 import { CredenciaisDTO } from "../../models/credenciais.dto";
@@ -19,12 +20,12 @@ import { DomSanitizer } from "@angular/platform-browser";
 @IonicPage()
 @Component({
   selector: "page-login",
-  templateUrl: "login.html"
+  templateUrl: "login.html",
 })
 export class LoginPage {
   creds: CredenciaisDTO = {
     email: "",
-    senha: ""
+    senha: "",
   };
 
   membro: MembroInfo = new MembroInfo();
@@ -38,7 +39,8 @@ export class LoginPage {
     public storage: StorageService,
     public events: Events,
     public igrejaService: IgrejaService,
-    public sanitizer: DomSanitizer
+    public sanitizer: DomSanitizer,
+    private _loadingCtrl: LoadingController
   ) {
     this.creds = new CredenciaisDTO();
   }
@@ -58,51 +60,62 @@ export class LoginPage {
 
   ionViewDidEnter() {
     this.auth.refreshToken().subscribe(
-      response => {
+      (response) => {
         this.auth.successfulLogin(response.headers.get("Authorization"));
         this.navCtrl.setRoot("TabsPage");
       },
-      error => {}
+      (error) => {}
     );
   }
 
   login() {
+    let loading = this.obterLoading();
+    loading.present();
     this.auth.authenticate(this.creds).subscribe(
-      response => {
+      (response) => {
         this.auth.successfulLogin(response.headers.get("Authorization"));
         let user: LocalUser = this.storage.getLocalUser();
         this.membroService.findByEmail(user.email).subscribe(
-          resposta => {
+          (resposta) => {
             this.membro = resposta;
             this.storage.setMembro(this.membro);
             this.createUser(this.membro);
 
             this.igrejaService.obterIgreja(this.membro.igrejaId).subscribe(
-              resposta => {
+              (resposta) => {
                 this.storage.setIgreja(resposta);
               },
-              error => {
+              (error) => {
                 console.log("Não foi possivel obter a igreja");
               }
             );
             this.membroService
               .getImageFromBucket(this.membro.id + "")
               .subscribe(
-                response => {
+                (response) => {
                   this.membro.imageUrl = `${API_CONFIG.bucketBaseUrl}/membro${this.membro.id}.jpg`;
                   this.storage.setMembro(this.membro);
                 },
-                error => {
+                (error) => {
                   return "assets/imgs/avatar-blank.png";
                 }
               );
           },
-          error => {}
+          (error) => {}
         );
+        loading.dismiss();
         this.navCtrl.setRoot("TabsPage");
       },
-      error => {}
+      (error) => {
+        loading.dismiss();
+      }
     );
+  }
+
+  obterLoading() {
+    return this._loadingCtrl.create({
+      content: "Carregando...",
+    });
   }
 
   signup() {
@@ -111,14 +124,14 @@ export class LoginPage {
 
   getImageIfExists(membro: MembroInfo) {
     this.membroService.getImageFromBucket(this.membro.id + "").subscribe(
-      response => {
+      (response) => {
         this.membro.imageUrl = `${API_CONFIG.bucketBaseUrl}/membro${this.membro.id}.jpg`;
-        this.blobToDataURL(response).then(dataUrl => {
+        this.blobToDataURL(response).then((dataUrl) => {
           let str: string = dataUrl as string;
           return this.sanitizer.bypassSecurityTrustUrl(str);
         });
       },
-      error => {
+      (error) => {
         return "assets/imgs/avatar-blank.png";
       }
     );
@@ -128,7 +141,7 @@ export class LoginPage {
     return new Promise((fulfill, reject) => {
       let reader = new FileReader();
       reader.onerror = reject;
-      reader.onload = e => fulfill(reader.result);
+      reader.onload = (e) => fulfill(reader.result);
       reader.readAsDataURL(blob);
     });
   }

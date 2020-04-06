@@ -4,7 +4,7 @@ import {
   HttpInterceptor,
   HttpHandler,
   HttpRequest,
-  HTTP_INTERCEPTORS
+  HTTP_INTERCEPTORS,
 } from "@angular/common/http";
 import { Observable } from "rxjs/Rx"; // IMPORTANTE: IMPORT ATUALIZADO
 import { AlertController } from "ionic-angular/components/alert/alert-controller";
@@ -64,13 +64,13 @@ export class ErrorInterceptor implements HttpInterceptor {
   handle401() {
     let alert = this.alertCtrl.create({
       title: "Falha de autenticação",
-      message: "Email ou senha incorretos",
+      message: "E-mail ou senha incorretos",
       enableBackdropDismiss: false,
       buttons: [
         {
-          text: "Ok"
-        }
-      ]
+          text: "Ok",
+        },
+      ],
     });
     alert.present();
   }
@@ -82,9 +82,9 @@ export class ErrorInterceptor implements HttpInterceptor {
       enableBackdropDismiss: false,
       buttons: [
         {
-          text: "Ok"
-        }
-      ]
+          text: "Ok",
+        },
+      ],
     });
     alert.present();
   }
@@ -99,9 +99,9 @@ export class ErrorInterceptor implements HttpInterceptor {
         enableBackdropDismiss: false,
         buttons: [
           {
-            text: "Ok"
-          }
-        ]
+            text: "Ok",
+          },
+        ],
       });
       alert.present();
     }
@@ -114,9 +114,9 @@ export class ErrorInterceptor implements HttpInterceptor {
       enableBackdropDismiss: false,
       buttons: [
         {
-          text: "Ok"
-        }
-      ]
+          text: "Ok",
+        },
+      ],
     });
     alert.present();
   }
@@ -139,5 +139,5 @@ export class ErrorInterceptor implements HttpInterceptor {
 export const ErrorInterceptorProvider = {
   provide: HTTP_INTERCEPTORS,
   useClass: ErrorInterceptor,
-  multi: true
+  multi: true,
 };
