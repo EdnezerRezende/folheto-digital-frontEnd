@@ -1,10 +1,10 @@
 {
-  "name": "PIC Taguatinga",
-  "short_name": "PIC",
+  "name": "Boletim PIC Taguatinga",
+  "short_name": "Boletim PIC",
   "start_url": "index.html",
   "display": "standalone",
   "icons": [{
-    "src": "assets/img/icone_login_new-old.jpg",
+    "src": "assets/img/logo.jpg",
     "sizes": "512x512",
     "type": "image/png"
   }],
