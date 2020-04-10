@@ -34,8 +34,8 @@ export class ContactPage {
   ionViewWillEnter() {}
 
   get obterDadosIgreja(): IgrejaInfoDTO {
-    let igreja: IgrejaInfoDTO = this.storage.getIgreja();
-    return igreja;
+    this.igreja = this.storage.getIgreja();
+    return this.igreja;
   }
 
   obterLoading() {
@@ -80,7 +80,7 @@ export class ContactPage {
     loading.present();
 
     let contato: ContatoDTO = new ContatoDTO();
-    contato.to = "godoirezende@gmail.com";
+    contato.to = this.igreja.email;
     contato.email = this.membro.email;
     contato.assunto = this.formGroup.value.assunto;
     contato.mensagem = this.formGroup.value.mensagem;
