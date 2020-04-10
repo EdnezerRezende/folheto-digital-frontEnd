@@ -1,7 +1,6 @@
 <ion-split-pane>
-  <ion-menu [content]="conteudo" id="cabecalho-menu">
-    <!-- *ngIf="membroLogado" -->
-    <ion-content *ngIf="membroLogado">
+  <ion-menu [content]="conteudo" id="cabecalho-menu" *ngIf="membroLogado">
+    <ion-content>
       <ion-item id="cabecalho-menu" class="cabecalho-menu">
         <div>
           <ion-avatar item-start>
@@ -11,7 +10,7 @@
         <button menuClose ion-button round (click)="logoff() " icon-start>
           <ion-icon name="md-exit"></ion-icon> SAIR
         </button>
-        <p style="color:white">{{ membroLogado?.email }}</p>
+        <p style="color: white;">{{ membroLogado?.email }}</p>
       </ion-item>
 
       <ion-list sliding="false" id="aberturaMenu">
@@ -22,15 +21,17 @@
           text-wrap
           [ngClass]="{active: isLevel1Shown('idx'+i)}"
           (click)="toggleLevel1('idx'+i)"
-          style="justify-content: space-around "
+          style="justify-content: space-around;"
         >
           <h2>
             <ion-icon [name]="pagina.icone" item-left></ion-icon>
             {{ pagina.titulo }}
             <ion-icon
-              style="justify-content: flex-end;
-                        display: flex;
-                        margin-top: -28px;"
+              style="
+                justify-content: flex-end;
+                display: flex;
+                margin-top: -28px;
+              "
               color="success"
               item-right
               [name]="isLevel1Shown('idx'+i) ? 'arrow-dropdown' : 'arrow-dropright'"
@@ -100,7 +101,7 @@
         <button menuClose ion-button round (click)="logoff() " icon-start>
           <ion-icon name="md-exit"></ion-icon> SAIR
         </button>
-        <p style="color:white">Olá {{ membroLogado?.nome }}</p>
+        <p style="color: white;">Olá {{ membroLogado?.nome }}</p>
       </ion-item>
       <ion-list>
         <button

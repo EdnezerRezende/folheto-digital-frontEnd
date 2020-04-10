@@ -11,7 +11,7 @@ import { AlertController } from "ionic-angular/components/alert/alert-controller
 @IonicPage()
 @Component({
   selector: "page-contact",
-  templateUrl: "contact.html"
+  templateUrl: "contact.html",
 })
 export class ContactPage {
   formGroup: FormGroup;
@@ -40,7 +40,7 @@ export class ContactPage {
 
   obterLoading() {
     return this._loadingCtrl.create({
-      content: "Carregando..."
+      content: "Carregando...",
     });
   }
 
@@ -51,23 +51,27 @@ export class ContactPage {
         [
           Validators.required,
           Validators.minLength(5),
-          Validators.maxLength(120)
-        ]
+          Validators.maxLength(120),
+        ],
       ],
       email: [this.membro.email, [Validators.required, Validators.email]],
       telefone: [this.membro.telefone1, [Validators.required]],
       assunto: [
         "",
-        [Validators.required, Validators.minLength(5), Validators.maxLength(50)]
+        [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(50),
+        ],
       ],
       mensagem: [
         "",
         [
           Validators.required,
           Validators.minLength(11),
-          Validators.maxLength(200)
-        ]
-      ]
+          Validators.maxLength(200),
+        ],
+      ],
     });
   }
 
@@ -84,7 +88,7 @@ export class ContactPage {
     contato.telefone = this.formGroup.value.telefone;
 
     this._emailService.enviarContato(contato).subscribe(
-      response => {
+      (response) => {
         loading.dismiss();
         this._alertCtrl
           .create({
@@ -92,16 +96,16 @@ export class ContactPage {
             subTitle: "O E-mail foi enviado com sucesso, aguarde contato!",
             buttons: [
               {
-                text: "Sim",
+                text: "OK",
                 handler: () => {
-                  this.navCtrl.goToRoot;
-                }
-              }
-            ]
+                  this.navCtrl.setRoot("TabsPage");
+                },
+              },
+            ],
           })
           .present();
       },
-      erro => {
+      (erro) => {
         loading.dismiss();
       }
     );

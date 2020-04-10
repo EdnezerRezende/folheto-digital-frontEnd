@@ -43,11 +43,11 @@ import { Camera } from "@ionic-native/camera";
       tabsPlacement: "bottom",
       pageTransition: "md-transition  ",
       menuType: "overlay",
-      RichTextModule
+      RichTextModule,
     }),
     OrderModule,
     IonicImageViewerModule,
-    BrMaskerModule
+    BrMaskerModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [MyApp],
@@ -73,8 +73,8 @@ import { Camera } from "@ionic-native/camera";
     OfertaServicoService,
     MissaoService,
     EmailService,
-    Camera
+    Camera,
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}
