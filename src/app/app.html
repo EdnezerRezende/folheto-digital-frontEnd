@@ -1,11 +1,6 @@
 <ion-split-pane>
   <ion-menu [content]="conteudo" id="cabecalho-menu" *ngIf="membroLogado">
-<<<<<<< HEAD
     <ion-content>
-=======
-    <!-- *ngIf="membroLogado" -->
-    <ion-content *ngIf="membroLogado">
->>>>>>> Remove barra lateral na página de login (web)
       <ion-item id="cabecalho-menu" class="cabecalho-menu">
         <div>
           <ion-avatar item-start>
@@ -42,50 +37,20 @@
               [name]="isLevel1Shown('idx'+i) ? 'arrow-dropdown' : 'arrow-dropright'"
             ></ion-icon>
           </h2>
-          <ion-list
-            hideWhen="ios"
-            style="margin-bottom: -26px;"
-            menuClose
-            *ngIf="isLevel1Shown('idx'+i)"
-          >
-            <ion-item
-              no-lines
-              menuClose
-              *ngFor="let sub of pagina.subTitulo"
-              text-wrap
-              (click)="irPagina(sub.componente)"
-            >
+          <ion-list hideWhen="ios" style="margin-bottom: -26px;" menuClose *ngIf="isLevel1Shown('idx'+i)">
+            <ion-item no-lines menuClose *ngFor="let sub of pagina.subTitulo" text-wrap
+              (click)="irPagina(sub.componente)">
               <h3 style="margin-top: -12px;">
-                <ion-icon
-                  color="sucess"
-                  [name]="sub.iconeSub"
-                  menuClose
-                  item-left
-                ></ion-icon>
+                <ion-icon color="sucess" [name]="sub.iconeSub" menuClose item-left></ion-icon>
                 {{sub.submenu}}
               </h3>
             </ion-item>
           </ion-list>
-          <ion-list
-            showWhen="ios"
-            style="margin-bottom: -15px;"
-            menuClose
-            *ngIf="isLevel1Shown('idx'+i)"
-          >
-            <ion-item
-              no-lines
-              menuClose
-              *ngFor="let sub of pagina.subTitulo"
-              text-wrap
-              (click)="irPagina(sub.componente)"
-            >
+          <ion-list showWhen="ios" style="margin-bottom: -15px;" menuClose *ngIf="isLevel1Shown('idx'+i)">
+            <ion-item no-lines menuClose *ngFor="let sub of pagina.subTitulo" text-wrap
+              (click)="irPagina(sub.componente)">
               <h3 style="margin-top: -10px;">
-                <ion-icon
-                  color="sucess"
-                  [name]="sub.iconeSub"
-                  menuClose
-                  item-left
-                ></ion-icon>
+                <ion-icon color="sucess" [name]="sub.iconeSub" menuClose item-left></ion-icon>
                 {{sub.submenu}}
               </h3>
             </ion-item>
@@ -109,12 +74,7 @@
         <p style="color: white;">Olá {{ membroLogado?.nome }}</p>
       </ion-item>
       <ion-list>
-        <button
-          menuClose
-          ion-item
-          *ngFor="let pagina of paginasPerfil"
-          (click)="abrePagina(pagina)"
-        >
+        <button menuClose ion-item *ngFor="let pagina of paginasPerfil" (click)="abrePagina(pagina)">
           {{pagina.titulo}}
         </button>
       </ion-list>
@@ -123,3 +83,7 @@
 
   <ion-nav [root]="rootPage" main #conteudo swipeBackEnabled="false"></ion-nav>
 </ion-split-pane>
+
+<button ion-fab class="btn-pwa" (click)="instalarPWA(event)" *ngIf="showBtn" showWhen="ios, android">
+  <ion-icon name="add-circle-outline" style="font-weight: bold;"></ion-icon>
+</button>

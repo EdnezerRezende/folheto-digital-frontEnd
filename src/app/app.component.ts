@@ -11,7 +11,7 @@ import { API_CONFIG } from "../config/api.config";
 import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
-  templateUrl: "app.html"
+  templateUrl: "app.html",
 })
 export class MyApp {
   @ViewChild(Nav) public nav: Nav;
@@ -25,6 +25,8 @@ export class MyApp {
   mostraOpcaoListar: boolean = true;
   picture: any;
   avatar = "assets/img/avatar-padrao.jpg";
+  showBtn: boolean = false;
+  deferredPrompt: any;
 
   public paginas: any[] = this.tratarMenuTelaSemCadastro();
 
@@ -60,13 +62,51 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
     });
+
+    this.checarPWA();
+  }
+
+  checarPWA() {
+    window.addEventListener("beforeinstallprompt", (e) => {
+      // Prevent Chrome 67 and earlier from automatically showing the prompt
+      e.preventDefault();
+      // Stash the event so it can be triggered later on the button event.
+      this.deferredPrompt = e;
+
+      // Update UI by showing a button to notify the user they can add to home screen
+      this.showBtn = true;
+    });
+
+    //button click event to show the promt
+
+    window.addEventListener("appinstalled", (event) => {
+      console.log("installed");
+    });
+
+    if (window.matchMedia("(display-mode: standalone)").matches) {
+      console.log("display-mode is standalone");
+    }
+  }
+
+  instalarPWA(e) {
+    // hide our user interface that shows our button
+    // Show the prompt
+    this.deferredPrompt.prompt();
+    // Wait for the user to respond to the prompt
+    this.deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === "accepted") {
+        console.log("User accepted the prompt");
+      } else {
+        console.log("User dismissed the prompt");
+      }
+      this.deferredPrompt = null;
+    });
   }
 
   // ionViewDidLeave(){
   //     console.log("entrei aqui, com id = " + this.dadosMembro.id);
   //     this.obterImagem();
   //     console.log(this.dadosMembro.imageUrl);
-
   // }
 
   tratarMenuTela(): any[] {
@@ -78,17 +118,17 @@ export class MyApp {
             submenu: "Cadastrar",
             componente: "MensagemCadastrarPage",
             iconeSub: "md-paper",
-            mostra: this.mostraOpcaoCadastro
+            mostra: this.mostraOpcaoCadastro,
           },
           {
             submenu: "Listar",
             componente: "MensagemListarPage",
             iconeSub: "md-list-box",
-            mostra: this.mostraOpcaoListar
-          }
+            mostra: this.mostraOpcaoListar,
+          },
         ],
         icone: "md-filing",
-        mostra: true
+        mostra: true,
       },
       {
         titulo: "PG´s",
@@ -97,17 +137,17 @@ export class MyApp {
             submenu: "Cadastrar",
             componente: "PgCadastrarPage",
             iconeSub: "md-paper",
-            mostraCad: this.mostraOpcaoCadastro
+            mostraCad: this.mostraOpcaoCadastro,
           },
           {
             submenu: "Listar",
             componente: "PgListarPage",
             iconeSub: "md-list-box",
-            mostra: this.mostraOpcaoListar
-          }
+            mostra: this.mostraOpcaoListar,
+          },
         ],
         icone: "md-home",
-        mostra: true
+        mostra: true,
       },
       {
         titulo: "Agendas e Eventos",
@@ -116,17 +156,17 @@ export class MyApp {
             submenu: "Cadastrar",
             componente: "EventoAgendaCadastrarPage",
             iconeSub: "md-paper",
-            mostraCad: this.mostraOpcaoCadastro
+            mostraCad: this.mostraOpcaoCadastro,
           },
           {
             submenu: "Listar",
             componente: "EventoAgendaListarPage",
             iconeSub: "md-list-box",
-            mostra: this.mostraOpcaoListar
-          }
+            mostra: this.mostraOpcaoListar,
+          },
         ],
         icone: "md-calendar",
-        mostra: true
+        mostra: true,
       },
       {
         titulo: "Devocionais",
@@ -135,17 +175,17 @@ export class MyApp {
             submenu: "Cadastrar",
             componente: "DevocionaisCadastrarPage",
             iconeSub: "md-paper",
-            mostraCad: this.mostraOpcaoCadastro
+            mostraCad: this.mostraOpcaoCadastro,
           },
           {
             submenu: "Listar",
             componente: "DevocionaisListarPage",
             iconeSub: "md-list-box",
-            mostra: this.mostraOpcaoListar
-          }
+            mostra: this.mostraOpcaoListar,
+          },
         ],
         icone: "md-bookmarks",
-        mostra: true
+        mostra: true,
       },
       {
         titulo: "Ofertas e Serviços",
@@ -154,17 +194,17 @@ export class MyApp {
             submenu: "Cadastrar",
             componente: "OfertasServicoCadastrarPage",
             iconeSub: "md-paper",
-            mostraCad: this.mostraOpcaoCadastro
+            mostraCad: this.mostraOpcaoCadastro,
           },
           {
             submenu: "Listar",
             componente: "OfertasServicoListarPage",
             iconeSub: "md-list-box",
-            mostra: this.mostraOpcaoListar
-          }
+            mostra: this.mostraOpcaoListar,
+          },
         ],
         icone: "md-bookmarks",
-        mostra: true
+        mostra: true,
       },
       {
         titulo: "Missões",
@@ -173,17 +213,17 @@ export class MyApp {
             submenu: "Cadastrar",
             componente: "MissaoCadastrarPage",
             iconeSub: "md-paper",
-            mostra: this.mostraOpcaoCadastro
+            mostra: this.mostraOpcaoCadastro,
           },
           {
             submenu: "Listar",
             componente: "MissaoListarPage",
             iconeSub: "md-list-box",
-            mostra: this.mostraOpcaoListar
-          }
+            mostra: this.mostraOpcaoListar,
+          },
         ],
         icone: "md-globe",
-        mostra: true
+        mostra: true,
       },
       {
         titulo: "Aniversariantes",
@@ -192,11 +232,11 @@ export class MyApp {
             submenu: "Listar",
             componente: "AniversariantesListarPage",
             iconeSub: "md-list-box",
-            mostra: this.mostraOpcaoListar
-          }
+            mostra: this.mostraOpcaoListar,
+          },
         ],
         icone: "md-color-wand",
-        mostra: true
+        mostra: true,
       },
       {
         titulo: "Membros",
@@ -205,18 +245,18 @@ export class MyApp {
             submenu: "Cadastrar",
             componente: "SignupPage",
             iconeSub: "md-paper",
-            mostra: this.mostraOpcaoCadastro
+            mostra: this.mostraOpcaoCadastro,
           },
           {
             submenu: "Listar",
             componente: "MembrosListarPage",
             iconeSub: "md-list-box",
-            mostra: this.mostraOpcaoListar
-          }
+            mostra: this.mostraOpcaoListar,
+          },
         ],
         icone: "md-people",
-        mostra: true
-      }
+        mostra: true,
+      },
     ];
   }
 
@@ -229,11 +269,11 @@ export class MyApp {
             submenu: "Listar",
             componente: "MensagemListarPage",
             iconeSub: "md-list-box",
-            mostra: this.mostraOpcaoListar
-          }
+            mostra: this.mostraOpcaoListar,
+          },
         ],
         icone: "md-filing",
-        mostra: true
+        mostra: true,
       },
       {
         titulo: "PG´s",
@@ -242,11 +282,11 @@ export class MyApp {
             submenu: "Listar",
             componente: "PgListarPage",
             iconeSub: "md-list-box",
-            mostra: this.mostraOpcaoListar
-          }
+            mostra: this.mostraOpcaoListar,
+          },
         ],
         icone: "md-home",
-        mostra: true
+        mostra: true,
       },
       {
         titulo: "Agendas e Eventos",
@@ -255,11 +295,11 @@ export class MyApp {
             submenu: "Listar",
             componente: "EventoAgendaListarPage",
             iconeSub: "md-list-box",
-            mostra: this.mostraOpcaoListar
-          }
+            mostra: this.mostraOpcaoListar,
+          },
         ],
         icone: "md-calendar",
-        mostra: true
+        mostra: true,
       },
       {
         titulo: "Devocionais",
@@ -268,11 +308,11 @@ export class MyApp {
             submenu: "Listar",
             componente: "DevocionaisListarPage",
             iconeSub: "md-list-box",
-            mostra: this.mostraOpcaoListar
-          }
+            mostra: this.mostraOpcaoListar,
+          },
         ],
         icone: "md-bookmarks",
-        mostra: true
+        mostra: true,
       },
       {
         titulo: "Ofertas e Serviços",
@@ -281,11 +321,11 @@ export class MyApp {
             submenu: "Listar",
             componente: "OfertasServicoListarPage",
             iconeSub: "md-list-box",
-            mostra: this.mostraOpcaoListar
-          }
+            mostra: this.mostraOpcaoListar,
+          },
         ],
         icone: "md-bookmarks",
-        mostra: true
+        mostra: true,
       },
       {
         titulo: "Missões",
@@ -294,11 +334,11 @@ export class MyApp {
             submenu: "Listar",
             componente: "MissaoListarPage",
             iconeSub: "md-list-box",
-            mostra: this.mostraOpcaoListar
-          }
+            mostra: this.mostraOpcaoListar,
+          },
         ],
         icone: "md-filing",
-        mostra: true
+        mostra: true,
       },
       {
         titulo: "Aniversariantes",
@@ -307,12 +347,12 @@ export class MyApp {
             submenu: "Listar",
             componente: "AniversariantesListarPage",
             iconeSub: "md-list-box",
-            mostra: this.mostraOpcaoListar
-          }
+            mostra: this.mostraOpcaoListar,
+          },
         ],
         icone: "md-color-wand",
-        mostra: true
-      }
+        mostra: true,
+      },
     ];
   }
 
@@ -338,9 +378,9 @@ export class MyApp {
       console.log(this.dadosMembro.imageUrl);
 
       this.membroService.getImageFromBucket(this.dadosMembro.id + "").subscribe(
-        response => {
+        (response) => {
           this.dadosMembro.imageUrl = `${API_CONFIG.bucketBaseUrl}/membro${this.dadosMembro.id}.jpg`;
-          this.blobToDataURL(response).then(dataUrl => {
+          this.blobToDataURL(response).then((dataUrl) => {
             let str: string = dataUrl as string;
             console.log("ImagemTratada Depois");
             console.log(this.dadosMembro.imageUrl);
@@ -348,7 +388,7 @@ export class MyApp {
             return this.picture;
           });
         },
-        error => {
+        (error) => {
           this.picture = "assets/img/avatar-padrao.jpg";
           return this.picture;
         }
@@ -361,7 +401,7 @@ export class MyApp {
     return new Promise((fulfill, reject) => {
       let reader = new FileReader();
       reader.onerror = reject;
-      reader.onload = e => fulfill(reader.result);
+      reader.onload = (e) => fulfill(reader.result);
       reader.readAsDataURL(blob);
     });
   }
