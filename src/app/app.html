@@ -84,6 +84,6 @@
   <ion-nav [root]="rootPage" main #conteudo swipeBackEnabled="false"></ion-nav>
 </ion-split-pane>
 
-<button ion-fab class="btn-pwa" (click)="instalarPWA(event)" *ngIf="showBtn" showWhen="ios, android">
+<button ion-fab class="btn-pwa" (click)="instalarPWA(event)" *ngIf="showBtn">
   <ion-icon name="add-circle-outline" style="font-weight: bold;"></ion-icon>
 </button>
