@@ -14,11 +14,11 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
-$fa-font-path: "../assets/fonts" !default; 
+$fa-font-path: "../assets/fonts" !default;
 
-@import "font-awesome"; 
+@import "font-awesome";
 
-i[class^="fa-"], ion-icon[class^="fa-"] {    
+i[class^="fa-"], ion-icon[class^="fa-"] {
    font-family: "FontAwesome" !important;
 }
 
@@ -93,4 +93,10 @@ page-home{
 }
 .alinharDireita{
    text-align: right;
+}
+.btn-pwa {
+  top: 32px;
+  right: 32px;
+  position: absolute;
+  font-weight: bold;
 }

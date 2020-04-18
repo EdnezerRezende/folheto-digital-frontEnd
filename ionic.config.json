@@ -1,8 +1,7 @@
 {
   "name": "folheto_digital_frontEnd",
-  "app_id": "",
-  "type": "ionic-angular",
   "integrations": {
     "cordova": {}
-  }
+  },
+  "type": "ionic-angular"
 }

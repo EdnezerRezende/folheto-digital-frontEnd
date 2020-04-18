@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="br.com.igrejacristo.folhetim" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>PIC</name>
+    <name>Boletim PIC Taguatinga</name>
     <description>Aplicação voltada para acompanhamento das atividades da Igreja de Cristo</description>
-    <author email="godoirezende@gmail.com" href="http://ionicframework.com/">Ednezer de Godoi Rezende</author>
+    <author email="cristeltagsul@bol.com.br" href="pictaguatinga.com.br">PIC Taguatinga</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
