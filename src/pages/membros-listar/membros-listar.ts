@@ -5,7 +5,7 @@ import {
   NavParams,
   LoadingController,
   AlertController,
-  ItemSliding
+  ItemSliding,
 } from "ionic-angular";
 import { Membro } from "../../models/membro";
 import { ImageViewerController } from "ionic-img-viewer";
@@ -14,12 +14,11 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { StorageService } from "../../services/storage.service";
 import { IgrejaInfoDTO } from "../../models/igreja_info.dto";
 import { API_CONFIG } from "../../config/api.config";
-import { BrMaskModel, BrMaskerIonicServices3 } from "brmasker-ionic-3";
 
 @IonicPage()
 @Component({
   selector: "page-membros-listar",
-  templateUrl: "membros-listar.html"
+  templateUrl: "membros-listar.html",
 })
 export class MembrosListarPage {
   membros: Membro[] = new Array<Membro>();
@@ -37,8 +36,7 @@ export class MembrosListarPage {
     private _membroService: MembroService,
     public sanitizer: DomSanitizer,
     imageViewerCtrl: ImageViewerController,
-    public storage: StorageService,
-    private brMasker: BrMaskerIonicServices3
+    public storage: StorageService
   ) {
     this._imageViewerCtrl = imageViewerCtrl;
     this.profileImage = "assets/imgs/avatar-blank.png";
@@ -46,7 +44,7 @@ export class MembrosListarPage {
 
   obterLoading() {
     return this._loadingCtrl.create({
-      content: "Carregando..."
+      content: "Carregando...",
     });
   }
 
@@ -63,13 +61,13 @@ export class MembrosListarPage {
     loading.present();
     let igreja: IgrejaInfoDTO = this.storage.getIgreja();
     this._membroService.buscaTodosPorIgreja(igreja.id).subscribe(
-      resposta => {
+      (resposta) => {
         loading.dismiss();
         this.membros = resposta;
         this.loadImageUrls();
         this.membrosSearch = this.membros;
       },
-      error => {
+      (error) => {
         loading.dismiss();
         this._alertCtrl
           .create({
@@ -78,9 +76,9 @@ export class MembrosListarPage {
               "Não foi possível obter os Membros, tente novamente mais tarde!",
             buttons: [
               {
-                text: "Ok"
-              }
-            ]
+                text: "Ok",
+              },
+            ],
           })
           .present();
         this.navCtrl.goToRoot;
@@ -89,36 +87,36 @@ export class MembrosListarPage {
   }
 
   loadImageUrls() {
-    this.membros.forEach(item => {
+    this.membros.forEach((item) => {
       this._membroService.getSmallImageFromBucket(item.id).subscribe(
-        response => {
+        (response) => {
           item.imageUrl = `${API_CONFIG.bucketBaseUrl}/membro${item.id}.jpg`;
         },
-        error => {}
+        (error) => {}
       );
     });
   }
 
   sendPicture(item: Membro) {
     this._membroService.uploadPicture(this.picture, item.id).subscribe(
-      response => {
+      (response) => {
         this.picture = null;
         this.getImageIfExists(item);
       },
-      error => {}
+      (error) => {}
     );
   }
 
   getImageIfExists(item: Membro) {
     this._membroService.getImageFromBucket(item.id + "").subscribe(
-      response => {
+      (response) => {
         this.membros[0].imageUrl = `${API_CONFIG.bucketBaseUrl}/Pg${item.id}.jpg`;
-        this.blobToDataURL(response).then(dataUrl => {
+        this.blobToDataURL(response).then((dataUrl) => {
           let str: string = dataUrl as string;
           item.imageUrl = this.sanitizer.bypassSecurityTrustUrl(str);
         });
       },
-      error => {
+      (error) => {
         this.profileImage = "assets/imgs/avatar-blank.png";
       }
     );
@@ -128,7 +126,7 @@ export class MembrosListarPage {
     return new Promise((fulfill, reject) => {
       let reader = new FileReader();
       reader.onerror = reject;
-      reader.onload = e => fulfill(reader.result);
+      reader.onload = (e) => fulfill(reader.result);
       reader.readAsDataURL(blob);
     });
   }
@@ -141,7 +139,7 @@ export class MembrosListarPage {
     const val = ev.target.value;
 
     if (val && val.trim() != "") {
-      this.membrosSearch = this.membrosSearch.filter(item => {
+      this.membrosSearch = this.membrosSearch.filter((item) => {
         return (
           item.nome.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
           item.email.toLowerCase().indexOf(val.toLowerCase()) > -1
@@ -167,10 +165,10 @@ export class MembrosListarPage {
             text: "Sim",
             handler: () => {
               this.deletarConfirmado(item);
-            }
+            },
           },
-          { text: "Não" }
-        ]
+          { text: "Não" },
+        ],
       })
       .present();
     slidingItem.close();
@@ -191,7 +189,7 @@ export class MembrosListarPage {
           this.membrosSearch = this.copiaLista();
         }
       },
-      error => {
+      (error) => {
         loading.dismiss();
         console.log(error);
         this._alertCtrl
@@ -201,9 +199,9 @@ export class MembrosListarPage {
               "Não foi possível apagar este Membro, tente novamente mais tarde!",
             buttons: [
               {
-                text: "Ok"
-              }
-            ]
+                text: "Ok",
+              },
+            ],
           })
           .present();
       }

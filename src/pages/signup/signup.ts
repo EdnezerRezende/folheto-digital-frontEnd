@@ -1,13 +1,11 @@
-import { Component, ViewChild } from "@angular/core";
+import { Component } from "@angular/core";
 import {
   IonicPage,
   NavController,
   NavParams,
-  LoadingController,
-  ToastController,
-  AlertController
+  AlertController,
 } from "ionic-angular";
-import { NgModel, FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { MembroService } from "../../services/domain/membro.service";
 import { EstadoDTO } from "../../models/estado.dto";
 import { CidadeDTO } from "../../models/cidade.dto";
@@ -16,13 +14,11 @@ import { EstadoService } from "../../services/domain/estado.service";
 import { MembroNewDTO } from "../../models/membro-new.dto";
 import { IgrejaService } from "../../services/domain/igreja.service";
 import { IgrejaDTO } from "../../models/igreja.dto";
-import { Membro } from "../../models/membro";
-import { BrMaskerIonicServices3 } from "brmasker-ionic-3";
 
 @IonicPage()
 @Component({
   selector: "page-signup",
-  templateUrl: "signup.html"
+  templateUrl: "signup.html",
 })
 export class SignupPage {
   formGroup: FormGroup;
@@ -39,15 +35,17 @@ export class SignupPage {
     public cidadeService: CidadeService,
     public estadoService: EstadoService,
     public membroService: MembroService,
-    public alertCtrl: AlertController,
-    private brMasker: BrMaskerIonicServices3
+    public alertCtrl: AlertController
   ) {
     this.criarFormulario();
-    
   }
 
-  private retiraMascaraTelefone(tel:string):string {
-    tel = tel.replace('(','').replace(')', '').replace('-','').replace(' ', '');
+  private retiraMascaraTelefone(tel: string): string {
+    tel = tel
+      .replace("(", "")
+      .replace(")", "")
+      .replace("-", "")
+      .replace(" ", "");
     return tel;
   }
 
@@ -58,8 +56,8 @@ export class SignupPage {
         [
           Validators.required,
           Validators.minLength(5),
-          Validators.maxLength(120)
-        ]
+          Validators.maxLength(120),
+        ],
       ],
       email: ["", [Validators.required, Validators.email]],
       cpf: [
@@ -67,8 +65,8 @@ export class SignupPage {
         [
           Validators.required,
           Validators.minLength(11),
-          Validators.maxLength(14)
-        ]
+          Validators.maxLength(14),
+        ],
       ],
       senha: ["", [Validators.required]],
       logradouro: ["", [Validators.required]],
@@ -81,7 +79,7 @@ export class SignupPage {
       igrejaId: ["", []],
       estadoId: [null, [Validators.required]],
       cidadeId: [null, [Validators.required]],
-      dataNascimento: [null, [Validators.required]]
+      dataNascimento: [null, [Validators.required]],
     });
   }
 
@@ -93,10 +91,10 @@ export class SignupPage {
 
   obterIgreja() {
     this.igrejaService.obterTodasIgrejas().subscribe(
-      response => {
+      (response) => {
         this.igrejas = response;
       },
-      error => {
+      (error) => {
         let alert = this.alertCtrl.create({
           title: "ERRO!",
           message:
@@ -107,9 +105,9 @@ export class SignupPage {
               text: "Ok",
               handler: () => {
                 this.navCtrl.pop();
-              }
-            }
-          ]
+              },
+            },
+          ],
         });
         alert.present();
       }
@@ -117,35 +115,37 @@ export class SignupPage {
   }
   private obterEstados() {
     this.estadoService.findAll().subscribe(
-      response => {
+      (response) => {
         this.estados = response;
         this.formGroup.controls.estadoId.setValue(this.estados[0].id);
         this.updateCidades();
       },
-      error => {}
+      (error) => {}
     );
   }
 
   updateCidades() {
     let estado_id = this.formGroup.value.estadoId;
     this.cidadeService.findAll(estado_id).subscribe(
-      response => {
+      (response) => {
         this.cidades = response;
         this.formGroup.controls.cidadeId.setValue(null);
       },
-      error => {}
+      (error) => {}
     );
   }
 
   signupUser() {
     this.membro.telefones = this.retiraMascaraTelefone(this.membro.telefones);
-    this.formGroup.controls.celular.setValue(this.retiraMascaraTelefone(this.formGroup.controls.celular.value));
+    this.formGroup.controls.celular.setValue(
+      this.retiraMascaraTelefone(this.formGroup.controls.celular.value)
+    );
 
     this.membroService.insert(this.formGroup.value).subscribe(
-      response => {
+      (response) => {
         this.showInsertOk();
       },
-      error => {}
+      (error) => {}
     );
   }
 
@@ -159,9 +159,9 @@ export class SignupPage {
           text: "Ok",
           handler: () => {
             this.navCtrl.pop();
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
     alert.present();
   }

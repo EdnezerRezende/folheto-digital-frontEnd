@@ -41,22 +41,7 @@ export class MyApp {
     public sanitizer: DomSanitizer,
     public membroService: MembroService
   ) {
-    events.subscribe("user:created", (user, time) => {
-      console.log("Bem Vindo ", user.nome, " as ", time);
-    });
-
-    // let options: NativeTransitionOptions = {
-    //   direction: 'up',
-    //   duration: 500,
-    //   slowdownfactor: 3,
-    //   slidePixels: 20,
-    //   iosdelay: 100,
-    //   androiddelay: 150,
-    //   fixedPixelsTop: 0,
-    //   fixedPixelsBottom: 60
-    //   };
-
-    // this._nativePageTransitions.slide(options);
+    events.subscribe("user:created", (user, time) => {});
 
     platform.ready().then(() => {
       statusBar.styleDefault();
@@ -102,12 +87,6 @@ export class MyApp {
       this.deferredPrompt = null;
     });
   }
-
-  // ionViewDidLeave(){
-  //     console.log("entrei aqui, com id = " + this.dadosMembro.id);
-  //     this.obterImagem();
-  //     console.log(this.dadosMembro.imageUrl);
-  // }
 
   tratarMenuTela(): any[] {
     return [
@@ -228,6 +207,12 @@ export class MyApp {
       {
         titulo: "Aniversariantes",
         subTitulo: [
+          {
+            submenu: "Cadastrar",
+            componente: "AniversarianteCadastrarPage",
+            iconeSub: "md-paper",
+            mostra: this.mostraOpcaoCadastro,
+          },
           {
             submenu: "Listar",
             componente: "AniversariantesListarPage",

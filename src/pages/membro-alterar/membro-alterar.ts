@@ -1,78 +1,91 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
-import { Membro } from '../../models/membro';
-import { BrMaskerIonicServices3, BrMaskModel, BrMaskServicesModel } from 'brmasker-ionic-3';
-import { AlertController } from 'ionic-angular/components/alert/alert-controller';
-import { MembroService } from '../../services/domain/membro.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { EnderecoDTO } from '../../models/endereco.dto';
-import { EstadoDTO } from '../../models/estado.dto';
-import { CidadeDTO } from '../../models/cidade.dto';
-import { EstadoService } from '../../services/domain/estado.service';
-import { CidadeService } from '../../services/domain/cidade.service';
-import { DominiosService } from '../../dominios/dominios.service';
-import { MembroAlteraDadosDTO } from '../../models/membro-altera-dados.dto';
-
+import { Component } from "@angular/core";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  LoadingController,
+} from "ionic-angular";
+import { Membro } from "../../models/membro";
+import {
+  BrMaskerIonicServices3,
+  BrMaskModel,
+  BrMaskServicesModel,
+} from "brmasker-ionic-3";
+import { AlertController } from "ionic-angular/components/alert/alert-controller";
+import { MembroService } from "../../services/domain/membro.service";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { EnderecoDTO } from "../../models/endereco.dto";
+import { EstadoDTO } from "../../models/estado.dto";
+import { CidadeDTO } from "../../models/cidade.dto";
+import { EstadoService } from "../../services/domain/estado.service";
+import { CidadeService } from "../../services/domain/cidade.service";
+import { MembroAlteraDadosDTO } from "../../models/membro-altera-dados.dto";
 
 @IonicPage()
 @Component({
-  selector: 'page-membro-alterar',
-  templateUrl: 'membro-alterar.html',
+  selector: "page-membro-alterar",
+  templateUrl: "membro-alterar.html",
 })
 export class MembroAlterarPage {
-  membro:Membro = new Membro();
-  membroAlterar:MembroAlteraDadosDTO = new MembroAlteraDadosDTO();
-  endereco:EnderecoDTO = new EnderecoDTO();
-  telefone:string;
+  membro: Membro = new Membro();
+  membroAlterar: MembroAlteraDadosDTO = new MembroAlteraDadosDTO();
+  endereco: EnderecoDTO = new EnderecoDTO();
+  telefone: string;
   formGroup: FormGroup;
   estados: EstadoDTO[];
   cidades: CidadeDTO[];
-  cidade:CidadeDTO;
-  estado:EstadoDTO;
-  
-  constructor(public navCtrl: NavController, public navParams: NavParams, 
-      private brMasker: BrMaskerIonicServices3,
-      private _loadingCtrl: LoadingController,
-      private _membroService: MembroService,
-      public alertCtrl: AlertController,
-      public formBuilder: FormBuilder,
-      public cidadeService: CidadeService,
-      public estadoService: EstadoService
-    ) {
+  cidade: CidadeDTO;
+  estado: EstadoDTO;
+
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private brMasker: BrMaskerIonicServices3,
+    private _loadingCtrl: LoadingController,
+    private _membroService: MembroService,
+    public alertCtrl: AlertController,
+    public formBuilder: FormBuilder,
+    public cidadeService: CidadeService,
+    public estadoService: EstadoService
+  ) {
     this.criarFormulario();
-    
   }
 
   private obterMembro() {
-    if (this.navParams.get('item')) {
-      let membro = this.navParams.get('item');
-      this._membroService.findById(membro.id + '').subscribe(resposta => {
-        this.membro = resposta;
-        this.endereco = this.membro.enderecos[0];
-        let tels: string[] = new Array<string>();
-        this.membro.telefones.forEach(tel => {
-          tels.push(this.mascaraTelefone(tel));
-        });
-        this.membro.telefones = tels;
-        this.membro.enderecos[0].cep = this.mascaraCep(this.membro.enderecos[0].cep);
-        this.estado = this.membro.enderecos[0].cidade.estado;
-        this.cidade = this.membro.enderecos[0].cidade;
-
-      }, error => {
-        let alert = this.alertCtrl.create({
-          title: "ERRO!",
-          message: "Não foi possível obter dados do membro, tente novamente mais tarde!",
-          buttons: [
-            {
-              text: "Ok",
-              handler: () => {
-                this.navCtrl.pop();
-              }
-            }
-          ]
-        });
-        alert.present();
-      });
+    if (this.navParams.get("item")) {
+      let membro = this.navParams.get("item");
+      this._membroService.findById(membro.id + "").subscribe(
+        (resposta) => {
+          this.membro = resposta;
+          this.endereco = this.membro.enderecos[0];
+          let tels: string[] = new Array<string>();
+          this.membro.telefones.forEach((tel) => {
+            tels.push(this.mascaraTelefone(tel));
+          });
+          this.membro.telefones = tels;
+          this.membro.enderecos[0].cep = this.mascaraCep(
+            this.membro.enderecos[0].cep
+          );
+          this.estado = this.membro.enderecos[0].cidade.estado;
+          this.cidade = this.membro.enderecos[0].cidade;
+        },
+        (error) => {
+          let alert = this.alertCtrl.create({
+            title: "ERRO!",
+            message:
+              "Não foi possível obter dados do membro, tente novamente mais tarde!",
+            buttons: [
+              {
+                text: "Ok",
+                handler: () => {
+                  this.navCtrl.pop();
+                },
+              },
+            ],
+          });
+          alert.present();
+        }
+      );
     }
   }
 
@@ -87,7 +100,7 @@ export class MembroAlterarPage {
       telefones: ["", []],
       cep: ["", [Validators.required]],
       estadoId: [null, [Validators.required]],
-      cidadeId: [null, [Validators.required]]
+      cidadeId: [null, [Validators.required]],
     });
   }
 
@@ -96,38 +109,41 @@ export class MembroAlterarPage {
     this.obterEstados();
   }
 
-  private mascaraTelefone(tel:string):string {
+  private mascaraTelefone(tel: string): string {
     let config: BrMaskModel = new BrMaskModel();
     config.phone = true;
     return this.brMasker.writeCreateValue(tel, config);
   }
 
-  private retiraMascaraTelefone(tel:string):string {
-    tel = tel.replace('(','').replace(')', '').replace('-','').replace(' ', '');
+  private retiraMascaraTelefone(tel: string): string {
+    tel = tel
+      .replace("(", "")
+      .replace(")", "")
+      .replace("-", "")
+      .replace(" ", "");
     return tel;
   }
 
-  private mascaraCep(cep:string):string {
+  private mascaraCep(cep: string): string {
     let config: BrMaskServicesModel = new BrMaskServicesModel();
     config.mask = "00.000-000";
     return this.brMasker.writeCreateValue(cep, config);
   }
 
-  private retiraMascaraCep(cep:string):string {
-    cep = cep.replace('.','').replace('-','');
+  private retiraMascaraCep(cep: string): string {
+    cep = cep.replace(".", "").replace("-", "");
     return cep;
   }
 
-
-  insereTel(){
+  insereTel() {
     this.membro.telefones.push(this.telefone);
     this.telefone = "";
   }
 
-  deletaTel(tel:string){
+  deletaTel(tel: string) {
     let lista = this.membro.telefones.slice(0);
     let index = lista.indexOf(tel);
-    if ( index != -1 ){
+    if (index != -1) {
       lista.splice(index, 1);
       this.membro.telefones = lista;
     }
@@ -135,56 +151,67 @@ export class MembroAlterarPage {
 
   obterLoading() {
     return this._loadingCtrl.create({
-      content: 'Carregando...'
+      content: "Carregando...",
     });
   }
 
-  alterar(){
+  alterar() {
     let loading = this.obterLoading();
     loading.present();
 
     this.gerarDtoEnvio(this.membroAlterar);
 
-    this._membroService.alterarDados(this.membroAlterar, this.membro.id).subscribe(response => {
-      loading.dismiss();
-      this.alertCtrl
-          .create({
-            title: 'Sucesso',
-            subTitle: 'O Perfil do membro ' + this.membro.nome + ' foi alterado com sucesso!',
-            buttons: [
-              { text: 'Ok', 
-                handler: ()=>{
-                  this.navCtrl.pop();
-                } 
-              }
-            ]
-          })
-          .present();
-          
-    }, error => {
-      this.alertCtrl
-          .create({
-            title: 'Error',
-            subTitle: 'O Perfil do membro ' + this.membro.nome + ' não foi alterado, favor tentar mais tarde!',
-            buttons: [
-              { text: 'Ok', 
-                handler: ()=>{
-                  this.navCtrl.pop();
-                } 
-              }
-            ]
-          })
-          .present();
-      loading.dismiss();
-    });
+    this._membroService
+      .alterarDados(this.membroAlterar, this.membro.id)
+      .subscribe(
+        (response) => {
+          loading.dismiss();
+          this.alertCtrl
+            .create({
+              title: "Sucesso",
+              subTitle:
+                "O Perfil do membro " +
+                this.membro.nome +
+                " foi alterado com sucesso!",
+              buttons: [
+                {
+                  text: "Ok",
+                  handler: () => {
+                    this.navCtrl.pop();
+                  },
+                },
+              ],
+            })
+            .present();
+        },
+        (error) => {
+          this.alertCtrl
+            .create({
+              title: "Error",
+              subTitle:
+                "O Perfil do membro " +
+                this.membro.nome +
+                " não foi alterado, favor tentar mais tarde!",
+              buttons: [
+                {
+                  text: "Ok",
+                  handler: () => {
+                    this.navCtrl.pop();
+                  },
+                },
+              ],
+            })
+            .present();
+          loading.dismiss();
+        }
+      );
   }
-
 
   private gerarDtoEnvio(membroAlterar: MembroAlteraDadosDTO) {
     this.endereco.cep = this.retiraMascaraCep(this.endereco.cep.slice(0));
     this.retirarFormatacaoTelefone();
     membroAlterar.email = this.membro.email;
-    let endereco:EnderecoDTO[] = new Array<EnderecoDTO>();
+    let endereco: EnderecoDTO[] = new Array<EnderecoDTO>();
     this.cidade = this.formGroup.value.cidadeId;
     this.cidade.estado = new EstadoDTO();
     this.cidade.estado.id = this.formGroup.value.estadoId;
@@ -196,7 +223,7 @@ export class MembroAlterarPage {
 
   private retirarFormatacaoTelefone() {
     let tels: string[] = new Array<string>();
-    this.membro.telefones.forEach(tel => {
+    this.membro.telefones.forEach((tel) => {
       tels.push(this.retiraMascaraTelefone(tel));
     });
     this.membro.telefones = tels;
@@ -204,14 +231,15 @@ export class MembroAlterarPage {
 
   private obterEstados() {
     this.estadoService.findAll().subscribe(
-      response => {
+      (response) => {
         this.estados = response;
-        let estadoTemp = this.estado != undefined ? this.estado : this.estados[0];
+        let estadoTemp =
+          this.estado != undefined ? this.estado : this.estados[0];
         console.log(estadoTemp);
         this.formGroup.controls.estadoId.setValue(estadoTemp);
         this.updateCidades();
       },
-      error => {}
+      (error) => {}
     );
   }
 
@@ -219,19 +247,19 @@ export class MembroAlterarPage {
     let estado_id = this.formGroup.value.estadoId;
 
     this.cidadeService.findAll(estado_id.id).subscribe(
-      response => {
+      (response) => {
         this.cidades = response;
         this.formGroup.controls.cidadeId.setValue(this.cidade);
       },
-      error => {}
+      (error) => {}
     );
   }
 
-  compareEstado = (o1:EstadoDTO, o2:EstadoDTO) => {
+  compareEstado = (o1: EstadoDTO, o2: EstadoDTO) => {
     return o1 && o2 ? o1.id === o2.id : o1 === o2;
-  }
+  };
 
-  compareCidade= (o1:CidadeDTO, o2:CidadeDTO) => {
+  compareCidade = (o1: CidadeDTO, o2: CidadeDTO) => {
     return o1 && o2 ? o1.id === o2.id : o1 === o2;
-  }
+  };
 }

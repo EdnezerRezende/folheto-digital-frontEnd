@@ -4,14 +4,13 @@ import { StorageService } from "../../services/storage.service";
 import { API_CONFIG } from "../../config/api.config";
 import { CameraOptions, Camera } from "@ionic-native/camera";
 import { DomSanitizer } from "@angular/platform-browser";
-import { Membro } from "../../models/membro";
 import { MembroService } from "../../services/domain/membro.service";
 import { MembroInfo } from "../../models/membro-info";
 
 @IonicPage()
 @Component({
   selector: "page-profile",
-  templateUrl: "profile.html"
+  templateUrl: "profile.html",
 })
 export class ProfilePage {
   membro: MembroInfo;
@@ -38,11 +37,11 @@ export class ProfilePage {
     let localUser = this.storage.getLocalUser();
     if (localUser && localUser.email) {
       this.membroService.findByEmail(localUser.email).subscribe(
-        response => {
+        (response) => {
           this.membro = response as MembroInfo;
           this.getImageIfExists();
         },
-        error => {
+        (error) => {
           if (error.status == 403) {
             this.navCtrl.setRoot("TabsPage");
           }
@@ -55,14 +54,14 @@ export class ProfilePage {
 
   getImageIfExists() {
     this.membroService.getImageFromBucket(this.membro.id + "").subscribe(
-      response => {
+      (response) => {
         this.membro.imageUrl = `${API_CONFIG.bucketBaseUrl}/membro${this.membro.id}.jpg`;
-        this.blobToDataURL(response).then(dataUrl => {
+        this.blobToDataURL(response).then((dataUrl) => {
           let str: string = dataUrl as string;
           this.profileImage = this.sanitizer.bypassSecurityTrustUrl(str);
         });
       },
-      error => {
+      (error) => {
         this.profileImage = "assets/imgs/avatar-blank.png";
       }
     );
@@ -72,7 +71,7 @@ export class ProfilePage {
     return new Promise((fulfill, reject) => {
       let reader = new FileReader();
       reader.onerror = reject;
-      reader.onload = e => fulfill(reader.result);
+      reader.onload = (e) => fulfill(reader.result);
       reader.readAsDataURL(blob);
     });
   }
@@ -84,15 +83,15 @@ export class ProfilePage {
       quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.PNG,
-      mediaType: this.camera.MediaType.PICTURE
+      mediaType: this.camera.MediaType.PICTURE,
     };
 
     this.camera.getPicture(options).then(
-      imageData => {
+      (imageData) => {
         this.picture = "data:image/png;base64," + imageData;
         this.cameraOn = false;
       },
-      err => {
+      (err) => {
         this.cameraOn = false;
       }
     );
@@ -106,15 +105,15 @@ export class ProfilePage {
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.PNG,
-      mediaType: this.camera.MediaType.PICTURE
+      mediaType: this.camera.MediaType.PICTURE,
     };
 
     this.camera.getPicture(options).then(
-      imageData => {
+      (imageData) => {
         this.picture = "data:image/png;base64," + imageData;
         this.cameraOn = false;
       },
-      err => {
+      (err) => {
         this.cameraOn = false;
       }
     );
@@ -122,11 +121,11 @@ export class ProfilePage {
 
   sendPicture() {
     this.membroService.uploadPicture(this.picture, this.membro.id).subscribe(
-      response => {
+      (response) => {
         this.picture = null;
         this.getImageIfExists();
       },
-      error => {}
+      (error) => {}
     );
   }
 

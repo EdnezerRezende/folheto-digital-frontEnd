@@ -29,6 +29,7 @@ import { OfertaServicoService } from "../services/domain/oferta-servico.service"
 import { MissaoService } from "../services/domain/missao.service";
 import { EmailService } from "../services/domain/email.service";
 import { Camera } from "@ionic-native/camera";
+import { AniversarianteService } from "../services/domain/aniversariante.service";
 @NgModule({
   declarations: [MyApp],
   imports: [
@@ -74,6 +75,7 @@ import { Camera } from "@ionic-native/camera";
     MissaoService,
     EmailService,
     Camera,
+    AniversarianteService,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
