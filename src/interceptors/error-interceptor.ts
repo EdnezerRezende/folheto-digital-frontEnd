@@ -23,6 +23,7 @@ export class ErrorInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    this.storage.loadOff;
     return next.handle(req).catch((error, caught) => {
       let errorObj = error;
       if (errorObj.error) {

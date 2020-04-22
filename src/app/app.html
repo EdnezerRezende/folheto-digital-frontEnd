@@ -37,20 +37,50 @@
               [name]="isLevel1Shown('idx'+i) ? 'arrow-dropdown' : 'arrow-dropright'"
             ></ion-icon>
           </h2>
-          <ion-list hideWhen="ios" style="margin-bottom: -26px;" menuClose *ngIf="isLevel1Shown('idx'+i)">
-            <ion-item no-lines menuClose *ngFor="let sub of pagina.subTitulo" text-wrap
-              (click)="irPagina(sub.componente)">
+          <ion-list
+            hideWhen="ios"
+            style="margin-bottom: -26px;"
+            menuClose
+            *ngIf="isLevel1Shown('idx'+i)"
+          >
+            <ion-item
+              no-lines
+              menuClose
+              *ngFor="let sub of pagina.subTitulo"
+              text-wrap
+              (click)="irPagina(sub.componente)"
+            >
               <h3 style="margin-top: -12px;">
-                <ion-icon color="sucess" [name]="sub.iconeSub" menuClose item-left></ion-icon>
+                <ion-icon
+                  color="sucess"
+                  [name]="sub.iconeSub"
+                  menuClose
+                  item-left
+                ></ion-icon>
                 {{sub.submenu}}
               </h3>
             </ion-item>
           </ion-list>
-          <ion-list showWhen="ios" style="margin-bottom: -15px;" menuClose *ngIf="isLevel1Shown('idx'+i)">
-            <ion-item no-lines menuClose *ngFor="let sub of pagina.subTitulo" text-wrap
-              (click)="irPagina(sub.componente)">
+          <ion-list
+            showWhen="ios"
+            style="margin-bottom: -15px;"
+            menuClose
+            *ngIf="isLevel1Shown('idx'+i)"
+          >
+            <ion-item
+              no-lines
+              menuClose
+              *ngFor="let sub of pagina.subTitulo"
+              text-wrap
+              (click)="irPagina(sub.componente)"
+            >
               <h3 style="margin-top: -10px;">
-                <ion-icon color="sucess" [name]="sub.iconeSub" menuClose item-left></ion-icon>
+                <ion-icon
+                  color="sucess"
+                  [name]="sub.iconeSub"
+                  menuClose
+                  item-left
+                ></ion-icon>
                 {{sub.submenu}}
               </h3>
             </ion-item>
@@ -74,7 +104,12 @@
         <p style="color: white;">Olá {{ membroLogado?.nome }}</p>
       </ion-item>
       <ion-list>
-        <button menuClose ion-item *ngFor="let pagina of paginasPerfil" (click)="abrePagina(pagina)">
+        <button
+          menuClose
+          ion-item
+          *ngFor="let pagina of paginasPerfil"
+          (click)="abrePagina(pagina)"
+        >
           {{pagina.titulo}}
         </button>
       </ion-list>

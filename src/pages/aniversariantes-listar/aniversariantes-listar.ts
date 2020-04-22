@@ -37,17 +37,13 @@ export class AniversariantesListarPage {
   }
 
   private obterLista() {
-    let loading = this.obterLoading();
-    loading.present();
     let igreja: IgrejaInfoDTO = this.localStorage.getIgreja();
     this._aniversarianteService.buscaTodosAnviversariantes(igreja.id).subscribe(
       (resposta) => {
-        loading.dismiss();
         this.aniversariantes = resposta;
         this.aniversariantesSearch = resposta;
       },
       (error) => {
-        loading.dismiss();
         this._alertCtrl
           .create({
             title: "Falha",
@@ -118,12 +114,8 @@ export class AniversariantesListarPage {
   }
 
   deletarConfirmado(item: AniversarianteInfoDTO) {
-    let loading = this.obterLoading();
-    loading.present();
-
     this._aniversarianteService.deletar(item.id).subscribe(
       () => {
-        loading.dismiss();
         let lista = this.aniversariantes.slice(0);
         let index = lista.indexOf(item);
         if (index != -1) {
@@ -133,7 +125,6 @@ export class AniversariantesListarPage {
         }
       },
       (error) => {
-        loading.dismiss();
         console.log(error);
         this._alertCtrl
           .create({
