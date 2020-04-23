@@ -9,6 +9,8 @@ import { MembroInfo } from "../models/membro-info";
 import { MembroService } from "../services/domain/membro.service";
 import { API_CONFIG } from "../config/api.config";
 import { DomSanitizer } from "@angular/platform-browser";
+import { IgrejaInfoDTO } from "../models/igreja_info.dto";
+import { DomainBoletimProvider } from "../services/domain/domain-boletim";
 
 @Component({
   templateUrl: "app.html",
@@ -39,24 +41,10 @@ export class MyApp {
     public storage: StorageService,
     public events: Events,
     public sanitizer: DomSanitizer,
-    public membroService: MembroService
+    public membroService: MembroService,
+    private boletimService: DomainBoletimProvider
   ) {
-    events.subscribe("user:created", (user, time) => {
-      console.log("Bem Vindo ", user.nome, " as ", time);
-    });
-
-    // let options: NativeTransitionOptions = {
-    //   direction: 'up',
-    //   duration: 500,
-    //   slowdownfactor: 3,
-    //   slidePixels: 20,
-    //   iosdelay: 100,
-    //   androiddelay: 150,
-    //   fixedPixelsTop: 0,
-    //   fixedPixelsBottom: 60
-    //   };
-
-    // this._nativePageTransitions.slide(options);
+    events.subscribe("user:created", (user, time) => {});
 
     platform.ready().then(() => {
       statusBar.styleDefault();
@@ -102,12 +90,6 @@ export class MyApp {
       this.deferredPrompt = null;
     });
   }
-
-  // ionViewDidLeave(){
-  //     console.log("entrei aqui, com id = " + this.dadosMembro.id);
-  //     this.obterImagem();
-  //     console.log(this.dadosMembro.imageUrl);
-  // }
 
   tratarMenuTela(): any[] {
     return [
@@ -203,7 +185,7 @@ export class MyApp {
             mostra: this.mostraOpcaoListar,
           },
         ],
-        icone: "md-bookmarks",
+        icone: "md-hammer",
         mostra: true,
       },
       {
@@ -228,6 +210,12 @@ export class MyApp {
       {
         titulo: "Aniversariantes",
         subTitulo: [
+          {
+            submenu: "Cadastrar",
+            componente: "AniversarianteCadastrarPage",
+            iconeSub: "md-paper",
+            mostra: this.mostraOpcaoCadastro,
+          },
           {
             submenu: "Listar",
             componente: "AniversariantesListarPage",
@@ -255,6 +243,19 @@ export class MyApp {
           },
         ],
         icone: "md-people",
+        mostra: true,
+      },
+      {
+        titulo: "Boletim",
+        subTitulo: [
+          {
+            submenu: "Boletim Semanal",
+            iconeSub: "md-list-box",
+            componente: "BoletimPage",
+            mostra: this.mostraOpcaoListar,
+          },
+        ],
+        icone: "md-paper",
         mostra: true,
       },
     ];
@@ -324,7 +325,7 @@ export class MyApp {
             mostra: this.mostraOpcaoListar,
           },
         ],
-        icone: "md-bookmarks",
+        icone: "md-hammer",
         mostra: true,
       },
       {
@@ -353,6 +354,19 @@ export class MyApp {
         icone: "md-color-wand",
         mostra: true,
       },
+      {
+        titulo: "Boletim",
+        subTitulo: [
+          {
+            submenu: "Boletim Semanal",
+            componente: "BoletimPage",
+            iconeSub: "md-list-box",
+            mostra: this.mostraOpcaoListar,
+          },
+        ],
+        icone: "md-paper",
+        mostra: true,
+      },
     ];
   }
 
@@ -364,26 +378,61 @@ export class MyApp {
   paginasPerfil = [{ titulo: "Perfil", componente: "ProfilePage" }];
 
   abrePagina(pagina): void {
+    this.menuCtrl.close();
+    this.nav.popToRoot();
     if (pagina.titulo == "Sair") {
       this.logoff();
+    } else if (pagina.titulo == "Boletim Semanal") {
+      this.openPdf();
     } else {
       this.nav.push(pagina.componente);
       this.menuCtrl.close();
     }
+    this.toggleLevel1(undefined);
+  }
+
+  openPdf() {
+    let igreja: IgrejaInfoDTO = this.storage.getIgreja();
+    this.boletimService.obterBoletimSemanal(igreja.id).subscribe((data) => {
+      let newBlob = new Blob([data], { type: "application/pdf" });
+
+      if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveOrOpenBlob(newBlob);
+        return;
+      }
+      const dataConv = window.URL.createObjectURL(newBlob);
+
+      var link = document.createElement("a");
+      link.href = dataConv;
+      link.download = "Boletim Semanal.pdf";
+
+      link.dispatchEvent(
+        new MouseEvent("click", {
+          bubbles: true,
+          cancelable: true,
+          view: window,
+        })
+      );
+
+      setTimeout(function () {
+        window.URL.revokeObjectURL(dataConv);
+        link.remove();
+      }, 100);
+
+      (error) => {
+        console.log(error);
+      };
+    });
+    this.nav.setRoot("TabsPage");
   }
 
   get imagemTratada() {
     if (!this.picture) {
-      console.log("ImagemTratada Antes");
-      console.log(this.dadosMembro.imageUrl);
-
       this.membroService.getImageFromBucket(this.dadosMembro.id + "").subscribe(
         (response) => {
           this.dadosMembro.imageUrl = `${API_CONFIG.bucketBaseUrl}/membro${this.dadosMembro.id}.jpg`;
           this.blobToDataURL(response).then((dataUrl) => {
             let str: string = dataUrl as string;
-            console.log("ImagemTratada Depois");
-            console.log(this.dadosMembro.imageUrl);
             this.picture = this.sanitizer.bypassSecurityTrustUrl(str);
             return this.picture;
           });
@@ -427,7 +476,13 @@ export class MyApp {
 
   irPagina(componente) {
     this.menuCtrl.close();
-    this.nav.push(componente);
+    this.nav.popToRoot();
+    if (componente == "BoletimPage") {
+      this.openPdf();
+    } else {
+      this.nav.push(componente);
+    }
+    this.toggleLevel1(undefined);
   }
 
   toggleLevel1(idx) {

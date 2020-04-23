@@ -41,7 +41,7 @@ export class MembroService {
   insert(obj: MembroNewDTO) {
     return this.http.post(`${API_CONFIG.baseUrl}/membros`, obj, {
       observe: "response",
-      responseType: "text"
+      responseType: "text",
     });
   }
 
@@ -54,14 +54,8 @@ export class MembroService {
       formData,
       {
         observe: "response",
-        responseType: "text"
+        responseType: "text",
       }
-    );
-  }
-
-  buscaTodosAnviversariantes(idIgreja: number): Observable<Membro[]> {
-    return this.http.get<Membro[]>(
-      `${API_CONFIG.baseUrl}/membros/aniversariantes/${idIgreja}`
     );
   }
 
@@ -74,21 +68,21 @@ export class MembroService {
   deletar(idMembro: number) {
     return this.http.delete(`${API_CONFIG.baseUrl}/membros/${idMembro}`, {
       observe: "response",
-      responseType: "text"
+      responseType: "text",
     });
   }
 
   alterarPerfil(obj: MembroAlteraPerfilDTO) {
     return this.http.put(`${API_CONFIG.baseUrl}/membros/perfil`, obj, {
       observe: "response",
-      responseType: "text"
+      responseType: "text",
     });
   }
 
   alterarDados(obj: MembroAlteraDadosDTO, id) {
     return this.http.put(`${API_CONFIG.baseUrl}/membros/${id}`, obj, {
       observe: "response",
-      responseType: "text"
+      responseType: "text",
     });
   }
 }

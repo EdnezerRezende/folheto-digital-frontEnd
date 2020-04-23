@@ -3,9 +3,8 @@ import {
   IonicPage,
   NavController,
   NavParams,
-  LoadingController,
   AlertController,
-  ItemSliding
+  ItemSliding,
 } from "ionic-angular";
 import { DevocionalDTO } from "../../models/devocional.dto";
 import { DevocionalService } from "../../services/domain/devocional.service";
@@ -15,7 +14,7 @@ import { MembroInfo } from "../../models/membro-info";
 @IonicPage()
 @Component({
   selector: "page-devocionais-listar",
-  templateUrl: "devocionais-listar.html"
+  templateUrl: "devocionais-listar.html",
 })
 export class DevocionaisListarPage {
   devocionais: DevocionalDTO[] = new Array<DevocionalDTO>();
@@ -25,17 +24,10 @@ export class DevocionaisListarPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private _loadingCtrl: LoadingController,
     private _alertCtrl: AlertController,
     private _devocionalService: DevocionalService,
     public storageComentaService: StorageService
   ) {}
-
-  obterLoading() {
-    return this._loadingCtrl.create({
-      content: "Carregando..."
-    });
-  }
 
   ionViewWillEnter() {
     this.dadosMembro = this.storageComentaService.getMembro();
@@ -48,22 +40,18 @@ export class DevocionaisListarPage {
   }
 
   private obterLista() {
-    let loading = this.obterLoading();
-    loading.present();
     this._devocionalService.buscaTodos().subscribe(
-      resposta => {
-        loading.dismiss();
+      (resposta) => {
         this.devocionais = resposta;
         this.devocionaisSearch = this.devocionais;
-        this.devocionais.forEach(devocional => {
+        this.devocionais.forEach((devocional) => {
           let isLido = this.storageComentaService.getReferenciaLida(
             devocional.id
           );
           devocional.isLido = isLido;
         });
       },
-      error => {
-        loading.dismiss();
+      (error) => {
         this._alertCtrl
           .create({
             title: "Falha",
@@ -71,9 +59,9 @@ export class DevocionaisListarPage {
               "Não foi possível obter os devocionais, tente novamente mais tarde!",
             buttons: [
               {
-                text: "Ok"
-              }
-            ]
+                text: "Ok",
+              },
+            ],
           })
           .present();
         this.navCtrl.goToRoot;
@@ -89,7 +77,7 @@ export class DevocionaisListarPage {
     const val = ev.target.value;
 
     if (val && val.trim() != "") {
-      this.devocionaisSearch = this.devocionaisSearch.filter(item => {
+      this.devocionaisSearch = this.devocionaisSearch.filter((item) => {
         return (
           item.referencia.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
           item.descricao.toLowerCase().indexOf(val.toLowerCase()) > -1
@@ -115,22 +103,18 @@ export class DevocionaisListarPage {
             text: "Sim",
             handler: () => {
               this.deletarConfirmado(item);
-            }
+            },
           },
-          { text: "Não" }
-        ]
+          { text: "Não" },
+        ],
       })
       .present();
-      slidingItem.close();
+    slidingItem.close();
   }
 
   deletarConfirmado(item: DevocionalDTO) {
-    let loading = this.obterLoading();
-    loading.present();
-
     this._devocionalService.deletar(item.id).subscribe(
       () => {
-        loading.dismiss();
         let lista = this.devocionais.slice(0);
         let index = lista.indexOf(item);
         if (index != -1) {
@@ -140,8 +124,7 @@ export class DevocionaisListarPage {
           this.storageComentaService.setRemoveReferencia(item.id);
         }
       },
-      error => {
-        loading.dismiss();
+      (error) => {
         console.log(error);
         this._alertCtrl
           .create({
@@ -150,9 +133,9 @@ export class DevocionaisListarPage {
               "Não foi possível apagar esta Mensagem, tente novamente mais tarde!",
             buttons: [
               {
-                text: "Ok"
-              }
-            ]
+                text: "Ok",
+              },
+            ],
           })
           .present();
       }

@@ -1,5 +1,3 @@
-import { EnderecoDTO } from "./endereco.dto";
-
 export class MembroNewDTO {
   id: number;
   nome: string;

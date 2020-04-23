@@ -3,9 +3,8 @@ import {
   IonicPage,
   NavController,
   NavParams,
-  LoadingController,
   AlertController,
-  ItemSliding
+  ItemSliding,
 } from "ionic-angular";
 import { OfertaServicoDTO } from "../../models/ofertaServico.dto";
 import { StorageService } from "../../services/storage.service";
@@ -14,7 +13,7 @@ import { OfertaServicoService } from "../../services/domain/oferta-servico.servi
 @IonicPage()
 @Component({
   selector: "page-ofertas-servico-listar",
-  templateUrl: "ofertas-servico-listar.html"
+  templateUrl: "ofertas-servico-listar.html",
 })
 export class OfertasServicoListarPage {
   servicos: OfertaServicoDTO[] = new Array<OfertaServicoDTO>();
@@ -24,7 +23,6 @@ export class OfertasServicoListarPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public storageComentaService: StorageService,
-    private _loadingCtrl: LoadingController,
     private _alertCtrl: AlertController,
     private _ofertaServicoService: OfertaServicoService
   ) {}
@@ -33,27 +31,17 @@ export class OfertasServicoListarPage {
     this.obterLista();
   }
 
-  obterLoading() {
-    return this._loadingCtrl.create({
-      content: "Carregando..."
-    });
-  }
-
   get perfilLogado() {
     return this.storageComentaService.temPerfilAdminLider();
   }
 
   obterLista() {
-    let loading = this.obterLoading();
-    loading.present();
     this._ofertaServicoService.buscaTodos().subscribe(
-      resposta => {
-        loading.dismiss();
+      (resposta) => {
         this.servicos = resposta;
         this.servicosSearch = this.servicos;
       },
-      error => {
-        loading.dismiss();
+      (error) => {
         this._alertCtrl
           .create({
             title: "Falha",
@@ -61,9 +49,9 @@ export class OfertasServicoListarPage {
               "Não foi possível obter as ofertas ou os serviços, tente novamente mais tarde!",
             buttons: [
               {
-                text: "Ok"
-              }
-            ]
+                text: "Ok",
+              },
+            ],
           })
           .present();
         this.navCtrl.goToRoot;
@@ -86,7 +74,7 @@ export class OfertasServicoListarPage {
     const val = ev.target.value;
 
     if (val && val.trim() != "") {
-      this.servicosSearch = this.servicosSearch.filter(item => {
+      this.servicosSearch = this.servicosSearch.filter((item) => {
         return (
           item.nome.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
           item.descricao.toLowerCase().indexOf(val.toLowerCase()) > -1
@@ -105,22 +93,18 @@ export class OfertasServicoListarPage {
             text: "Sim",
             handler: () => {
               this.deletarConfirmado(item);
-            }
+            },
           },
-          { text: "Não" }
-        ]
+          { text: "Não" },
+        ],
       })
       .present();
     slidingItem.close();
   }
 
   deletarConfirmado(item: OfertaServicoDTO) {
-    let loading = this.obterLoading();
-    loading.present();
-
     this._ofertaServicoService.deletar(item.id).subscribe(
       () => {
-        loading.dismiss();
         let lista = this.servicos.slice(0);
         let index = lista.indexOf(item);
         if (index != -1) {
@@ -129,8 +113,7 @@ export class OfertasServicoListarPage {
           this.servicosSearch = this.copiaLista();
         }
       },
-      error => {
-        loading.dismiss();
+      (error) => {
         this._alertCtrl
           .create({
             title: "Falha",
@@ -138,9 +121,9 @@ export class OfertasServicoListarPage {
               "Não foi possível apagar esta Oferta ou Serviço, tente novamente mais tarde!",
             buttons: [
               {
-                text: "Ok"
-              }
-            ]
+                text: "Ok",
+              },
+            ],
           })
           .present();
       }

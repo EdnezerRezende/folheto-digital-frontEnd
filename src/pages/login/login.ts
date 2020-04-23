@@ -5,7 +5,6 @@ import {
   NavParams,
   MenuController,
   Events,
-  LoadingController,
 } from "ionic-angular";
 import { AuthService } from "../../services/auth.service";
 import { CredenciaisDTO } from "../../models/credenciais.dto";
@@ -39,8 +38,7 @@ export class LoginPage {
     public storage: StorageService,
     public events: Events,
     public igrejaService: IgrejaService,
-    public sanitizer: DomSanitizer,
-    private _loadingCtrl: LoadingController
+    public sanitizer: DomSanitizer
   ) {
     this.creds = new CredenciaisDTO();
   }
@@ -69,8 +67,6 @@ export class LoginPage {
   }
 
   login() {
-    let loading = this.obterLoading();
-    loading.present();
     this.auth.authenticate(this.creds).subscribe(
       (response) => {
         this.auth.successfulLogin(response.headers.get("Authorization"));
@@ -103,19 +99,10 @@ export class LoginPage {
           },
           (error) => {}
         );
-        loading.dismiss();
         this.navCtrl.setRoot("TabsPage");
       },
-      (error) => {
-        loading.dismiss();
-      }
+      (error) => {}
     );
-  }
-
-  obterLoading() {
-    return this._loadingCtrl.create({
-      content: "Carregando...",
-    });
   }
 
   signup() {

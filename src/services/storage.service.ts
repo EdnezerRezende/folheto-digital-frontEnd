@@ -5,13 +5,37 @@ import { Comentarios } from "../models/comentarios";
 import { MembroInfo } from "../models/membro-info";
 import { IgrejaInfoDTO } from "../models/igreja_info.dto";
 import { BrMaskerIonicServices3, BrMaskModel } from "brmasker-ionic-3";
+import { LoadingController } from "ionic-angular";
 
 @Injectable()
 export class StorageService {
   membro: MembroInfo = new MembroInfo();
+  loading;
 
-  constructor(private brMasker: BrMaskerIonicServices3) {}
+  constructor(
+    private brMasker: BrMaskerIonicServices3,
+    private _loadingCtrl: LoadingController
+  ) {}
 
+  load() {
+    if (!this.loading) {
+      this.loading = this.obterLoading();
+      this.loading.present();
+    }
+  }
+  loadOff(nada: any) {
+    if (this.loading) {
+      this.loading.dismiss();
+      this.loading = undefined;
+    }
+  }
+
+  obterLoading() {
+    return this._loadingCtrl.create({
+      // dismissOnPageChange: true,
+      content: "Carregando...",
+    });
+  }
   getLocalUser(): LocalUser {
     let usr = localStorage.getItem(STORAGE_KEYS.localUser);
     if (usr == null) {
@@ -107,7 +131,7 @@ export class StorageService {
       return false;
     }
 
-    usr.perfis.forEach(perfil => {
+    usr.perfis.forEach((perfil) => {
       if (perfil == "ADMIN" || perfil == "LIDER") {
         isPermite = true;
       }
@@ -137,7 +161,7 @@ export class StorageService {
       config.phone = true;
       let telefones: string[] = new Array<string>();
 
-      igreja.telefones.forEach(phone => {
+      igreja.telefones.forEach((phone) => {
         telefones.push(this.brMasker.writeCreateValue(phone, config));
       });
       igreja.telefones = telefones;

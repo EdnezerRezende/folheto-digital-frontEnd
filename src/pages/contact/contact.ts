@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { NavController, IonicPage, LoadingController } from "ionic-angular";
+import { NavController, IonicPage } from "ionic-angular";
 import { Validators, FormBuilder, FormGroup } from "@angular/forms";
 import { StorageService } from "../../services/storage.service";
 import { MembroInfo } from "../../models/membro-info";
@@ -23,7 +23,6 @@ export class ContactPage {
     public navCtrl: NavController,
     public formBuilder: FormBuilder,
     public storage: StorageService,
-    private _loadingCtrl: LoadingController,
     private _alertCtrl: AlertController,
     private _emailService: EmailService
   ) {
@@ -36,12 +35,6 @@ export class ContactPage {
   get obterDadosIgreja(): IgrejaInfoDTO {
     this.igreja = this.storage.getIgreja();
     return this.igreja;
-  }
-
-  obterLoading() {
-    return this._loadingCtrl.create({
-      content: "Carregando...",
-    });
   }
 
   private criarFormulario() {
@@ -76,9 +69,6 @@ export class ContactPage {
   }
 
   enviarEmail() {
-    let loading = this.obterLoading();
-    loading.present();
-
     let contato: ContatoDTO = new ContatoDTO();
     contato.to = this.igreja.email;
     contato.email = this.membro.email;
@@ -89,7 +79,6 @@ export class ContactPage {
 
     this._emailService.enviarContato(contato).subscribe(
       (response) => {
-        loading.dismiss();
         this._alertCtrl
           .create({
             title: "Sucesso",
@@ -105,9 +94,7 @@ export class ContactPage {
           })
           .present();
       },
-      (erro) => {
-        loading.dismiss();
-      }
+      (erro) => {}
     );
   }
 

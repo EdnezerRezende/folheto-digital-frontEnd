@@ -4,8 +4,7 @@ import {
   NavController,
   NavParams,
   AlertController,
-  LoadingController,
-  ItemSliding
+  ItemSliding,
 } from "ionic-angular";
 import { MensagemService } from "../../services/domain/mensagem.service";
 import { MensagemDTO } from "../../models/mensagem.dto";
@@ -14,7 +13,7 @@ import { StorageService } from "../../services/storage.service";
 @IonicPage()
 @Component({
   selector: "page-mensagem-listar",
-  templateUrl: "mensagem-listar.html"
+  templateUrl: "mensagem-listar.html",
 })
 export class MensagemListarPage {
   mensagens: MensagemDTO[] = new Array<MensagemDTO>();
@@ -24,16 +23,9 @@ export class MensagemListarPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public mensagemService: MensagemService,
-    private _loadingCtrl: LoadingController,
     private _alertCtrl: AlertController,
     public storage: StorageService
   ) {}
-
-  obterLoading() {
-    return this._loadingCtrl.create({
-      content: "Carregando..."
-    });
-  }
 
   ionViewDidLoad() {
     this.obterLista();
@@ -44,17 +36,12 @@ export class MensagemListarPage {
   }
 
   private obterLista() {
-    let loading = this.obterLoading();
-    loading.present();
     this.mensagemService.buscaTodos().subscribe(
-      resposta => {
-        loading.dismiss();
+      (resposta) => {
         this.mensagens = resposta;
         this.mensagensSearch = this.mensagens;
       },
-      error => {
-        loading.dismiss();
-        console.log(error);
+      (error) => {
         this._alertCtrl
           .create({
             title: "Falha",
@@ -62,9 +49,9 @@ export class MensagemListarPage {
               "Não foi possível obter as Mensagens, tente novamente mais tarde!",
             buttons: [
               {
-                text: "Ok"
-              }
-            ]
+                text: "Ok",
+              },
+            ],
           })
           .present();
         this.navCtrl.goToRoot;
@@ -87,7 +74,7 @@ export class MensagemListarPage {
     const val = ev.target.value;
 
     if (val && val.trim() != "") {
-      this.mensagensSearch = this.mensagensSearch.filter(item => {
+      this.mensagensSearch = this.mensagensSearch.filter((item) => {
         return (
           item.autor.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
           item.titulo.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
@@ -112,22 +99,18 @@ export class MensagemListarPage {
             text: "Sim",
             handler: () => {
               this.deletarMensagem(mensagem);
-            }
+            },
           },
-          { text: "Não" }
-        ]
+          { text: "Não" },
+        ],
       })
       .present();
     slidingItem.close();
   }
 
   deletarMensagem(mensagem: MensagemDTO) {
-    let loading = this.obterLoading();
-    loading.present();
-
     this.mensagemService.deletarMensagem(mensagem.id).subscribe(
       () => {
-        loading.dismiss();
         let listaMensagem = this.mensagens.slice(0);
         let index = listaMensagem.indexOf(mensagem);
         if (index != -1) {
@@ -136,9 +119,7 @@ export class MensagemListarPage {
           this.mensagensSearch = this.copiaListaListaMensagens();
         }
       },
-      error => {
-        loading.dismiss();
-        console.log(error);
+      (error) => {
         this._alertCtrl
           .create({
             title: "Falha",
@@ -146,9 +127,9 @@ export class MensagemListarPage {
               "Não foi possível apagar esta Mensagem, tente novamente mais tarde!",
             buttons: [
               {
-                text: "Ok"
-              }
-            ]
+                text: "Ok",
+              },
+            ],
           })
           .present();
       }
