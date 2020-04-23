@@ -3,7 +3,6 @@ import {
   IonicPage,
   NavController,
   NavParams,
-  LoadingController,
   AlertController,
 } from "ionic-angular";
 import { DomainBoletimProvider } from "../../services/domain/domain-boletim";
@@ -19,24 +18,14 @@ export class BoletimPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private boletimService: DomainBoletimProvider,
-    private localStorage: StorageService,
-    private _loadingCtrl: LoadingController
+    private localStorage: StorageService
   ) {}
 
   ionViewDidLoad() {
     this.openPdf();
   }
 
-  obterLoading() {
-    return this._loadingCtrl.create({
-      content: "Carregando...",
-    });
-  }
-
   openPdf() {
-    let loading = this.obterLoading();
-    loading.present();
-
     let igreja: IgrejaInfoDTO = this.localStorage.getIgreja();
     this.boletimService.obterBoletimSemanal(igreja.id).subscribe((data) => {
       let newBlob = new Blob([data], { type: "application/pdf" });
@@ -64,10 +53,7 @@ export class BoletimPage {
         link.remove();
       }, 100);
 
-      loading.dismiss();
-      (error) => {
-        loading.dismiss();
-      };
+      (error) => {};
     });
     this.navCtrl.setRoot("TabsPage");
   }

@@ -22,7 +22,9 @@ export class AuthInterceptor implements HttpInterceptor {
     let N = API_CONFIG.baseUrl.length;
     let requestToAPI = req.url.substring(0, N) == API_CONFIG.baseUrl;
     if (requestToAPI) {
-      this.storage.load;
+      if (req.url != undefined) {
+        this.storage.load();
+      }
     }
     if (localUser && requestToAPI) {
       const authReq = req.clone({

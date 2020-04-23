@@ -3,8 +3,7 @@ import {
   IonicPage,
   NavController,
   NavParams,
-  LoadingController,
-  ItemSliding
+  ItemSliding,
 } from "ionic-angular";
 import { AgendaEventoDTO } from "../../models/agenda-evento.dto";
 import { AlertController } from "ionic-angular/components/alert/alert-controller";
@@ -14,7 +13,7 @@ import { StorageService } from "../../services/storage.service";
 @IonicPage()
 @Component({
   selector: "page-evento-agenda-listar",
-  templateUrl: "evento-agenda-listar.html"
+  templateUrl: "evento-agenda-listar.html",
 })
 export class EventoAgendaListarPage {
   agendasEventos: AgendaEventoDTO[] = new Array<AgendaEventoDTO>();
@@ -23,17 +22,10 @@ export class EventoAgendaListarPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private _loadingCtrl: LoadingController,
     private _alertCtrl: AlertController,
     private _agendaEventoService: AgendaEventoService,
     public storage: StorageService
   ) {}
-
-  obterLoading() {
-    return this._loadingCtrl.create({
-      content: "Carregando..."
-    });
-  }
 
   ionViewWillEnter() {
     this.obterLista();
@@ -44,16 +36,12 @@ export class EventoAgendaListarPage {
   }
 
   private obterLista() {
-    let loading = this.obterLoading();
-    loading.present();
     this._agendaEventoService.buscaTodos().subscribe(
-      resposta => {
-        loading.dismiss();
+      (resposta) => {
         this.agendasEventos = resposta;
         this.agendasEventosSearch = this.agendasEventos;
       },
-      error => {
-        loading.dismiss();
+      (error) => {
         this._alertCtrl
           .create({
             title: "Falha",
@@ -61,9 +49,9 @@ export class EventoAgendaListarPage {
               "Não foi possível obter a agenda e ou eventos, tente novamente mais tarde!",
             buttons: [
               {
-                text: "Ok"
-              }
-            ]
+                text: "Ok",
+              },
+            ],
           })
           .present();
         this.navCtrl.goToRoot;
@@ -79,7 +67,7 @@ export class EventoAgendaListarPage {
     const val = ev.target.value;
 
     if (val && val.trim() != "") {
-      this.agendasEventosSearch = this.agendasEventosSearch.filter(item => {
+      this.agendasEventosSearch = this.agendasEventosSearch.filter((item) => {
         return (
           item.titulo.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
           item.descricao.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
@@ -108,21 +96,17 @@ export class EventoAgendaListarPage {
             text: "Sim",
             handler: () => {
               this.deletarConfirmado(item);
-            }
+            },
           },
-          { text: "Não" }
-        ]
+          { text: "Não" },
+        ],
       })
       .present();
   }
 
   deletarConfirmado(item: AgendaEventoDTO) {
-    let loading = this.obterLoading();
-    loading.present();
-
     this._agendaEventoService.deletar(item.id).subscribe(
       () => {
-        loading.dismiss();
         let lista = this.agendasEventos.slice(0);
         let index = lista.indexOf(item);
         if (index != -1) {
@@ -131,8 +115,7 @@ export class EventoAgendaListarPage {
           this.agendasEventosSearch = this.copiaLista();
         }
       },
-      error => {
-        loading.dismiss();
+      (error) => {
         this._alertCtrl
           .create({
             title: "Falha",
@@ -140,9 +123,9 @@ export class EventoAgendaListarPage {
               "Não foi possível apagar esta Mensagem, tente novamente mais tarde!",
             buttons: [
               {
-                text: "Ok"
-              }
-            ]
+                text: "Ok",
+              },
+            ],
           })
           .present();
       }

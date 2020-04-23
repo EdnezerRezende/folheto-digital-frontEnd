@@ -3,7 +3,6 @@ import {
   IonicPage,
   NavController,
   NavParams,
-  LoadingController,
   AlertController,
   ItemSliding,
 } from "ionic-angular";
@@ -28,7 +27,6 @@ export class AniversariantesListarPage {
     public navParams: NavParams,
     private _aniversarianteService: AniversarianteService,
     private localStorage: StorageService,
-    private _loadingCtrl: LoadingController,
     private _alertCtrl: AlertController
   ) {}
 
@@ -58,12 +56,6 @@ export class AniversariantesListarPage {
           .present();
       }
     );
-  }
-
-  obterLoading() {
-    return this._loadingCtrl.create({
-      content: "Carregando...",
-    });
   }
 
   doRefresh(refresher) {

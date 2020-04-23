@@ -4,8 +4,7 @@ import {
   NavController,
   NavParams,
   AlertController,
-  LoadingController,
-  ItemSliding
+  ItemSliding,
 } from "ionic-angular";
 import { PgDTO } from "../../models/pg.dto";
 import { PGService } from "../../services/domain/pg.service";
@@ -17,7 +16,7 @@ import { StorageService } from "../../services/storage.service";
 @IonicPage()
 @Component({
   selector: "page-pg-listar",
-  templateUrl: "pg-listar.html"
+  templateUrl: "pg-listar.html",
 })
 export class PgListarPage {
   pgs: PgDTO[] = new Array<PgDTO>();
@@ -30,7 +29,6 @@ export class PgListarPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private _loadingCtrl: LoadingController,
     private _alertCtrl: AlertController,
     private _pgService: PGService,
     public sanitizer: DomSanitizer,
@@ -39,12 +37,6 @@ export class PgListarPage {
   ) {
     this._imageViewerCtrl = imageViewerCtrl;
     this.profileImage = "assets/imgs/avatar-blank.png";
-  }
-
-  obterLoading() {
-    return this._loadingCtrl.create({
-      content: "Carregando..."
-    });
   }
 
   ionViewDidLoad() {
@@ -56,17 +48,13 @@ export class PgListarPage {
   }
 
   private obterLista() {
-    let loading = this.obterLoading();
-    loading.present();
     this._pgService.buscaTodos().subscribe(
-      resposta => {
-        loading.dismiss();
+      (resposta) => {
         this.pgs = resposta;
         this.loadImageUrls();
         this.pgsSearch = this.pgs;
       },
-      error => {
-        loading.dismiss();
+      (error) => {
         this._alertCtrl
           .create({
             title: "Falha",
@@ -74,9 +62,9 @@ export class PgListarPage {
               "Não foi possível obter os PG´s, tente novamente mais tarde!",
             buttons: [
               {
-                text: "Ok"
-              }
-            ]
+                text: "Ok",
+              },
+            ],
           })
           .present();
         this.navCtrl.goToRoot;
@@ -85,36 +73,36 @@ export class PgListarPage {
   }
 
   loadImageUrls() {
-    this.pgs.forEach(item => {
+    this.pgs.forEach((item) => {
       this._pgService.getSmallImageFromBucket(item.id).subscribe(
-        response => {
+        (response) => {
           item.imageUrl = `${API_CONFIG.bucketBaseUrl}/Pg${item.id}.jpg`;
         },
-        error => {}
+        (error) => {}
       );
     });
   }
 
   sendPicture(item: PgDTO) {
     this._pgService.uploadPicture(this.picture, item.id).subscribe(
-      response => {
+      (response) => {
         this.picture = null;
         this.getImageIfExists(item);
       },
-      error => {}
+      (error) => {}
     );
   }
 
   getImageIfExists(item: PgDTO) {
     this._pgService.getImageFromBucket(item.id).subscribe(
-      response => {
+      (response) => {
         item.imageUrl = `${API_CONFIG.bucketBaseUrl}/Pg${item.id}.jpg`;
-        this.blobToDataURL(response).then(dataUrl => {
+        this.blobToDataURL(response).then((dataUrl) => {
           let str: string = dataUrl as string;
           item.imageUrl = this.sanitizer.bypassSecurityTrustUrl(str);
         });
       },
-      error => {
+      (error) => {
         this.profileImage = "assets/imgs/avatar-blank.png";
       }
     );
@@ -124,7 +112,7 @@ export class PgListarPage {
     return new Promise((fulfill, reject) => {
       let reader = new FileReader();
       reader.onerror = reject;
-      reader.onload = e => fulfill(reader.result);
+      reader.onload = (e) => fulfill(reader.result);
       reader.readAsDataURL(blob);
     });
   }
@@ -137,7 +125,7 @@ export class PgListarPage {
     const val = ev.target.value;
 
     if (val && val.trim() != "") {
-      this.pgsSearch = this.pgsSearch.filter(item => {
+      this.pgsSearch = this.pgsSearch.filter((item) => {
         return (
           item.lider.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
           item.responsavelCasa.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
@@ -168,22 +156,18 @@ export class PgListarPage {
             text: "Sim",
             handler: () => {
               this.deletarConfirmado(item);
-            }
+            },
           },
-          { text: "Não" }
-        ]
+          { text: "Não" },
+        ],
       })
       .present();
     slidingItem.close();
   }
 
   deletarConfirmado(item: PgDTO) {
-    let loading = this.obterLoading();
-    loading.present();
-
     this._pgService.deletar(item.id).subscribe(
       () => {
-        loading.dismiss();
         let lista = this.pgs.slice(0);
         let index = lista.indexOf(item);
         if (index != -1) {
@@ -192,8 +176,7 @@ export class PgListarPage {
           this.pgsSearch = this.copiaLista();
         }
       },
-      error => {
-        loading.dismiss();
+      (error) => {
         console.log(error);
         this._alertCtrl
           .create({
@@ -202,9 +185,9 @@ export class PgListarPage {
               "Não foi possível apagar esta Mensagem, tente novamente mais tarde!",
             buttons: [
               {
-                text: "Ok"
-              }
-            ]
+                text: "Ok",
+              },
+            ],
           })
           .present();
       }

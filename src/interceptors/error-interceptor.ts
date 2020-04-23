@@ -23,12 +23,12 @@ export class ErrorInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    this.storage.loadOff;
+    this.storage.loadOff("Teste");
     return next.handle(req).catch((error, caught) => {
       let errorObj = error;
-      if (errorObj.error) {
-        errorObj = errorObj.error;
-      }
+      // if (errorObj.error) {
+      //   errorObj = errorObj.error;
+      // }
       if (!errorObj.status) {
         errorObj = JSON.parse(errorObj);
       }
@@ -40,6 +40,10 @@ export class ErrorInterceptor implements HttpInterceptor {
 
         case 403:
           this.handle403();
+          break;
+
+        case 404:
+          this.handle404(errorObj);
           break;
 
         case 422:
@@ -61,7 +65,38 @@ export class ErrorInterceptor implements HttpInterceptor {
   handle403() {
     this.storage.setLocalUser(null);
   }
-
+  handle404(errorObj) {
+    if (
+      errorObj.message.indexOf(
+        "Http failure response for https://igreja-cristo.herokuapp.com/boletins/semanal/1: 404 OK"
+      ) != -1
+    ) {
+      let alert = this.alertCtrl.create({
+        title: "Erro",
+        message:
+          "Não Existe texto de Missão ou Mensagem.Necessário cadastrar para este período.",
+        enableBackdropDismiss: false,
+        buttons: [
+          {
+            text: "Ok",
+          },
+        ],
+      });
+      alert.present();
+    } else {
+      let alert = this.alertCtrl.create({
+        title: "Página não encontrada",
+        message: "A Página requisitada não foi encontrada!",
+        enableBackdropDismiss: false,
+        buttons: [
+          {
+            text: "Ok",
+          },
+        ],
+      });
+      alert.present();
+    }
+  }
   handle401() {
     let alert = this.alertCtrl.create({
       title: "Falha de autenticação",

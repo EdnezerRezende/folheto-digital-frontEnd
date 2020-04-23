@@ -3,7 +3,6 @@ import {
   IonicPage,
   NavController,
   NavParams,
-  LoadingController,
   AlertController,
   ItemSliding,
 } from "ionic-angular";
@@ -31,7 +30,6 @@ export class MembrosListarPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private _loadingCtrl: LoadingController,
     private _alertCtrl: AlertController,
     private _membroService: MembroService,
     public sanitizer: DomSanitizer,
@@ -40,12 +38,6 @@ export class MembrosListarPage {
   ) {
     this._imageViewerCtrl = imageViewerCtrl;
     this.profileImage = "assets/imgs/avatar-blank.png";
-  }
-
-  obterLoading() {
-    return this._loadingCtrl.create({
-      content: "Carregando...",
-    });
   }
 
   ionViewDidLoad() {
@@ -57,18 +49,14 @@ export class MembrosListarPage {
   }
 
   private obterLista() {
-    let loading = this.obterLoading();
-    loading.present();
     let igreja: IgrejaInfoDTO = this.storage.getIgreja();
     this._membroService.buscaTodosPorIgreja(igreja.id).subscribe(
       (resposta) => {
-        loading.dismiss();
         this.membros = resposta;
         this.loadImageUrls();
         this.membrosSearch = this.membros;
       },
       (error) => {
-        loading.dismiss();
         this._alertCtrl
           .create({
             title: "Falha",
@@ -175,12 +163,8 @@ export class MembrosListarPage {
   }
 
   deletarConfirmado(item: Membro) {
-    let loading = this.obterLoading();
-    loading.present();
-
     this._membroService.deletar(item.id).subscribe(
       () => {
-        loading.dismiss();
         let lista = this.membros.slice(0);
         let index = lista.indexOf(item);
         if (index != -1) {
@@ -190,8 +174,6 @@ export class MembrosListarPage {
         }
       },
       (error) => {
-        loading.dismiss();
-        console.log(error);
         this._alertCtrl
           .create({
             title: "Falha",

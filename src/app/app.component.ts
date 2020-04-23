@@ -185,7 +185,7 @@ export class MyApp {
             mostra: this.mostraOpcaoListar,
           },
         ],
-        icone: "md-bookmarks",
+        icone: "md-hammer",
         mostra: true,
       },
       {
@@ -255,7 +255,7 @@ export class MyApp {
             mostra: this.mostraOpcaoListar,
           },
         ],
-        icone: "md-color-wand",
+        icone: "md-paper",
         mostra: true,
       },
     ];
@@ -325,7 +325,7 @@ export class MyApp {
             mostra: this.mostraOpcaoListar,
           },
         ],
-        icone: "md-bookmarks",
+        icone: "md-hammer",
         mostra: true,
       },
       {
@@ -364,7 +364,7 @@ export class MyApp {
             mostra: this.mostraOpcaoListar,
           },
         ],
-        icone: "md-color-wand",
+        icone: "md-paper",
         mostra: true,
       },
     ];
@@ -428,16 +428,11 @@ export class MyApp {
 
   get imagemTratada() {
     if (!this.picture) {
-      console.log("ImagemTratada Antes");
-      console.log(this.dadosMembro.imageUrl);
-
       this.membroService.getImageFromBucket(this.dadosMembro.id + "").subscribe(
         (response) => {
           this.dadosMembro.imageUrl = `${API_CONFIG.bucketBaseUrl}/membro${this.dadosMembro.id}.jpg`;
           this.blobToDataURL(response).then((dataUrl) => {
             let str: string = dataUrl as string;
-            console.log("ImagemTratada Depois");
-            console.log(this.dadosMembro.imageUrl);
             this.picture = this.sanitizer.bypassSecurityTrustUrl(str);
             return this.picture;
           });

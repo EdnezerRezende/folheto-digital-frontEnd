@@ -17,16 +17,22 @@ export class StorageService {
     private _loadingCtrl: LoadingController
   ) {}
 
-  get load() {
-    this.loading = this.obterLoading();
-    return this.loading.present();
+  load() {
+    if (!this.loading) {
+      this.loading = this.obterLoading();
+      this.loading.present();
+    }
   }
-  get loadOff() {
-    return this.loading.dismiss();
+  loadOff(nada: any) {
+    if (this.loading) {
+      this.loading.dismiss();
+      this.loading = undefined;
+    }
   }
 
   obterLoading() {
     return this._loadingCtrl.create({
+      // dismissOnPageChange: true,
       content: "Carregando...",
     });
   }

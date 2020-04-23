@@ -4,7 +4,6 @@ import {
   NavController,
   NavParams,
   AlertController,
-  LoadingController,
 } from "ionic-angular";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { AniversarianteNewDTO } from "../../models/aniversariante-new.dto";
@@ -28,7 +27,6 @@ export class AniversarianteCadastrarPage {
     public navParams: NavParams,
     public formBuilder: FormBuilder,
     public alertCtrl: AlertController,
-    private _loadingCtrl: LoadingController,
     private localStorage: StorageService,
     private _aniversarianteService: AniversarianteService
   ) {
@@ -59,8 +57,6 @@ export class AniversarianteCadastrarPage {
   ionViewDidLoad() {}
 
   cadastrar() {
-    let loading = this.obterLoading();
-    loading.present();
     let igreja: IgrejaInfoDTO = this.localStorage.getIgreja();
 
     this.aniversariante.idIgreja = igreja.id;
@@ -76,10 +72,9 @@ export class AniversarianteCadastrarPage {
     } else {
       this._aniversarianteService.insert(this.aniversariante).subscribe(
         (resposta) => {
-          this.sucesso(loading);
+          this.sucesso();
         },
         (error) => {
-          loading.dismiss();
           this.error();
         }
       );
@@ -120,8 +115,7 @@ export class AniversarianteCadastrarPage {
     }
   }
 
-  private sucesso(loading) {
-    loading.dismiss();
+  private sucesso() {
     if (this.aniversariante.id) {
       this.alertCtrl
         .create({
@@ -165,11 +159,5 @@ export class AniversarianteCadastrarPage {
         })
         .present();
     }
-  }
-
-  obterLoading() {
-    return this._loadingCtrl.create({
-      content: "Carregando...",
-    });
   }
 }

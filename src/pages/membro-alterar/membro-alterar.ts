@@ -1,10 +1,5 @@
 import { Component } from "@angular/core";
-import {
-  IonicPage,
-  NavController,
-  NavParams,
-  LoadingController,
-} from "ionic-angular";
+import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { Membro } from "../../models/membro";
 import {
   BrMaskerIonicServices3,
@@ -41,7 +36,6 @@ export class MembroAlterarPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private brMasker: BrMaskerIonicServices3,
-    private _loadingCtrl: LoadingController,
     private _membroService: MembroService,
     public alertCtrl: AlertController,
     public formBuilder: FormBuilder,
@@ -149,23 +143,13 @@ export class MembroAlterarPage {
     }
   }
 
-  obterLoading() {
-    return this._loadingCtrl.create({
-      content: "Carregando...",
-    });
-  }
-
   alterar() {
-    let loading = this.obterLoading();
-    loading.present();
-
     this.gerarDtoEnvio(this.membroAlterar);
 
     this._membroService
       .alterarDados(this.membroAlterar, this.membro.id)
       .subscribe(
         (response) => {
-          loading.dismiss();
           this.alertCtrl
             .create({
               title: "Sucesso",
@@ -202,7 +186,6 @@ export class MembroAlterarPage {
               ],
             })
             .present();
-          loading.dismiss();
         }
       );
   }
