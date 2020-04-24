@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Membros</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-refresher
+    slot="fixed"
+    pullFactor="0.5"
+    pullMin="100"
+    pullMax="200"
+    (ionRefresh)="doRefresh($event)"
+  >
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-searchbar
+    animated="true"
+    placeholder="Pesquisar "
+    (ionInput)="getItems($event)"
+  ></ion-searchbar>
+  <ion-list>
+    <ion-item-sliding #slidingCase *ngFor="let membro of membrosSearch">
+      <ion-item detail="false">
+        <ion-thumbnail item-start>
+          <img
+            [src]="membro.imageUrl || profileImage"
+            #myImage
+            (click)="presentImage(myImage)"
+          />
+        </ion-thumbnail>
+        <h4><label>Nome: </label>{{ membro.nome }}</h4>
+        <h4>
+          <label>Data Nascimento: </label>{{ membro.dataNascimento |
+          date:'dd/MM/yyyy'}}
+        </h4>
+        <h4><label>E-mail: </label> {{ membro.email }}</h4>
+        <ion-item-divider
+          *ngIf="membro.telefones"
+          color="light"
+          style="text-align:center;"
+          >Contato:
+        </ion-item-divider>
+        <h6 *ngIf="membro.telefones">
+          <p *ngFor="let telefone of membro.telefones">
+            <ion-icon name="md-call" style="color: #55acee"></ion-icon> {{
+            telefone }}
+          </p>
+        </h6>
+      </ion-item>
+      <ion-item-options side="right" *ngIf="perfilLogado">
+        <button ion-button color="dark" (click)="mudarPerfil(membro,slidingCase)">
+          <ion-icon name="md-people"></ion-icon> Peril
+        </button>
+        <button ion-button color="primary" (click)="alterar(membro,slidingCase)">
+          <ion-icon name="md-create"></ion-icon> Alterar
+        </button>
+        <button ion-button color="danger" (click)="deletar(membro,slidingCase)">
+          <ion-icon name="md-trash"></ion-icon> Deletar
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

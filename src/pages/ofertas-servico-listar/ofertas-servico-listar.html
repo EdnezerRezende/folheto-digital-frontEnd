@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Valorize o que é nosso</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-refresher
+    slot="fixed" pullFactor="0.5" pullMin="100" pullMax="200" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  
+  <ion-searchbar
+    animated="true"
+    placeholder="Pesquisar "
+    (ionInput)="getItems($event)"
+  ></ion-searchbar>
+
+  <ion-list #slidingCase  *ngFor="let servico of servicosSearch">
+    <ion-item-sliding  >
+      <ion-item detail (click)="detalhar(servico,slidingCase)">
+          <h2><strong><label>{{ servico.nome }}</label></strong></h2>
+        <h4><label >{{ servico.descricao }}</label></h4>
+
+      </ion-item>
+      <ion-item-options side="right" *ngIf="perfilLogado">
+        <button ion-button color="primary" (click)="alterar(servico,slidingCase)">
+          <ion-icon name="md-create"></ion-icon> Alterar
+        </button>
+        <button ion-button color="danger" (click)="deletar(servico,slidingCase)">
+          <ion-icon name="md-trash"></ion-icon> Deletar
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+
+</ion-content>

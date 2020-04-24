@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Listar Mensagens</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-refresher slot="fixed" pullFactor="0.5" pullMin="100" pullMax="200" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-searchbar
+    animated="true"
+    placeholder="Pesquisar "
+    (ionInput)="getItems($event)"
+  ></ion-searchbar>
+  <ion-list >
+    <ion-item-sliding #slidingCase *ngFor="let mensagem of mensagensSearch">
+      <ion-item detail="true" (click)="detalhar(mensagem,slidingCase)" >
+        <h2><strong><label>Título: </label>{{ mensagem.titulo }}</strong></h2>
+        <h4><label>Autor(a): </label>{{ mensagem.autor }}</h4>
+        <h4><label>Mensagem: </label><span [innerHTML]="mensagem.mensagem.substr(0, 20) + '...'"></span></h4>
+        <!-- <ion-icon (click)="detalhar(mensagem)" item-right isActive="true" class="fa-book"></ion-icon> -->
+      </ion-item>
+
+      <ion-item-options side="right" *ngIf="perfilLogado">
+        <button ion-button color="primary" (click)="alterarMensagem(mensagem,slidingCase)"><ion-icon name="md-create"></ion-icon> Alterar</button>
+        <button ion-button color="danger" (click)="deletar(mensagem,slidingCase)"><ion-icon name="md-trash"></ion-icon> Deletar</button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

@@ -1,16 +1,121 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>
+    <ion-title class="alinharLabel">
       Contatos
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-list-header>Secretária</ion-list-header>
-    <ion-item>
-        <ion-icon name="call"></ion-icon> 3423-4234
+  <ion-list *ngIf="obterDadosIgreja">
+    <ion-item class="ajustesContato">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <a (click)="visualizarMap()"
+              ><ion-icon name="md-pin" item-right isActive="true"></ion-icon>
+              {{ obterDadosIgreja.endereco.logradouro }} CEP: {{
+              obterDadosIgreja.endereco.cep }}
+              <p>
+                {{ obterDadosIgreja.endereco.cidade.nome }} / {{
+                obterDadosIgreja.endereco.cidade.estado.nome }}
+              </p>
+            </a>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <p>
+            <ion-col>
+              <ion-icon name="call"></ion-icon> {{
+              obterDadosIgreja.telefones[0]}}
+            </ion-col>
+            <ion-col>
+              <ion-icon name="mail-open"></ion-icon>
+              <a href="mailto: obterDadosIgreja.email">
+                {{obterDadosIgreja.email}}
+              </a>
+            </ion-col>
+          </p>
+        </ion-row>
+      </ion-grid>
     </ion-item>
   </ion-list>
+
+  <form
+    [formGroup]="formGroup"
+    (ngSubmit)="enviarEmail(); $event.preventDefault()"
+    *ngIf="!mostrarMap"
+  >
+    <ion-item>
+      <ion-label stacked>Nome*</ion-label>
+      <ion-input formControlName="nome" type="text"></ion-input>
+    </ion-item>
+
+    <p
+      class="danger"
+      *ngIf="formGroup.controls.nome.dirty && formGroup.controls.nome.errors"
+      margin-left
+    >
+      Valor inválido
+    </p>
+    <ion-item>
+      <ion-label stacked>E-mail*</ion-label>
+      <ion-input formControlName="email" type="text"></ion-input>
+    </ion-item>
+    <p
+      class="danger"
+      *ngIf="formGroup.controls.email.dirty && formGroup.controls.email.errors"
+      margin-left
+    >
+      Valor inválido
+    </p>
+    <ion-item>
+      <ion-label stacked>Telefone *</ion-label>
+      <ion-input formControlName="telefone" type="text"></ion-input>
+    </ion-item>
+    <p
+      class="danger"
+      *ngIf="formGroup.controls.telefone.dirty && formGroup.controls.telefone.errors"
+      margin-left
+    >
+      Valor inválido
+    </p>
+    <ion-item>
+      <ion-label stacked>Assunto *</ion-label>
+      <ion-input formControlName="assunto" type="text"></ion-input>
+    </ion-item>
+    <p
+      class="danger"
+      *ngIf="formGroup.controls.assunto.dirty && formGroup.controls.assunto.errors"
+      margin-left
+    >
+      Valor inválido
+    </p>
+    <ion-item>
+      <ion-label stacked>Mensagem *</ion-label>
+      <ion-input formControlName="mensagem" type="text"></ion-input>
+    </ion-item>
+    <p
+      class="danger"
+      *ngIf="formGroup.controls.mensagem.dirty && formGroup.controls.mensagem.errors"
+      margin-left
+    >
+      Valor inválido
+    </p>
+    <button ion-button block type="submit" [disabled]="formGroup.invalid">
+      Enviar
+    </button>
+  </form>
+
+  <div *ngIf="mostrarMap">
+    <iframe
+      width="425"
+      height="350"
+      frameborder="0"
+      scrolling="no"
+      marginheight="0"
+      marginwidth="0"
+      src="https://www.google.com.br/maps?f=q&amp;source=s_q&amp;hl=pt-BR&amp;geocode=&amp;q=Igreja+de+Cristo+de+Taguatinga,+Taguatinga,+Distrito+Federal&amp;aq=0&amp;oq=igreja+de+cristo+de+tagu&amp;sll=-14.239424,-53.186502&amp;sspn=48.424929,86.572266&amp;t=m&amp;ie=UTF8&amp;hq=Igreja+de+Cristo+de+Taguatinga,&amp;hnear=Taguatinga,+Bras%C3%ADlia+-+Distrito+Federal&amp;ll=-15.84079,-48.05538&amp;spn=0.006038,0.010568&amp;z=14&amp;iwloc=A&amp;cid=5066670363598549517&amp;output=embed"
+    ></iframe>
+  </div>
 </ion-content>

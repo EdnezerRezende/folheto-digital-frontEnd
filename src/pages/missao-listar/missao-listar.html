@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Missões</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-refresher slot="fixed" pullFactor="0.5" pullMin="100" pullMax="200" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-searchbar
+    animated="true"
+    placeholder="Pesquisar "
+    (ionInput)="getItems($event)"
+  ></ion-searchbar>
+  <ion-list >
+    <ion-item-sliding #slidingCase  *ngFor="let missao of missoesSearch">
+      <ion-item detail="true" (click)="detalhar(missao,slidingCase)" >
+        <h2><strong><label>Título: </label>{{ missao.titulo }}</strong></h2>
+        <h4><label>Autor(a): </label>{{ missao.autor }}</h4>
+        <h4><label>missao: </label><span [innerHTML]="missao.mensagem.substr(0, 20) + '...'"></span></h4>
+      </ion-item>
+
+      <ion-item-options side="right" *ngIf="perfilLogado">
+        <button ion-button color="primary" (click)="alterarMissao(missao,slidingCase)"><ion-icon name="md-create"></ion-icon> Alterar</button>
+        <button ion-button color="danger" (click)="deletar(missao,slidingCase)"><ion-icon name="md-trash"></ion-icon> Deletar</button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

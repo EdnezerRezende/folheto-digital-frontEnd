@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Perfil</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form
+    [formGroup]="formGroup"
+    (ngSubmit)="salvarAlteracao(); $event.preventDefault()"
+  >
+    <ion-item >
+      <ion-label stacked >Perfil: </ion-label>
+      <ion-select formControlName="perfil" (ionChange)="gravar()">
+        <ion-option *ngFor="let perfil of perfisEnum"  [value]="perfil" 
+        >{{ perfil }}</ion-option
+        >
+      </ion-select>
+      <button ion-button clear color="blue" type="button" item-right (click)="inserePerfil()" 
+        [disabled]="perfil == '' || perfil == undefined"
+        style="margin-top: 30px; font-size: 2.2rem !important;">
+          <ion-icon name="md-add-circle" ></ion-icon> 
+      </button>
+    </ion-item>
+    <ion-item-divider color="light" style="text-align:center;">Lista de Perfis</ion-item-divider>
+    <ion-list>
+      <ion-item *ngFor="let per of membro.perfis" style="text-align:center;">
+        {{ per }} <ion-icon name="md-trash" (click)="deletaPerfil(per)"></ion-icon> 
+      </ion-item>
+    </ion-list>
+
+    <button ion-button block type="submit" [disabled]="!membro.perfis.length">
+      Alterar Perfil
+    </button>
+  </form>
+</ion-content>

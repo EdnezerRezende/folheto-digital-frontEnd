@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Cadastrar</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form  [formGroup]="formulario"  >
+    <ion-item >
+      <ion-label stacked >Autor</ion-label>
+      <ion-input [(ngModel)]="mensagem.autor" formControlName="autor" name="autor"  type="text"></ion-input>
+    </ion-item>
+    <h6 class="error" *ngIf="!formulario.controls.autor.valid && (formulario.controls.autor.dirty || formulario.controls.autor.touched)">
+      Por favor, informe o Autor do Texto.
+    </h6>
+    <ion-item >
+      <ion-label stacked >Título</ion-label>
+      <ion-input [(ngModel)]="mensagem.titulo" formControlName="titulo" name="titulo"  type="text"></ion-input>
+    </ion-item>
+    <h6 class="error" *ngIf="!formulario.controls.titulo.valid && (formulario.controls.titulo.dirty || formulario.controls.titulo.touched)">
+      Por favor, informe o título do Texto.
+    </h6>
+    <rich-text [formControlItem]="formulario.controls.texto" [(ngModel)]="mensagem.mensagem" formControlName="texto" name="texto" ></rich-text>
+    <h6 class="error" *ngIf="!formulario.controls.texto.valid && (formulario.controls.texto.dirty || formulario.controls.texto.touched)">
+      Por favor, informe o Mensagem.
+    </h6>
+  </form>
+
+  <ion-fab top right edge >
+    <button ion-fab (click)="salvar(item)" [disabled]="formulario.invalid">
+      <ion-icon name="send"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>

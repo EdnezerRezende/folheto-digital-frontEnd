@@ -1,0 +1,174 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Alterar </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <p><strong>{{ membro.nome }}</strong></p>
+
+  <form [formGroup]="formGroup" (ngSubmit)="alterar(); $event.preventDefault()">
+    <ion-item>
+      <ion-label stacked>E-mail*</ion-label>
+      <ion-input
+        [(ngModel)]="membro.email"
+        formControlName="email"
+        type="text"
+      ></ion-input>
+    </ion-item>
+    <p
+      class="danger"
+      *ngIf="formGroup.controls.email.dirty && formGroup.controls.email.errors"
+      margin-left
+    >
+      Valor inválido
+    </p>
+
+    <ion-item-divider color="light" style="text-align:center;"
+      >Endereço</ion-item-divider
+    >
+
+    <ion-item>
+      <ion-label stacked>Logradouro *</ion-label>
+      <ion-input
+        [(ngModel)]="endereco.logradouro"
+        formControlName="logradouro"
+        type="text"
+      ></ion-input>
+    </ion-item>
+    <p
+      class="danger"
+      *ngIf="formGroup.controls.logradouro.dirty && formGroup.controls.logradouro.errors"
+      margin-left
+    >
+      Valor inválido
+    </p>
+
+    <ion-item>
+      <ion-label stacked>Número *</ion-label>
+      <ion-input
+        [(ngModel)]="endereco.numero"
+        formControlName="numero"
+        type="text"
+      ></ion-input>
+    </ion-item>
+    <p
+      class="danger"
+      *ngIf="formGroup.controls.numero.dirty && formGroup.controls.numero.errors"
+      margin-left
+    >
+      Valor inválido
+    </p>
+
+    <ion-item>
+      <ion-label stacked>Complemento</ion-label>
+      <ion-input
+        [(ngModel)]="endereco.complemento"
+        formControlName="complemento"
+        type="text"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Bairro</ion-label>
+      <ion-input
+        [(ngModel)]="endereco.bairro"
+        formControlName="bairro"
+        type="text"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>CEP *</ion-label>
+      <ion-input
+        [(ngModel)]="endereco.cep"
+        [brmasker]="{mask:'00.000-000', len:10}"
+        formControlName="cep"
+        type="text"
+      ></ion-input>
+    </ion-item>
+    <p
+      class="danger"
+      *ngIf="formGroup.controls.cep.dirty && formGroup.controls.cep.errors"
+      margin-left
+    >
+      Valor inválido
+    </p>
+
+    <ion-item>
+      <ion-label stacked>Estado *</ion-label>
+      <ion-select
+        [(ngModel)]="estado"
+        formControlName="estadoId"
+        [compareWith]="compareEstado"
+        (ionChange)="updateCidades()"
+      >
+        <ion-option *ngFor="let estado of estados; first as f" [value]="estado"
+          >{{ estado.nome }}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Cidade *</ion-label>
+      <ion-select
+        [(ngModel)]="cidade"
+        formControlName="cidadeId"
+        [compareWith]="compareCidade"
+      >
+        <ion-option *ngFor="let cidade of cidades" [value]="cidade"
+          >{{cidade.nome}}</ion-option
+        >
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Telefone: </ion-label>
+      <ion-input
+        [(ngModel)]="telefone"
+        [brmasker]="{phone: true}"
+        name="telefone"
+        type="tel"
+        formControlName="telefone"
+      ></ion-input>
+      <button
+        ion-button
+        clear
+        color="blue"
+        type="button"
+        item-right
+        (click)="insereTel()"
+        [disabled]="telefone == '' || telefone == undefined"
+        style="margin-top: 30px; font-size: 2.2rem !important;"
+      >
+        <ion-icon name="md-add-circle"></ion-icon>
+      </button>
+    </ion-item>
+    <ion-item-divider color="light" style="text-align:center;"
+      >Lista de Telefones</ion-item-divider
+    >
+    <ion-list>
+      <ion-item *ngFor="let tel of membro.telefones" style="text-align:center;">
+        {{ tel }} <ion-icon name="md-trash" (click)="deletaTel(tel)"></ion-icon>
+      </ion-item>
+    </ion-list>
+
+    <button
+      *ngIf="!membro.id"
+      ion-button
+      block
+      type="submit"
+      [disabled]="formGroup.invalid"
+    >
+      Criar conta
+    </button>
+    <button
+      *ngIf="membro.id"
+      ion-button
+      block
+      type="submit"
+      [disabled]="formGroup.invalid"
+    >
+      Alterar conta
+    </button>
+  </form>
+</ion-content>

@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Cadastrar</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="formGroup" (ngSubmit)="cadastrar()">
+    <ion-item>
+      <ion-label stacked>Nome*</ion-label>
+      <ion-input
+        [(ngModel)]="aniversariante.nome"
+        formControlName="nome"
+        type="text"
+      ></ion-input>
+    </ion-item>
+    <p
+      class="danger"
+      *ngIf="formGroup.controls.nome.dirty && formGroup.controls.nome.errors"
+      margin-left
+    >
+      Valor inválido
+    </p>
+    <ion-item>
+      <ion-label stacked>E-mail*</ion-label>
+      <ion-input
+        [(ngModel)]="aniversariante.email"
+        formControlName="email"
+        type="text"
+      ></ion-input>
+    </ion-item>
+    <p
+      class="danger"
+      *ngIf="formGroup.controls.email.dirty && formGroup.controls.email.errors"
+      margin-left
+    >
+      Valor inválido
+    </p>
+    <ion-item>
+      <ion-label stacked>Data de Nascimento *</ion-label>
+      <ion-datetime
+        [(ngModel)]="aniversariante.dataNascimento"
+        displayFormat="DD/MM/YYYY"
+        formControlName="dataNascimento"
+        pickerFormat="DD/MM/YYYY"
+      ></ion-datetime>
+    </ion-item>
+    <p
+      class="danger"
+      *ngIf="formGroup.controls.dataNascimento.dirty && formGroup.controls.dataNascimento.errors"
+      margin-left
+    >
+      Valor inválido
+    </p>
+
+    <button ion-button block type="submit" [disabled]="formGroup.invalid">
+      Criar conta
+    </button>
+  </form>
+</ion-content>

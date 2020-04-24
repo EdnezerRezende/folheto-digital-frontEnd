@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Missão</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title><strong>{{ missao.titulo }}</strong>
+      </ion-card-title> 
+    </ion-card-header>
+    <span [innerHTML]="missao.mensagem"></span>
+    <h6 class="alinharDireita"> {{ missao.autor }}</h6>
+  </ion-card>
+</ion-content>

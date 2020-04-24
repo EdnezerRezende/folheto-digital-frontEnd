@@ -10,6 +10,10 @@
     "build": "ionic-app-scripts build",
     "lint": "ionic-app-scripts lint"
   },
+  "config": {
+    "ionic_copy": "./config/copy.config.js",
+    "ionic_sass": "./config/sass.config.js"
+  },
   "dependencies": {
     "@angular/animations": "5.2.11",
     "@angular/common": "5.2.11",
@@ -20,19 +24,60 @@
     "@angular/http": "5.2.11",
     "@angular/platform-browser": "5.2.11",
     "@angular/platform-browser-dynamic": "5.2.11",
+    "@ionic-native/camera": "^4.20.0",
     "@ionic-native/core": "~4.20.0",
+    "@ionic-native/native-page-transitions": "^5.15.1",
     "@ionic-native/splash-screen": "~4.20.0",
     "@ionic-native/status-bar": "~4.20.0",
     "@ionic/storage": "2.2.0",
+    "angular2-jwt": "^0.2.3",
+    "brmasker-ionic-3": "^1.6.3",
+    "com.telerik.plugins.nativepagetransitions": "^0.6.5",
+    "cordova-android": "8.1.0",
+    "cordova-android-support-gradle-release": "^3.0.1",
+    "cordova-browser": "5.0.4",
+    "cordova-plugin-camera": "^4.1.0",
+    "cordova-plugin-device": "^2.0.3",
+    "cordova-plugin-ionic-keyboard": "^2.2.0",
+    "cordova-plugin-ionic-webview": "^4.1.3",
+    "cordova-plugin-splashscreen": "^5.0.3",
+    "cordova-plugin-statusbar": "^2.4.3",
+    "cordova-plugin-whitelist": "^1.3.4",
+    "font-awesome": "^4.7.0",
     "ionic-angular": "3.9.5",
+    "ionic-img-viewer": "^2.9.0",
+    "ionic-rich-text": "^0.2.7",
     "ionicons": "3.0.0",
+    "ngx-order-pipe": "^2.0.4",
     "rxjs": "5.5.11",
     "sw-toolbox": "3.6.0",
     "zone.js": "0.8.29"
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.2.2",
+    "ionic": "^5.4.16",
     "typescript": "~2.6.2"
   },
-  "description": "An Ionic project"
+  "description": "An Ionic project",
+  "cordova": {
+    "plugins": {
+      "com.telerik.plugins.nativepagetransitions": {},
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-ionic-webview": {},
+      "cordova-plugin-ionic-keyboard": {},
+      "cordova-plugin-camera": {
+        "ANDROID_SUPPORT_V4_VERSION": "27.+"
+      },
+      "cordova-android-support-gradle-release": {
+        "ANDROID_SUPPORT_VERSION": "27.+"
+      }
+    },
+    "platforms": [
+      "browser",
+      "android"
+    ]
+  }
 }

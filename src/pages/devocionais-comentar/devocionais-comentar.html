@@ -1,0 +1,85 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Comentários</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="formulario">
+    <ion-item>
+      <ion-label stacked>Referência: {{ comentario.referencia }}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>O que me chamou a atenção? </ion-label>
+      <ion-textarea
+        [(ngModel)]="comentario.chamouAtencao"
+        formControlName="chamouAtencao"
+        name="chamouAtencao"
+      ></ion-textarea>
+    </ion-item>
+    <h6
+      class="error"
+      *ngIf="!formulario.controls.chamouAtencao.valid && (formulario.controls.chamouAtencao.dirty || formulario.controls.chamouAtencao.touched)"
+    >
+      Por favor, informe o que chamou a atenção no texto.
+    </h6>
+    <ion-item>
+      <ion-label stacked>O que o texto ensina sobre Deus? </ion-label>
+      <ion-textarea
+        [(ngModel)]="comentario.sobreDeus"
+        formControlName="sobreDeus"
+        name="sobreDeus"
+      >
+      </ion-textarea>
+    </ion-item>
+    <h6
+      class="error"
+      *ngIf="!formulario.controls.sobreDeus.valid && (formulario.controls.sobreDeus.dirty || formulario.controls.sobreDeus.touched)"
+    >
+      Por favor, informe o texto ensina sobre Deus.
+    </h6>
+    <ion-item>
+      <ion-label stacked>O que o texto ensina sobre a Humanidade? </ion-label>
+      <ion-textarea
+        [(ngModel)]="comentario.sobreHumanidade"
+        formControlName="sobreHumanidade"
+        name="sobreHumanidade"
+      >
+      </ion-textarea>
+    </ion-item>
+    <h6
+      class="error"
+      *ngIf="!formulario.controls.sobreHumanidade.valid && (formulario.controls.sobreHumanidade.dirty || formulario.controls.sobreHumanidade.touched)"
+    >
+      Por favor, informe o texto ensina sobre a Humanidade.
+    </h6>
+    <ion-item>
+      <ion-label stacked>E como vou obedecer a essa passagem? </ion-label>
+      <ion-textarea
+        [(ngModel)]="comentario.oQueAprendi"
+        formControlName="oQueAprendi"
+        name="oQueAprendi"
+      >
+      </ion-textarea>
+    </ion-item>
+    <h6
+      class="error"
+      *ngIf="!formulario.controls.oQueAprendi.valid && (formulario.controls.oQueAprendi.dirty || formulario.controls.oQueAprendi.touched)"
+    >
+      Por favor, informe como vou obedecer a essa passagem.
+    </h6>
+  </form>
+  <div style="text-align: center;">
+    <button ion-button (click)="criar()" [disabled]="formulario.invalid">
+      <ion-icon name="send"></ion-icon>
+    </button>
+    <button
+      ion-button
+      color="danger"
+      (click)="deletar(comentario)"
+      [disabled]="formulario.invalid"
+    >
+      <ion-icon name="md-trash"></ion-icon>
+    </button>
+  </div>
+</ion-content>

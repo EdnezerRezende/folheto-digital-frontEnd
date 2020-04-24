@@ -1,0 +1,79 @@
+<ion-header>
+    <ion-navbar>
+      <ion-title>Cadastrar</ion-title>
+    </ion-navbar>
+  </ion-header>
+
+  <ion-content padding>
+      <form  [formGroup]="formulario"  >
+          <ion-item >
+            <ion-label stacked >Título: </ion-label>
+            <ion-input [(ngModel)]="agendaEvento.titulo" formControlName="titulo" name="titulo"  type="text"></ion-input>
+          </ion-item>
+          <h6 class="error" *ngIf="!formulario.controls.titulo.valid && (formulario.controls.titulo.dirty || formulario.controls.titulo.touched)">
+            Por favor, informe o Título.
+          </h6>
+          <ion-item >
+            <ion-label stacked >Dia da Semana: </ion-label>
+            <ion-select [(ngModel)]="agendaEvento.diaSemanaAtividade" formControlName="diaSemanaAtividade"
+            [compareWith]="compareFn"
+            >
+              <ion-option *ngFor="let dia of diasSemana"  [value]="dia">{{dia}}</ion-option>
+            </ion-select>
+          </ion-item>
+          <h6 class="error" *ngIf="!formulario.controls.diaSemanaAtividade.valid && (formulario.controls.diaSemanaAtividade.dirty || formulario.controls.diaSemanaAtividade.touched)">
+            Por favor, informe o Dia da Semana que ocorrerá.
+          </h6>
+          <ion-item >
+            <ion-label stacked >Hora de Início: </ion-label>
+            <ion-datetime [(ngModel)]="agendaEvento.horaAtividade" formControlName="horaAtividade" name="horaAtividade"
+              displayFormat="HH:mm" ></ion-datetime>
+          </ion-item>
+          <h6 class="error" *ngIf="!formulario.controls.horaAtividade.valid && (formulario.controls.horaAtividade.dirty || formulario.controls.horaAtividade.touched)">
+            Por favor, informe a hora de início.
+          </h6>
+          <ion-item >
+            <ion-label stacked >Descrição: </ion-label>
+            <ion-input [(ngModel)]="agendaEvento.descricao" formControlName="descricao" name="descricao"  type="text"></ion-input>
+          </ion-item>
+          <h6 class="error" *ngIf="!formulario.controls.descricao.valid && (formulario.controls.descricao.dirty || formulario.controls.descricao.touched)">
+            Por favor, informe a Descrição do Evento ou Agenda.
+          </h6>
+
+
+          <ion-item >
+            <ion-label stacked >Data de Início: </ion-label>
+            <ion-datetime [(ngModel)]="agendaEvento.dataInicio" formControlName="dataInicio" name="dataInicio"
+              displayFormat="DD/MM/YYYY" ></ion-datetime>
+          </ion-item>
+          <h6 class="error" *ngIf="!formulario.controls.dataInicio.valid && (formulario.controls.dataInicio.dirty || formulario.controls.dataInicio.touched)">
+            Por favor, informe a data de início.
+          </h6>
+
+
+          <ion-item >
+            <ion-label stacked >Data Fim: </ion-label>
+            <ion-datetime [(ngModel)]="agendaEvento.dataFim" formControlName="dataFim" name="dataFim"
+              displayFormat="DD/MM/YYYY" ></ion-datetime>
+          </ion-item>
+          <h6 class="error" *ngIf="!formulario.controls.dataFim.valid && (formulario.controls.dataFim.dirty || formulario.controls.dataFim.touched)">
+            Por favor, informe a data fim.
+          </h6>
+
+          <ion-item >
+              <ion-label stacked >Tome nota </ion-label>
+              <ion-checkbox color="primary" [checked]="false" [(ngModel)]="agendaEvento.isEvento" formControlName="isEvento" name="isEvento"></ion-checkbox>
+            </ion-item>
+            <h6 class="error" *ngIf="!formulario.controls.isEvento.valid && (formulario.controls.isEvento.dirty || formulario.controls.isEvento.touched)">
+              Por favor, informe se é um evento ou não.
+            </h6>
+
+        </form>
+
+        <ion-fab top right edge >
+          <button ion-fab (click)="salvar(item)" [disabled]="formulario.invalid">
+            <ion-icon name="send"></ion-icon>
+          </button>
+        </ion-fab>
+  </ion-content>
+

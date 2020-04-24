@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Aniversariantes</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-refresher
+    slot="fixed"
+    pullFactor="0.5"
+    pullMin="100"
+    pullMax="200"
+    (ionRefresh)="doRefresh($event)"
+  >
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-searchbar
+    animated="true"
+    placeholder="Pesquisar "
+    (ionInput)="getItems($event)"
+  ></ion-searchbar>
+
+  <ion-list detail="true" *ngFor="let aniversariante of aniversariantesSearch">
+    <ion-item-sliding #slidingCase>
+      <ion-item detail>
+        <h2>
+          <strong
+            >{{ aniversariante.dataNascimento | date:'dd/MM' }} - {{
+            aniversariante.nome }}</strong
+          >
+        </h2>
+        <h4>{{ aniversariante.email }}</h4>
+      </ion-item>
+      <ion-item-options side="right" *ngIf="perfilLogado">
+        <button
+          ion-button
+          color="primary"
+          (click)="alterar( aniversariante,slidingCase )"
+        >
+          <ion-icon name="md-create"></ion-icon> Alterar
+        </button>
+        <button
+          ion-button
+          color="danger"
+          (click)="deletar( aniversariante,slidingCase )"
+        >
+          <ion-icon name="md-trash"></ion-icon> Deletar
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>
