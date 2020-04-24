@@ -10,6 +10,7 @@ import { DevocionalDTO } from "../../models/devocional.dto";
 import { DevocionalService } from "../../services/domain/devocional.service";
 import { StorageService } from "../../services/storage.service";
 import { MembroInfo } from "../../models/membro-info";
+import { IgrejaInfoDTO } from "../../models/igreja_info.dto";
 
 @IonicPage()
 @Component({
@@ -40,7 +41,8 @@ export class DevocionaisListarPage {
   }
 
   private obterLista() {
-    this._devocionalService.buscaTodos().subscribe(
+    let igreja: IgrejaInfoDTO = this.storageComentaService.getIgreja();
+    this._devocionalService.buscaTodos(igreja.id).subscribe(
       (resposta) => {
         this.devocionais = resposta;
         this.devocionaisSearch = this.devocionais;

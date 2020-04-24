@@ -3,7 +3,7 @@ import {
   IonicPage,
   NavController,
   NavParams,
-  AlertController
+  AlertController,
 } from "ionic-angular";
 import { DevocionalDTO } from "../../models/devocional.dto";
 import { StorageService } from "../../services/storage.service";
@@ -13,7 +13,7 @@ import { Validators, FormGroup, FormBuilder } from "@angular/forms";
 @IonicPage()
 @Component({
   selector: "page-devocionais-comentar",
-  templateUrl: "devocionais-comentar.html"
+  templateUrl: "devocionais-comentar.html",
 })
 export class DevocionaisComentarPage {
   devocional: DevocionalDTO = new DevocionalDTO();
@@ -52,7 +52,10 @@ export class DevocionaisComentarPage {
 
   private criarFormulario() {
     this.formulario = this.fb.group({
-      texto: ["", Validators.required]
+      chamouAtencao: ["", Validators.required],
+      sobreDeus: ["", Validators.required],
+      sobreHumanidade: ["", Validators.required],
+      oQueAprendi: ["", Validators.required],
     });
   }
 
@@ -65,7 +68,7 @@ export class DevocionaisComentarPage {
       .create({
         title: "Salvo",
         subTitle: "Comentário salvo com sucesso",
-        buttons: [{ text: "Ok" }]
+        buttons: [{ text: "Ok" }],
       })
       .present();
   }
@@ -84,10 +87,10 @@ export class DevocionaisComentarPage {
             text: "Sim",
             handler: () => {
               this.deletarConfirmado(item);
-            }
+            },
           },
-          { text: "Não" }
-        ]
+          { text: "Não" },
+        ],
       })
       .present();
   }

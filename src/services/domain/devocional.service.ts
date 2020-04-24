@@ -7,28 +7,25 @@ import { DevocionalNewDTO } from "../../models/devocional-new.dto";
 
 @Injectable()
 export class DevocionalService {
+  constructor(public http: HttpClient) {}
 
-    constructor(public http:HttpClient){
+  buscaTodos(idIgreja: number): Observable<DevocionalDTO[]> {
+    return this.http.get<DevocionalDTO[]>(
+      `${API_CONFIG.baseUrl}/devocionais/igreja/${idIgreja}`
+    );
+  }
 
-    }
+  salvar(dto: DevocionalNewDTO) {
+    return this.http.post(`${API_CONFIG.baseUrl}/devocionais/`, dto, {
+      observe: "response",
+      responseType: "text",
+    });
+  }
 
-    buscaTodos(): Observable<DevocionalDTO[]>{
-        return this.http.get<DevocionalDTO[]>(`${API_CONFIG.baseUrl}/devocionais`);
-    }
-
-    salvar(dto:DevocionalNewDTO){
-        return this.http.post(`${API_CONFIG.baseUrl}/devocionais/`, dto,
-        { 
-            observe: 'response', 
-            responseType: 'text'
-        });
-    }
-
-    deletar(idPg:number){
-        return this.http.delete(`${API_CONFIG.baseUrl}/devocionais/${idPg}`,
-        { 
-            observe: 'response', 
-            responseType: 'text'
-        });
-    }
+  deletar(idPg: number) {
+    return this.http.delete(`${API_CONFIG.baseUrl}/devocionais/${idPg}`, {
+      observe: "response",
+      responseType: "text",
+    });
+  }
 }
