@@ -140,6 +140,18 @@ export class ErrorInterceptor implements HttpInterceptor {
         ],
       });
       alert.present();
+    } else {
+      let alert = this.alertCtrl.create({
+        title: "Erro ",
+        message: JSON.parse(errorObj.error).message,
+        enableBackdropDismiss: false,
+        buttons: [
+          {
+            text: "Ok",
+          },
+        ],
+      });
+      alert.present();
     }
   }
 

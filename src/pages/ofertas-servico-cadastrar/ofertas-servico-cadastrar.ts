@@ -21,7 +21,7 @@ export class OfertasServicoCadastrarPage {
   item: any;
   formulario: FormGroup;
   servico: OfertaServicoNewDTO = new OfertaServicoNewDTO();
-  telefone: string;
+  telefone: string = "";
 
   constructor(
     public navCtrl: NavController,
@@ -109,6 +109,7 @@ export class OfertasServicoCadastrarPage {
                   text: "Sim",
                   handler: () => {
                     this.criarFormulario();
+                    this.servico = new OfertaServicoNewDTO();
                   },
                 },
                 {
