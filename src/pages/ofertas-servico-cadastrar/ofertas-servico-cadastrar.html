@@ -1,4 +1,3 @@
-
 <ion-header>
   <ion-navbar>
     <ion-title>Valorize o que é nosso </ion-title>
@@ -6,65 +5,119 @@
 </ion-header>
 
 <ion-content padding>
-    <form  [formGroup]="formulario"  >
-        <ion-item >
-          <ion-label stacked >Nome do Serviço: </ion-label>
-          <ion-input [(ngModel)]="servico.nome" formControlName="nome" name="nome"  type="text"></ion-input>
-        </ion-item>
-        <h6 class="error" *ngIf="!formulario.controls.nome.valid && (formulario.controls.nome.dirty || formulario.controls.nome.touched)">
-          Por favor, informe o Nome do Serviço.
-        </h6>
-        <rich-text [formControlItem]="formulario.controls.descricao" [(ngModel)]="servico.descricao" formControlName="descricao" name="descricao" ></rich-text>
-        <h6 class="error" *ngIf="!formulario.controls.descricao.valid && (formulario.controls.descricao.dirty || formulario.controls.descricao.touched)">
-          Por favor, informe a descrição do Serviço.
-        </h6>
+  <form [formGroup]="formulario">
+    <ion-item>
+      <ion-label stacked>Nome do Serviço: </ion-label>
+      <ion-input
+        [(ngModel)]="servico.nome"
+        formControlName="nome"
+        name="nome"
+        type="text"
+      ></ion-input>
+    </ion-item>
+    <h6
+      class="error"
+      *ngIf="!formulario.controls.nome.valid && (formulario.controls.nome.dirty || formulario.controls.nome.touched)"
+    >
+      Por favor, informe o Nome do Serviço.
+    </h6>
+    <rich-text
+      [formControlItem]="formulario.controls.descricao"
+      [(ngModel)]="servico.descricao"
+      formControlName="descricao"
+      name="descricao"
+    ></rich-text>
+    <h6
+      class="error"
+      *ngIf="!formulario.controls.descricao.valid && (formulario.controls.descricao.dirty || formulario.controls.descricao.touched)"
+    >
+      Por favor, informe a descrição do Serviço.
+    </h6>
 
-        <ion-item >
-          <ion-label stacked >E-mail: </ion-label>
-          <ion-input [(ngModel)]="servico.emailServico" formControlName="emailServico" name="emailServico"  type="text"></ion-input>
-        </ion-item>
-        <h6 class="error" *ngIf="!formulario.controls.emailServico.valid && (formulario.controls.emailServico.dirty || formulario.controls.emailServico.touched)">
-          Por favor, informe o E-mail do Serviço.
-        </h6>
+    <ion-item>
+      <ion-label stacked>E-mail: </ion-label>
+      <ion-input
+        [(ngModel)]="servico.emailServico"
+        formControlName="emailServico"
+        name="emailServico"
+        type="text"
+      ></ion-input>
+    </ion-item>
+    <h6
+      class="error"
+      *ngIf="!formulario.controls.emailServico.valid && (formulario.controls.emailServico.dirty || formulario.controls.emailServico.touched)"
+    >
+      Por favor, informe o E-mail do Serviço.
+    </h6>
 
-       
-        <ion-item >
-          <ion-label stacked >Instagram: </ion-label>
-          <ion-input [(ngModel)]="servico.instagram" formControlName="instagram" name="instagram"  type="text"></ion-input>
-        </ion-item>
-        
-        <ion-item >
-          <ion-label stacked >Facebook: </ion-label>
-          <ion-input [(ngModel)]="servico.facebook" formControlName="facebook" name="facebook"  type="text"></ion-input>
-        </ion-item>
+    <ion-item>
+      <ion-label stacked>Instagram: </ion-label>
+      <ion-input
+        [(ngModel)]="servico.instagram"
+        formControlName="instagram"
+        name="instagram"
+        type="text"
+      ></ion-input>
+    </ion-item>
 
-        <ion-item >
-          <ion-label stacked >Endereço: </ion-label>
-          <ion-input [(ngModel)]="servico.endereco" formControlName="endereco" name="endereco"  type="text"></ion-input>
-        </ion-item>
+    <ion-item>
+      <ion-label stacked>Facebook: </ion-label>
+      <ion-input
+        [(ngModel)]="servico.facebook"
+        formControlName="facebook"
+        name="facebook"
+        type="text"
+      ></ion-input>
+    </ion-item>
 
-        <ion-item >
-          <ion-label stacked >Telefone: </ion-label>
-          <ion-input [(ngModel)]="telefone" [brmasker]="{phone: true}" formControlName="telefone" name="telefone"  type="tel"></ion-input>
-          <button ion-button clear color="blue" type="button" item-right (click)="insereTel(tel)" 
-            [disabled]="telefone == '' || telefone == undefined"
-            style="margin-top: 30px; font-size: 2.2rem !important;">
-              <ion-icon name="md-add-circle" ></ion-icon> 
-          </button>
-          
-        </ion-item>
-        <ion-item-divider color="light" style="text-align:center;">Lista de Telefones</ion-item-divider>
-        <ion-list>
-          <ion-item *ngFor="let tel of servico.telefones" style="text-align:center;">
-            {{ tel }} <ion-icon name="md-trash" (click)="deletaTel(tel)"></ion-icon> 
-          </ion-item>
-        </ion-list>
-        
-      </form>
-    
-      <ion-fab top right edge >
-        <button ion-fab (click)="salvar(item)" [disabled]="formulario.invalid">
-          <ion-icon name="send"></ion-icon>
-        </button>
-      </ion-fab>
+    <ion-item>
+      <ion-label stacked>Endereço: </ion-label>
+      <ion-input
+        [(ngModel)]="servico.endereco"
+        formControlName="endereco"
+        name="endereco"
+        type="text"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Telefone: </ion-label>
+      <ion-input
+        [(ngModel)]="telefone"
+        [brmasker]="{phone: true}"
+        formControlName="telefone"
+        name="telefone"
+        type="tel"
+      ></ion-input>
+      <button
+        ion-button
+        clear
+        color="blue"
+        type="button"
+        item-right
+        (click)="insereTel()"
+        [disabled]="telefone == '' || telefone == undefined"
+        style="margin-top: 30px; font-size: 2.2rem !important;"
+      >
+        <ion-icon name="md-add-circle"></ion-icon>
+      </button>
+    </ion-item>
+    <ion-item-divider color="light" style="text-align: center;"
+      >Lista de Telefones</ion-item-divider
+    >
+    <ion-list>
+      <ion-item
+        *ngFor="let tel of servico.telefones"
+        style="text-align: center;"
+      >
+        {{ tel }} <ion-icon name="md-trash" (click)="deletaTel(tel)"></ion-icon>
+      </ion-item>
+    </ion-list>
+  </form>
+
+  <ion-fab top right edge>
+    <button ion-fab (click)="salvar(item)" [disabled]="formulario.invalid">
+      <ion-icon name="send"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>

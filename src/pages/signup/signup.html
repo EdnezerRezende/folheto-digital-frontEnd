@@ -79,7 +79,11 @@
 
     <ion-item>
       <ion-label stacked>Senha*</ion-label>
-      <ion-input [(ngModel)]="membro.senha" formControlName="senha" type="password"></ion-input>
+      <ion-input
+        [(ngModel)]="membro.senha"
+        formControlName="senha"
+        type="password"
+      ></ion-input>
     </ion-item>
     <p
       class="danger"
@@ -90,7 +94,11 @@
     </p>
     <ion-item>
       <ion-label stacked>Logradouro*</ion-label>
-      <ion-input [(ngModel)]="membro.logradouro" formControlName="logradouro" type="text"></ion-input>
+      <ion-input
+        [(ngModel)]="membro.logradouro"
+        formControlName="logradouro"
+        type="text"
+      ></ion-input>
     </ion-item>
     <p
       class="danger"
@@ -101,7 +109,11 @@
     </p>
     <ion-item>
       <ion-label stacked>Número*</ion-label>
-      <ion-input [(ngModel)]="membro.numero" formControlName="numero" type="text"></ion-input>
+      <ion-input
+        [(ngModel)]="membro.numero"
+        formControlName="numero"
+        type="text"
+      ></ion-input>
     </ion-item>
     <p
       class="danger"
@@ -112,15 +124,28 @@
     </p>
     <ion-item>
       <ion-label stacked>Complemento</ion-label>
-      <ion-input [(ngModel)]="membro.complemento" formControlName="complemento" type="text"></ion-input>
+      <ion-input
+        [(ngModel)]="membro.complemento"
+        formControlName="complemento"
+        type="text"
+      ></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>Bairro</ion-label>
-      <ion-input [(ngModel)]="membro.bairro" formControlName="bairro" type="text"></ion-input>
+      <ion-input
+        [(ngModel)]="membro.bairro"
+        formControlName="bairro"
+        type="text"
+      ></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>CEP *</ion-label>
-      <ion-input [(ngModel)]="membro.cep" [brmasker]="{mask:'00.000-000', len:10}" formControlName="cep" type="text"></ion-input>
+      <ion-input
+        [(ngModel)]="membro.cep"
+        [brmasker]="{mask:'00.000-000', len:10}"
+        formControlName="cep"
+        type="text"
+      ></ion-input>
     </ion-item>
     <p
       class="danger"
@@ -129,32 +154,6 @@
     >
       Valor inválido
     </p>
-    <ion-item>
-      <ion-label stacked>Telefone </ion-label>
-      <ion-input [(ngModel)]="membro.telefones" [brmasker]="{phone: true}" formControlName="telefone" type="text"></ion-input>
-    </ion-item>
-    <p
-      class="danger"
-      *ngIf="formGroup.controls.telefone.dirty && formGroup.controls.telefone.errors"
-      margin-left
-    >
-      Valor inválido
-    </p>
-    <ion-item>
-      <ion-label stacked>Celular</ion-label>
-      <ion-input  formControlName="celular" [brmasker]="{phone: true}" type="text"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label stacked>Igreja *</ion-label>
-      <ion-select formControlName="igrejaId">
-        <ion-option
-          *ngFor="let igreja of igrejas; first as p"
-          [value]="igreja.id"
-          [selected]="p"
-          >{{ igreja.nome }}
-        </ion-option>
-      </ion-select>
-    </ion-item>
     <ion-item>
       <ion-label stacked>Estado *</ion-label>
       <ion-select formControlName="estadoId" (ionChange)="updateCidades()">
@@ -174,6 +173,42 @@
         >
       </ion-select>
     </ion-item>
+    <ion-item>
+      <ion-label stacked>Telefone </ion-label>
+      <ion-input
+        [(ngModel)]="membro.telefones"
+        [brmasker]="{phone: true}"
+        formControlName="telefone"
+        type="text"
+      ></ion-input>
+    </ion-item>
+    <p
+      class="danger"
+      *ngIf="formGroup.controls.telefone.dirty && formGroup.controls.telefone.errors"
+      margin-left
+    >
+      Valor inválido
+    </p>
+    <ion-item>
+      <ion-label stacked>Celular</ion-label>
+      <ion-input
+        formControlName="celular"
+        [brmasker]="{phone: true}"
+        type="text"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Igreja *</ion-label>
+      <ion-select formControlName="igrejaId">
+        <ion-option
+          *ngFor="let igreja of igrejas; first as p"
+          [value]="igreja.id"
+          [selected]="p"
+          >{{ igreja.nome }}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+
     <button ion-button block type="submit" [disabled]="formGroup.invalid">
       Criar conta
     </button>
