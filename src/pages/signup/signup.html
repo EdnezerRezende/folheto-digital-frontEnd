@@ -201,9 +201,9 @@
       <ion-label stacked>Igreja *</ion-label>
       <ion-select formControlName="igrejaId">
         <ion-option
-          *ngFor="let igreja of igrejas; first as p"
+          *ngFor="let igreja of igrejas; first as f"
           [value]="igreja.id"
-          [selected]="p"
+          [selected]="f"
           >{{ igreja.nome }}
         </ion-option>
       </ion-select>

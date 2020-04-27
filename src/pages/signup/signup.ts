@@ -93,6 +93,7 @@ export class SignupPage {
     this.igrejaService.obterTodasIgrejas().subscribe(
       (response) => {
         this.igrejas = response;
+        this.formGroup.controls.igrejaId.setValue(this.igrejas[0].id);
       },
       (error) => {
         let alert = this.alertCtrl.create({
@@ -141,6 +142,12 @@ export class SignupPage {
       this.retiraMascaraTelefone(this.formGroup.controls.celular.value)
     );
 
+    if (
+      this.formGroup.controls.igrejaId.value == "" ||
+      this.formGroup.controls.igrejaId.value == undefined
+    ) {
+      this.formGroup.controls.igrejaId.setValue(this.igrejas[0]);
+    }
     this.membroService.insert(this.formGroup.value).subscribe(
       (response) => {
         this.showInsertOk();
