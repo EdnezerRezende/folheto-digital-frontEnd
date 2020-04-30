@@ -7,8 +7,9 @@
 <ion-content padding>
   <ion-avatar>
     <img
+      style="margin: auto;"
       class="circle"
-      [src]="pg.imageUrl || profileImage"
+      [src]="profileImage"
       #myImage
       (click)="presentImage(myImage)"
     />
@@ -21,13 +22,42 @@
   <p text-center>Líder: {{ pg.lider }}</p>
 
   <ion-card *ngIf="isLider">
-    <ion-card-header>
+    <ion-card-header text-center>
       Enviar imagem do PG
     </ion-card-header>
+    <div *ngIf="isHabilitaVideo">
+      <ack-webcam
+        #webcam
+        [options]="options"
+        (success)="onCamSuccess($event)"
+        (catch)="onCamError($event)"
+      ></ack-webcam>
+      <div style="text-align: center;">
+        <button ion-button center (click)="genBase64(webcam)">
+          <ion-icon name="md-camera"></ion-icon>
+        </button>
+      </div>
+    </div>
+    <div *ngIf="!isHabilitaVideo" style="text-align: center;">
+      <button ion-button (click)="habilitaCamera(webcam)" round>
+        Alterar Foto
+      </button>
+    </div>
     <ion-item *ngIf="picture">
       <img [src]="picture" />
     </ion-item>
-    <ion-item>
+    <div style="text-align: center;" *ngIf="picture">
+      <button ion-button outline block (click)="postFormData(webcam)" center>
+        Enviar
+      </button>
+      <button ion-button outline block (click)="cancel()" center>
+        Descartar imagem
+      </button>
+    </div>
+    <!-- <ion-item *ngIf="picture">
+      <img [src]="picture" />
+    </ion-item> -->
+    <!-- <ion-item>
       <button
         ion-button
         block
@@ -50,6 +80,6 @@
       <button *ngIf="picture" ion-button outline block (click)="cancel()">
         Descartar imagem
       </button>
-    </ion-item>
+    </ion-item> -->
   </ion-card>
 </ion-content>

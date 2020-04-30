@@ -93,7 +93,7 @@ export class LoginPage {
                   this.storage.setMembro(this.membro);
                 },
                 (error) => {
-                  return "assets/imgs/avatar-blank.png";
+                  console.log(error);
                 }
               );
           },
@@ -107,21 +107,6 @@ export class LoginPage {
 
   signup() {
     this.navCtrl.push("SignupPage");
-  }
-
-  getImageIfExists(membro: MembroInfo) {
-    this.membroService.getImageFromBucket(this.membro.id + "").subscribe(
-      (response) => {
-        this.membro.imageUrl = `${API_CONFIG.bucketBaseUrl}/membro${this.membro.id}.jpg`;
-        this.blobToDataURL(response).then((dataUrl) => {
-          let str: string = dataUrl as string;
-          return this.sanitizer.bypassSecurityTrustUrl(str);
-        });
-      },
-      (error) => {
-        return "assets/imgs/avatar-blank.png";
-      }
-    );
   }
 
   blobToDataURL(blob) {

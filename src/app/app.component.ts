@@ -442,6 +442,7 @@ export class MyApp {
           return this.picture;
         }
       );
+      // return this.storage.getMembro().imageUrl;
     }
     return this.picture;
   }

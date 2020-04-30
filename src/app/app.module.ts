@@ -31,6 +31,7 @@ import { EmailService } from "../services/domain/email.service";
 import { Camera } from "@ionic-native/camera";
 import { AniversarianteService } from "../services/domain/aniversariante.service";
 import { DomainBoletimProvider } from "../services/domain/domain-boletim";
+import { WebCamModule } from "ack-angular-webcam";
 @NgModule({
   declarations: [MyApp],
   imports: [
@@ -46,6 +47,7 @@ import { DomainBoletimProvider } from "../services/domain/domain-boletim";
       pageTransition: "md-transition  ",
       menuType: "overlay",
       RichTextModule,
+      WebCamModule,
     }),
     OrderModule,
     IonicImageViewerModule,
