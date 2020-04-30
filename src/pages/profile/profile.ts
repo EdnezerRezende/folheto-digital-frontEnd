@@ -6,6 +6,9 @@ import { CameraOptions, Camera } from "@ionic-native/camera";
 import { DomSanitizer } from "@angular/platform-browser";
 import { MembroService } from "../../services/domain/membro.service";
 import { MembroInfo } from "../../models/membro-info";
+import { WebCamComponent } from "ack-angular-webcam";
+import { HttpClient, HttpRequest } from "@angular/common/http";
+import { ImageUtilService } from "../../services/image-util.service";
 
 @IonicPage()
 @Component({
@@ -14,9 +17,11 @@ import { MembroInfo } from "../../models/membro-info";
 })
 export class ProfilePage {
   membro: MembroInfo;
-  picture: string;
+  picture: any;
   profileImage;
   cameraOn: boolean = false;
+  base64;
+  isHabilitaVideo: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -24,10 +29,54 @@ export class ProfilePage {
     public storage: StorageService,
     public membroService: MembroService,
     public camera: Camera,
-    public sanitizer: DomSanitizer
+    public sanitizer: DomSanitizer,
+    public http: HttpClient,
+    public imageUtilService: ImageUtilService
   ) {
     this.profileImage = "assets/imgs/avatar-blank.png";
   }
+
+  options: {
+    video: boolean | MediaTrackConstraints;
+    audio: boolean;
+    width: number;
+    height: number;
+    fallback: boolean;
+    fallbackSrc: string;
+    fallbackMode: string;
+    fallbackQuality: number;
+  };
+
+  habilitaCamera(webcam: WebCamComponent) {
+    // webcam.startCapturingVideo();
+    this.isHabilitaVideo = true;
+  }
+  genBase64(webcam: WebCamComponent) {
+    webcam
+      .getBase64()
+      .then((base) => {
+        webcam.options.video = false;
+        this.base64 = base;
+        this.picture = base;
+        this.isHabilitaVideo = false;
+        webcam.stop();
+      })
+      .catch((e) => console.error(e));
+  }
+
+  genPostData(webcam: WebCamComponent) {
+    webcam
+      .captureAsFormData({ fileName: "file.jpg" })
+      .then((formData) => this.postFormData(formData))
+      .catch((e) => console.error(e));
+  }
+  postFormData(formData) {
+    this.sendPicture();
+  }
+
+  onCamError(err) {}
+
+  onCamSuccess() {}
 
   ionViewDidLoad() {
     this.loadData();
@@ -35,11 +84,14 @@ export class ProfilePage {
 
   loadData() {
     let localUser = this.storage.getLocalUser();
-    if (localUser && localUser.email) {
+    let usuario = this.storage.getMembro();
+    if (localUser && localUser.email && usuario == undefined) {
       this.membroService.findByEmail(localUser.email).subscribe(
         (response) => {
           this.membro = response as MembroInfo;
-          this.getImageIfExists();
+          setTimeout(() => {
+            this.getImageIfExists();
+          }, 10000);
         },
         (error) => {
           if (error.status == 403) {
@@ -47,6 +99,9 @@ export class ProfilePage {
           }
         }
       );
+    } else if (usuario && usuario.email) {
+      this.membro = usuario;
+      this.profileImage = this.membro.imageUrl;
     } else {
       this.navCtrl.setRoot("TabsPage");
     }
@@ -123,6 +178,8 @@ export class ProfilePage {
     this.membroService.uploadPicture(this.picture, this.membro.id).subscribe(
       (response) => {
         this.picture = null;
+        this.membro.imageUrl = `${API_CONFIG.bucketBaseUrl}/membro${this.membro.id}.jpg`;
+        this.storage.setMembro(this.membro);
         this.getImageIfExists();
       },
       (error) => {}

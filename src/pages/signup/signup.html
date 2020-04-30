@@ -4,10 +4,7 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-  <form
-    [formGroup]="formGroup"
-    (ngSubmit)="signupUser(); $event.preventDefault()"
-  >
+  <form [formGroup]="formGroup" (ngSubmit)="signupUser();">
     <ion-item>
       <ion-label stacked>Nome*</ion-label>
       <ion-input
