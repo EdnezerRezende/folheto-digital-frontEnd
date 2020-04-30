@@ -18,9 +18,50 @@
     <ion-card-header>
       Alterar foto de perfil
     </ion-card-header>
+    <div *ngIf="isHabilitaVideo">
+      <div>
+        <ack-webcam
+          #webcam
+          [options]="options"
+          (success)="onCamSuccess($event)"
+          (catch)="onCamError($event)"
+        ></ack-webcam>
+      </div>
+      <div>
+        <button ion-button (click)="genBase64(webcam)">
+          <ion-icon name="md-camera"></ion-icon>
+        </button>
+      </div>
+      <!-- <div>
+        <ion-icon name="md-image"
+          ><input type="file" id="img" name="img" accept="image/*"
+        /></ion-icon>
+      </div> -->
+    </div>
+
+    <button
+      ion-button
+      *ngIf="!isHabilitaVideo"
+      (click)="habilitaCamera(webcam)"
+    >
+      Alterar Foto
+    </button>
     <ion-item *ngIf="picture">
       <img [src]="picture" />
     </ion-item>
+    <button
+      *ngIf="picture"
+      ion-button
+      outline
+      block
+      (click)="postFormData(webcam)"
+    >
+      Enviar
+    </button>
+    <button *ngIf="picture" ion-button outline block (click)="cancel()">
+      Descartar imagem
+    </button>
+    <!--
     <ion-item style="text-align: center;">
       <button
         style="font-size: 200%;"
@@ -52,6 +93,6 @@
       <button *ngIf="picture" ion-button outline block (click)="cancel()">
         Descartar imagem
       </button>
-    </ion-item>
+    </ion-item> -->
   </ion-card>
 </ion-content>
