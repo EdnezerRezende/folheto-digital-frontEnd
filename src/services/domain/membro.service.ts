@@ -19,44 +19,58 @@ export class MembroService {
   ) {}
 
   findById(id: string): Observable<Membro> {
-    return this.http.get<Membro>(`${API_CONFIG.baseUrl}/membros/${id}`);
+    return this.http
+      .get<Membro>(`${API_CONFIG.baseUrl}/membros/${id}`)
+      .finally(() => {
+        this.storage.loadOff("");
+      });
   }
 
   findByEmail(email: string): Observable<MembroInfo> {
-    return this.http.get<MembroInfo>(
-      `${API_CONFIG.baseUrl}/membros/email?value=${email}`
-    );
+    return this.http
+      .get<MembroInfo>(`${API_CONFIG.baseUrl}/membros/email?value=${email}`)
+      .finally(() => {
+        this.storage.loadOff("");
+      });
   }
 
   getSmallImageFromBucket(id: number): Observable<any> {
     let url = `${API_CONFIG.bucketBaseUrl}/membro${id}.jpg`;
-    return this.http.get(url, { responseType: "blob" });
+    return this.http.get(url, { responseType: "blob" }).finally(() => {
+      this.storage.loadOff("");
+    });
   }
 
   getImageFromBucket(id: string): Observable<any> {
     let url = `${API_CONFIG.bucketBaseUrl}/membro${id}.jpg`;
-    return this.http.get(url, { responseType: "blob" });
+    return this.http.get(url, { responseType: "blob" }).finally(() => {
+      this.storage.loadOff("");
+    });
   }
 
   insert(obj: MembroNewDTO) {
-    return this.http.post(`${API_CONFIG.baseUrl}/membros`, obj, {
-      observe: "response",
-      responseType: "text",
-    });
+    return this.http
+      .post(`${API_CONFIG.baseUrl}/membros`, obj, {
+        observe: "response",
+        responseType: "text",
+      })
+      .finally(() => {
+        this.storage.loadOff("");
+      });
   }
 
   uploadPicture(picture, idMembro: number) {
     let pictureBlob = this.imageUtilService.dataUriToBlob(picture);
     let formData: FormData = new FormData();
     formData.set("file", pictureBlob, "file.png");
-    return this.http.post(
-      `${API_CONFIG.baseUrl}/membros/picture/${idMembro}`,
-      formData,
-      {
+    return this.http
+      .post(`${API_CONFIG.baseUrl}/membros/picture/${idMembro}`, formData, {
         observe: "response",
         responseType: "text",
-      }
-    );
+      })
+      .finally(() => {
+        this.storage.loadOff("");
+      });
   }
 
   buscaTodosPorIgreja(idIgreja: number): Observable<Membro[]> {

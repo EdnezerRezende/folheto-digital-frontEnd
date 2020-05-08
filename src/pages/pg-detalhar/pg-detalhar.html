@@ -21,65 +21,11 @@
   </p>
   <p text-center>Líder: {{ pg.lider }}</p>
 
-  <ion-card *ngIf="isLider">
+  <ion-card *ngIf="isLider" style="text-align: center;">
     <ion-card-header text-center>
       Enviar imagem do PG
     </ion-card-header>
-    <div *ngIf="isHabilitaVideo">
-      <ack-webcam
-        #webcam
-        [options]="options"
-        (success)="onCamSuccess($event)"
-        (catch)="onCamError($event)"
-      ></ack-webcam>
-      <div style="text-align: center;">
-        <button ion-button center (click)="genBase64(webcam)">
-          <ion-icon name="md-camera"></ion-icon>
-        </button>
-      </div>
-    </div>
-    <div *ngIf="!isHabilitaVideo" style="text-align: center;">
-      <button ion-button (click)="habilitaCamera(webcam)" round>
-        Alterar Foto
-      </button>
-    </div>
-    <ion-item *ngIf="picture">
-      <img [src]="picture" />
-    </ion-item>
-    <div style="text-align: center;" *ngIf="picture">
-      <button ion-button outline block (click)="postFormData(webcam)" center>
-        Enviar
-      </button>
-      <button ion-button outline block (click)="cancel()" center>
-        Descartar imagem
-      </button>
-    </div>
-    <!-- <ion-item *ngIf="picture">
-      <img [src]="picture" />
-    </ion-item> -->
-    <!-- <ion-item>
-      <button
-        ion-button
-        block
-        (click)="getCameraPicture()"
-        [disabled]="cameraOn"
-      >
-        Camera
-      </button>
-      <button
-        ion-button
-        block
-        (click)="getGalleryPicture()"
-        [disabled]="cameraOn"
-      >
-        Galeria
-      </button>
-      <button *ngIf="picture" ion-button outline block (click)="sendPicture()">
-        Enviar imagem
-      </button>
-      <button *ngIf="picture" ion-button outline block (click)="cancel()">
-        Descartar imagem
-      </button>
-    </ion-item> -->
+
+    <foto (sendPictureEnvio)="sendPicture($event)" [picture]="retorno"></foto>
   </ion-card>
 </ion-content>

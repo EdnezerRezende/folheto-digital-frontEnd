@@ -3,12 +3,9 @@ import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { PgDTO } from "../../models/pg.dto";
 import { StorageService } from "../../services/storage.service";
 import { PGService } from "../../services/domain/pg.service";
-import { Camera, CameraOptions } from "@ionic-native/camera";
 import { DomSanitizer } from "@angular/platform-browser";
 import { API_CONFIG } from "../../config/api.config";
 import { ImageViewerController } from "ionic-img-viewer";
-//Camera NPM
-import { WebCamComponent } from "ack-angular-webcam";
 
 @IonicPage()
 @Component({
@@ -17,32 +14,16 @@ import { WebCamComponent } from "ack-angular-webcam";
 })
 export class PgDetalharPage {
   pg: PgDTO;
-  picture: string;
   profileImage: any = "assets/imgs/avatar-blank.png";
-  cameraOn: boolean = false;
   _imageViewerCtrl: ImageViewerController;
   isLider: boolean = false;
-
-  //Camera NPM
-  isHabilitaVideo: boolean = false;
-  options: {
-    video: boolean | MediaTrackConstraints;
-    audio: boolean;
-    width: number;
-    height: number;
-    fallback: boolean;
-    fallbackSrc: string;
-    fallbackMode: string;
-    fallbackQuality: number;
-  };
-  //Camera NPM
+  retorno: any = "";
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public storage: StorageService,
     public pgService: PGService,
-    public camera: Camera,
     public sanitizer: DomSanitizer,
     imageViewerCtrl: ImageViewerController
   ) {
@@ -52,38 +33,6 @@ export class PgDetalharPage {
   }
 
   ionViewDidLoad() {}
-
-  //Camera NPM
-  onCamError(err) {}
-
-  onCamSuccess() {}
-
-  habilitaCamera(webcam: WebCamComponent) {
-    // webcam.startCapturingVideo();
-    this.isHabilitaVideo = true;
-  }
-  genBase64(webcam: WebCamComponent) {
-    webcam
-      .getBase64()
-      .then((base) => {
-        webcam.options.video = false;
-        this.picture = base;
-        this.isHabilitaVideo = false;
-        webcam.stop();
-      })
-      .catch((e) => console.error(e));
-  }
-
-  genPostData(webcam: WebCamComponent) {
-    webcam
-      .captureAsFormData({ fileName: "file.jpg" })
-      .then((formData) => this.postFormData(formData))
-      .catch((e) => console.error(e));
-  }
-  postFormData(formData) {
-    this.sendPicture();
-  }
-  //Camera NPM
 
   private obterPG() {
     if (this.navParams.get("item")) {
@@ -121,63 +70,18 @@ export class PgDetalharPage {
     });
   }
 
-  getCameraPicture() {
-    this.cameraOn = true;
-
-    const options: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.PNG,
-      mediaType: this.camera.MediaType.PICTURE,
-    };
-
-    this.camera.getPicture(options).then(
-      (imageData) => {
-        this.picture = "data:image/png;base64," + imageData;
-        this.cameraOn = false;
-      },
-      (err) => {
-        this.cameraOn = false;
-      }
-    );
-  }
-
-  getGalleryPicture() {
-    this.cameraOn = true;
-
-    const options: CameraOptions = {
-      quality: 100,
-      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.PNG,
-      mediaType: this.camera.MediaType.PICTURE,
-    };
-
-    this.camera.getPicture(options).then(
-      (imageData) => {
-        this.picture = "data:image/jpg;base64," + imageData;
-        this.cameraOn = false;
-      },
-      (err) => {
-        this.cameraOn = false;
-      }
-    );
-  }
-
-  sendPicture() {
-    this.pgService.uploadPicture(this.picture, this.pg.id).subscribe(
+  sendPicture(picture: any) {
+    this.pgService.uploadPicture(picture, this.pg.id).subscribe(
       (response) => {
-        this.picture = null;
+        this.retorno = null;
         setTimeout(() => {
           this.getImageIfExists();
         }, 10000);
       },
-      (error) => {}
+      (error) => {
+        this.retorno = "Ocorreu um Erro no Envio, tentar novamente mais tarde!";
+      }
     );
-  }
-
-  cancel() {
-    this.picture = null;
   }
 
   presentImage(myImage) {

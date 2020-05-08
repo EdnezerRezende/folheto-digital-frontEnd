@@ -1,0 +1,77 @@
+<div hideWhen="android">
+  <div *ngIf="isHabilitaVideo">
+    <div>
+      <ack-webcam
+        #webcam
+        [options]="options"
+        (success)="onCamSuccess($event)"
+        (catch)="onCamError($event)"
+        [facingMode]="facingMode"
+      ></ack-webcam>
+    </div>
+    <div>
+      <button ion-button (click)="genBase64(webcam)">
+        <ion-icon name="md-camera"></ion-icon>
+      </button>
+    </div>
+    <!-- <div>
+          <ion-icon name="md-image"
+            ><input type="file" id="img" name="img" accept="image/*"
+          /></ion-icon>
+        </div> -->
+  </div>
+
+  <button ion-button *ngIf="!isHabilitaVideo" (click)="habilitaCamera(webcam)">
+    <ion-icon name="md-camera"></ion-icon>
+  </button>
+
+  <ion-item *ngIf="picture">
+    <img [src]="picture" />
+  </ion-item>
+  <button
+    *ngIf="picture"
+    ion-button
+    outline
+    block
+    (click)="postFormData(webcam)"
+  >
+    Enviar
+  </button>
+  <button *ngIf="picture" ion-button outline block (click)="cancel()">
+    Descartar imagem
+  </button>
+</div>
+<div showWhen="android">
+  <ion-item style="text-align: center;">
+    <button
+      style="font-size: 200%;"
+      ion-button
+      large
+      clear
+      icon-only
+      color="primary"
+      (click)="getCameraPicture()"
+      [disabled]="cameraOn"
+    >
+      <ion-icon name="md-camera"></ion-icon>
+    </button>
+    <button
+      style="font-size: 200%;"
+      ion-button
+      large
+      clear
+      icon-only
+      color="primary"
+      (click)="getGalleryPicture()"
+      [disabled]="cameraOn"
+    >
+      <ion-icon name="md-image"></ion-icon>
+    </button>
+    <button *ngIf="picture" ion-button outline block (click)="sendPicture()">
+      Enviar imagem
+    </button>
+    <button *ngIf="picture" ion-button outline block (click)="cancel()">
+      Descartar imagem
+    </button>
+  </ion-item>
+</div>

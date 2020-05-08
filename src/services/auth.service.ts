@@ -15,21 +15,29 @@ export class AuthService {
   constructor(public http: HttpClient, public storage: StorageService) {}
 
   authenticate(creds: CredenciaisDTO) {
-    return this.http.post(`${API_CONFIG.baseUrl}/login`, creds, {
-      observe: "response",
-      responseType: "text",
-    });
+    return this.http
+      .post(`${API_CONFIG.baseUrl}/login`, creds, {
+        observe: "response",
+        responseType: "text",
+      })
+      .finally(() => {
+        this.storage.loadOff("");
+      });
   }
 
   refreshToken() {
-    return this.http.post(
-      `${API_CONFIG.baseUrl}/auth/refresh_token`,
-      {},
-      {
-        observe: "response",
-        responseType: "text",
-      }
-    );
+    return this.http
+      .post(
+        `${API_CONFIG.baseUrl}/auth/refresh_token`,
+        {},
+        {
+          observe: "response",
+          responseType: "text",
+        }
+      )
+      .finally(() => {
+        this.storage.loadOff("");
+      });
   }
 
   successfulLogin(authorizationValue: string) {
@@ -52,6 +60,9 @@ export class AuthService {
     return this.http
       .post(`${API_CONFIG.baseUrl}/auth/signup`, values, {
         responseType: "text",
+      })
+      .finally(() => {
+        this.storage.loadOff("");
       })
       .pipe(
         tap((jwt) => {
