@@ -33,7 +33,8 @@ export class StorageService {
   obterLoading() {
     return this._loadingCtrl.create({
       // dismissOnPageChange: true,
-      content: "Carregando...",
+      spinner: "dots",
+      content: "Aguarde",
     });
   }
   getLocalUser(): LocalUser {

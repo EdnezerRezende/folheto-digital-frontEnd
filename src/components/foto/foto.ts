@@ -13,6 +13,8 @@ export class FotoComponent {
   @Input()
   picture: any = "";
 
+  cameras: any[] = [];
+
   captured: any = false;
   base64;
   cameraOn: boolean = false;
@@ -24,6 +26,16 @@ export class FotoComponent {
 
   constructor(public camera: Camera) {}
 
+  addCamera() {
+    this.cameras.push({
+      options: {
+        audio: false,
+        video: { width: {}, height: {} },
+        fallbackSrc: "./assets/img/jscam_canvas_only.swf",
+      },
+    });
+  }
+
   options: {
     video: true;
     audio: false;
@@ -34,7 +46,8 @@ export class FotoComponent {
   };
 
   habilitaCamera(webcam: WebCamComponent) {
-    // webcam.startCapturingVideo();
+    this.addCamera();
+
     this.isHabilitaVideo = true;
   }
   genBase64(webcam: WebCamComponent) {
@@ -45,6 +58,7 @@ export class FotoComponent {
         webcam.options.video = false;
         this.base64 = base;
         this.picture = base;
+        setTimeout(() => webcam.resizeVideo(), 0);
         this.isHabilitaVideo = false;
         webcam.stop();
       })
