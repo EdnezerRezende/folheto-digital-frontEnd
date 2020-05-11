@@ -10,20 +10,41 @@
       ></ack-webcam>
     </div>
     <div>
-      <button ion-button (click)="genBase64(webcam)">
+      <button ion-button (click)="genBase64(webcam)" class="tamanhoFont">
         <ion-icon name="md-camera"></ion-icon>
       </button>
     </div>
-    <!-- <div>
-          <ion-icon name="md-image"
-            ><input type="file" id="img" name="img" accept="image/*"
-          /></ion-icon>
-        </div> -->
   </div>
 
-  <button ion-button *ngIf="!isHabilitaVideo" (click)="habilitaCamera(webcam)">
+  <button
+    ion-button
+    *ngIf="!isHabilitaVideo"
+    (click)="habilitaCamera(webcam)"
+    class="tamanhoFont"
+  >
     <ion-icon name="md-camera"></ion-icon>
   </button>
+  <button
+    ion-button
+    *ngIf="!isHabilitaVideo"
+    (click)="abrirBuscaArquivo()"
+    class="tamanhoFont"
+  >
+    <ion-icon name="md-image"></ion-icon>
+  </button>
+  <br />
+  <br />
+  <div *ngIf="habilitaArquivo">
+    <label for="selecao-arquivo">Selecionar um arquivo </label>
+    <input
+      id="selecao-arquivo"
+      type="file"
+      accept="image/*"
+      (change)="handleFileInput($event)"
+    />
+    <br />
+    <br />
+  </div>
 
   <ion-item *ngIf="picture">
     <img [src]="picture" />
@@ -44,7 +65,7 @@
 <div showWhen="android">
   <ion-item style="text-align: center;">
     <button
-      style="font-size: 200%;"
+      class="tamanhoFont"
       ion-button
       large
       clear
@@ -56,7 +77,7 @@
       <ion-icon name="md-camera"></ion-icon>
     </button>
     <button
-      style="font-size: 200%;"
+      class="tamanhoFont"
       ion-button
       large
       clear
