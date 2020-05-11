@@ -1,27 +1,4 @@
 foto {
-  // .arquivo {
-  //   display: none;
-  // }
-  // .file {
-  //   line-height: 30px;
-  //   height: 30px;
-  //   border: 1px solid #a7a7a7;
-  //   padding: 5px;
-  //   box-sizing: border-box;
-  //   font-size: 15px;
-  //   vertical-align: middle;
-  //   width: 300px;
-  // }
-  // .btn {
-  //   border: none;
-  //   box-sizing: border-box;
-  //   padding: 2px 10px;
-  //   background-color: #4493c7;
-  //   color: #fff;
-  //   height: 32px;
-  //   font-size: 15px;
-  //   vertical-align: middle;
-  // }
   /* Esconde o input */
   input[type="file"] {
     display: none;
@@ -35,5 +12,9 @@ foto {
     cursor: pointer;
     margin: 10px;
     padding: 6px 20px;
+    font-size: 200%;
+  }
+  .tamanhoFont {
+    font-size: 200%;
   }
 }

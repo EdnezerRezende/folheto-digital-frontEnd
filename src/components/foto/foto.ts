@@ -29,6 +29,7 @@ export class FotoComponent {
   constructor(public camera: Camera) {}
 
   handleFileInput(event) {
+    this.picture = null;
     let reader = new FileReader();
 
     if (event.target.files && event.target.files.length) {
