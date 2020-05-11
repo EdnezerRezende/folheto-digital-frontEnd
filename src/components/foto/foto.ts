@@ -8,6 +8,8 @@ import { CameraOptions, Camera } from "@ionic-native/camera";
 })
 export class FotoComponent {
   text: string;
+  //Tratamento de busca de arquivo
+  habilitaArquivo: boolean = false;
 
   isHabilitaVideo: boolean = false;
   @Input()
@@ -26,6 +28,19 @@ export class FotoComponent {
 
   constructor(public camera: Camera) {}
 
+  handleFileInput(event) {
+    let reader = new FileReader();
+
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.picture = reader.result;
+      };
+    }
+  }
+
   addCamera() {
     this.cameras.push({
       options: {
@@ -34,6 +49,10 @@ export class FotoComponent {
         fallbackSrc: "./assets/img/jscam_canvas_only.swf",
       },
     });
+  }
+
+  abrirBuscaArquivo() {
+    this.habilitaArquivo = true;
   }
 
   options: {
@@ -47,7 +66,7 @@ export class FotoComponent {
 
   habilitaCamera(webcam: WebCamComponent) {
     this.addCamera();
-
+    this.habilitaArquivo = false;
     this.isHabilitaVideo = true;
   }
   genBase64(webcam: WebCamComponent) {
@@ -138,5 +157,7 @@ export class FotoComponent {
 
   cancel() {
     this.picture = null;
+    this.habilitaArquivo = false;
+    this.isHabilitaVideo = false;
   }
 }

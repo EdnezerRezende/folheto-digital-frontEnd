@@ -10,20 +10,60 @@
       ></ack-webcam>
     </div>
     <div>
-      <button ion-button (click)="genBase64(webcam)">
+      <button ion-button (click)="genBase64(webcam)" style="font-size: 200%;">
         <ion-icon name="md-camera"></ion-icon>
       </button>
     </div>
-    <!-- <div>
-          <ion-icon name="md-image"
-            ><input type="file" id="img" name="img" accept="image/*"
-          /></ion-icon>
-        </div> -->
   </div>
 
-  <button ion-button *ngIf="!isHabilitaVideo" (click)="habilitaCamera(webcam)">
+  <button
+    ion-button
+    *ngIf="!isHabilitaVideo"
+    (click)="habilitaCamera(webcam)"
+    style="font-size: 200%;"
+  >
     <ion-icon name="md-camera"></ion-icon>
   </button>
+  <button
+    ion-button
+    *ngIf="!isHabilitaVideo"
+    (click)="abrirBuscaArquivo()"
+    style="font-size: 200%;"
+  >
+    <ion-icon name="md-image"></ion-icon>
+  </button>
+  <br />
+  <br />
+  <div *ngIf="habilitaArquivo">
+    <!-- <input
+      class="arquivo"
+      type="file"
+      id="arquivo"
+      name="arquivo"
+      accept="image/*"
+    />
+    <input
+      type="text"
+      name="file"
+      id="file"
+      class="file"
+      placeholder="Arquivo"
+      readonly="readonly"
+    />
+    <input
+      type="button"
+      class="btn"
+      (click)="selecionaArquivo()"
+      value="SELECIONAR"
+    /> -->
+    <label for="selecao-arquivo">Selecionar um arquivo &#187;</label>
+    <input
+      id="selecao-arquivo"
+      type="file"
+      accept="image/*"
+      (change)="handleFileInput($event)"
+    />
+  </div>
 
   <ion-item *ngIf="picture">
     <img [src]="picture" />
