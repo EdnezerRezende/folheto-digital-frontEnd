@@ -88,7 +88,9 @@ export class ProfilePage {
         this.retorno = null;
         this.membro.imageUrl = `${API_CONFIG.bucketBaseUrl}/membro${this.membro.id}.jpg`;
         this.storage.setMembro(this.membro);
-        this.getImageIfExists();
+        setTimeout(() => {
+          this.getImageIfExists();
+        }, 5000);
       },
       (error) => {
         this.retorno = "Ocorreu um Erro no Envio, tentar novamente mais tarde!";

@@ -76,7 +76,7 @@ export class PgDetalharPage {
         this.retorno = null;
         setTimeout(() => {
           this.getImageIfExists();
-        }, 10000);
+        }, 5000);
       },
       (error) => {
         this.retorno = "Ocorreu um Erro no Envio, tentar novamente mais tarde!";

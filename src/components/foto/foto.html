@@ -1,5 +1,5 @@
 <div hideWhen="android">
-  <div *ngIf="isHabilitaVideo">
+  <div *ngIf="false">
     <div>
       <ack-webcam
         #webcam
@@ -18,7 +18,7 @@
 
   <button
     ion-button
-    *ngIf="!isHabilitaVideo"
+    *ngIf="false"
     (click)="habilitaCamera(webcam)"
     class="tamanhoFont"
   >
@@ -35,7 +35,7 @@
   <br />
   <br />
   <div *ngIf="habilitaArquivo">
-    <label for="selecao-arquivo">Selecionar um arquivo </label>
+    <label for="selecao-arquivo">Selecione um arquivo </label>
     <input
       id="selecao-arquivo"
       type="file"
