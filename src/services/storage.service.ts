@@ -1,11 +1,12 @@
 import { Injectable } from "@angular/core";
 import { STORAGE_KEYS } from "../config/storage_keys.config";
 import { LocalUser } from "../models/local_user";
-import { Comentarios } from "../models/comentarios";
+import { ComentarioDTO } from "../models/comentarios";
 import { MembroInfo } from "../models/membro-info";
 import { IgrejaInfoDTO } from "../models/igreja_info.dto";
 import { BrMaskerIonicServices3, BrMaskModel } from "brmasker-ionic-3";
 import { LoadingController } from "ionic-angular";
+import { BibliaToken } from "../models/biblia_token";
 
 @Injectable()
 export class StorageService {
@@ -30,6 +31,12 @@ export class StorageService {
     }
   }
 
+  tokenBiblia(obj: BibliaToken) {
+    localStorage.setItem(STORAGE_KEYS.tokenBiblia, JSON.stringify(obj));
+  }
+  getTokenBiblia() {
+    return JSON.parse(localStorage.getItem(STORAGE_KEYS.tokenBiblia));
+  }
   obterLoading() {
     return this._loadingCtrl.create({
       // dismissOnPageChange: true,
@@ -79,7 +86,7 @@ export class StorageService {
     }
   }
 
-  getComentarios(id: number): Comentarios {
+  getComentarios(id: number): ComentarioDTO {
     let str = localStorage.getItem(STORAGE_KEYS.comentarios + id);
 
     if (str != null) {
@@ -89,7 +96,7 @@ export class StorageService {
     }
   }
 
-  setComentarios(obj: Comentarios) {
+  setComentarios(obj: ComentarioDTO) {
     if (obj != null) {
       localStorage.setItem(
         STORAGE_KEYS.comentarios + obj.id,
@@ -98,7 +105,7 @@ export class StorageService {
     }
   }
 
-  setRemoveComentarios(obj: Comentarios) {
+  setRemoveComentarios(obj: ComentarioDTO) {
     localStorage.removeItem(STORAGE_KEYS.comentarios + obj.id);
   }
 

@@ -42,33 +42,29 @@ export class DevocionaisListarPage {
 
   private obterLista() {
     let igreja: IgrejaInfoDTO = this.storageComentaService.getIgreja();
-    this._devocionalService.buscaTodos(igreja.id).subscribe(
-      (resposta) => {
-        this.devocionais = resposta;
-        this.devocionaisSearch = this.devocionais;
-        this.devocionais.forEach((devocional) => {
-          let isLido = this.storageComentaService.getReferenciaLida(
-            devocional.id
-          );
-          devocional.isLido = isLido;
-        });
-      },
-      (error) => {
-        this._alertCtrl
-          .create({
-            title: "Falha",
-            subTitle:
-              "Não foi possível obter os devocionais, tente novamente mais tarde!",
-            buttons: [
-              {
-                text: "Ok",
-              },
-            ],
-          })
-          .present();
-        this.navCtrl.goToRoot;
-      }
-    );
+    this._devocionalService
+      .buscaTodos(igreja.id, this.dadosMembro.id)
+      .subscribe(
+        (resposta) => {
+          this.devocionais = resposta;
+          this.devocionaisSearch = this.devocionais;
+        },
+        (error) => {
+          this._alertCtrl
+            .create({
+              title: "Falha",
+              subTitle:
+                "Não foi possível obter os devocionais, tente novamente mais tarde!",
+              buttons: [
+                {
+                  text: "Ok",
+                },
+              ],
+            })
+            .present();
+          this.navCtrl.goToRoot;
+        }
+      );
   }
 
   copiaLista() {
@@ -81,8 +77,8 @@ export class DevocionaisListarPage {
     if (val && val.trim() != "") {
       this.devocionaisSearch = this.devocionaisSearch.filter((item) => {
         return (
-          item.referencia.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
-          item.descricao.toLowerCase().indexOf(val.toLowerCase()) > -1
+          item.referencia.book.nameU.toLowerCase().indexOf(val.toLowerCase()) >
+            -1 || item.descricao.toLowerCase().indexOf(val.toLowerCase()) > -1
         );
       });
     }
@@ -123,7 +119,6 @@ export class DevocionaisListarPage {
           lista.splice(index, 1);
           this.devocionais = lista;
           this.devocionaisSearch = this.copiaLista();
-          this.storageComentaService.setRemoveReferencia(item.id);
         }
       },
       (error) => {
@@ -156,17 +151,7 @@ export class DevocionaisListarPage {
 
   verificarLido(e, item: DevocionalDTO) {
     let isChecked = e.value;
-    let checkedGuard = this.storageComentaService.getReferenciaLida(item.id);
-    if (checkedGuard != undefined && checkedGuard != isChecked) {
-      this.storageComentaService.setReferenciaLida(item.id, isChecked);
-      item.isLido = isChecked;
-      return isChecked;
-    } else {
-      checkedGuard
-        ? checkedGuard
-        : this.storageComentaService.setReferenciaLida(item.id, isChecked);
-      item.isLido = isChecked;
-      return isChecked;
-    }
+    item.isLido = isChecked;
+    return isChecked;
   }
 }

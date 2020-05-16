@@ -1,0 +1,19 @@
+versiculos {
+  .alinhamentoTexto {
+    text-align: center !important;
+  }
+
+  .card-header {
+    background-color: map-get($colors, primary);
+    color: #fff;
+    padding: 0px;
+  }
+
+  .card-content {
+    webkittransition: {
+      max-height: 500ms, padding 500ms;
+    }
+    padding: 0px 0px;
+    max-height: 0px;
+  }
+}

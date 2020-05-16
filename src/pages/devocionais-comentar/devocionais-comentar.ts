@@ -7,8 +7,11 @@ import {
 } from "ionic-angular";
 import { DevocionalDTO } from "../../models/devocional.dto";
 import { StorageService } from "../../services/storage.service";
-import { Comentarios } from "../../models/comentarios";
+import { ComentarioDTO } from "../../models/comentarios";
 import { Validators, FormGroup, FormBuilder } from "@angular/forms";
+import { DevocionalComentarioService } from "../../services/domain/devocional.comentario.service";
+import { MembroInfo } from "../../models/membro-info";
+import { DevocionalComentarioNewDTO } from "../../models/devocional-comentario-new.dto";
 
 @IonicPage()
 @Component({
@@ -17,33 +20,51 @@ import { Validators, FormGroup, FormBuilder } from "@angular/forms";
 })
 export class DevocionaisComentarPage {
   devocional: DevocionalDTO = new DevocionalDTO();
-  comentario: Comentarios = new Comentarios();
+  comentario: ComentarioDTO = new ComentarioDTO();
 
   formulario: FormGroup;
+  membro: MembroInfo = new MembroInfo();
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public storageComentaService: StorageService,
+    public devocionalComentarioService: DevocionalComentarioService,
     private fb: FormBuilder,
     private _alertCtrl: AlertController
   ) {
-    this.criarFormulario();
-
     if (this.navParams.get("item")) {
       this.devocional = this.navParams.get("item");
-      this.comentario = storageComentaService.getComentarios(
-        this.devocional.id
-      );
-    }
-    if (this.comentario == null) {
       this.inicializarComentario();
+      this.membro = this.storageComentaService.getMembro();
+      this.devocionalComentarioService
+        .buscarPorReferenciaEMembro(
+          this.membro.id,
+          this.devocional.referencia.id
+        )
+        .subscribe(
+          (resposta) => {
+            if (resposta != undefined && resposta.id != undefined) {
+              this.comentario = resposta;
+            }
+          },
+          (error) => {
+            this._alertCtrl
+              .create({
+                title: "Comentário",
+                subTitle:
+                  "Não foi possível obter comentário, favor tentar mais tarde!",
+                buttons: [{ text: "Ok" }],
+              })
+              .present();
+          }
+        );
     }
   }
 
   private inicializarComentario() {
-    this.comentario = new Comentarios();
-    this.comentario.referencia = this.devocional.referencia;
+    this.comentario = new ComentarioDTO();
+    this.comentario.referencia = this.devocional.referencia.id;
     this.comentario.id = this.devocional.id;
     this.criarFormulario();
   }
@@ -52,32 +73,51 @@ export class DevocionaisComentarPage {
 
   private criarFormulario() {
     this.formulario = this.fb.group({
-      chamouAtencao: ["", Validators.required],
-      sobreDeus: ["", Validators.required],
-      sobreHumanidade: ["", Validators.required],
-      oQueAprendi: ["", Validators.required],
+      chamouAtencao: [""],
+      sobreDeus: [""],
+      sobreHumanidade: [""],
+      oQueAprendi: [""],
     });
   }
 
   criar() {
-    this.storageComentaService.setComentarios(this.comentario);
-    this.comentario = this.storageComentaService.getComentarios(
-      this.comentario.id
+    this.comentario.referencia = this.devocional.referencia.id;
+    let comentarioDTO: DevocionalComentarioNewDTO = new DevocionalComentarioNewDTO();
+    comentarioDTO.id = this.comentario.id;
+    comentarioDTO.chamouAtencao = this.comentario.chamouAtencao;
+    comentarioDTO.idMembro = this.membro.id;
+    comentarioDTO.oQueAprendi = this.comentario.oQueAprendi;
+    comentarioDTO.referencia = this.comentario.referencia;
+    comentarioDTO.sobreDeus = this.comentario.sobreDeus;
+    comentarioDTO.sobreHumanidade = this.comentario.sobreHumanidade;
+
+    this.devocionalComentarioService.salvar(comentarioDTO).subscribe(
+      (resposta) => {
+        this._alertCtrl
+          .create({
+            title: "Salvo",
+            subTitle: "Comentário salvo com sucesso",
+            buttons: [{ text: "Ok" }],
+          })
+          .present();
+      },
+      (error) => {
+        this._alertCtrl
+          .create({
+            title: "Error",
+            subTitle: "Comentário não foi salvo, tente novamente mais tarde!",
+            buttons: [{ text: "Ok" }],
+          })
+          .present();
+      }
     );
-    this._alertCtrl
-      .create({
-        title: "Salvo",
-        subTitle: "Comentário salvo com sucesso",
-        buttons: [{ text: "Ok" }],
-      })
-      .present();
   }
 
-  alterar(item: Comentarios) {
+  alterar(item: ComentarioDTO) {
     this.comentario = item;
   }
 
-  deletar(item: Comentarios) {
+  deletar(item: ComentarioDTO) {
     this._alertCtrl
       .create({
         title: "Excluir",
@@ -95,8 +135,23 @@ export class DevocionaisComentarPage {
       .present();
   }
 
-  deletarConfirmado(item: Comentarios) {
-    this.storageComentaService.setRemoveComentarios(item);
-    this.inicializarComentario();
+  deletarConfirmado(item: ComentarioDTO) {
+    this.devocionalComentarioService.deletar(item.id).subscribe(
+      (resposta) => {
+        this.inicializarComentario();
+      },
+      (error) => {
+        this._alertCtrl.create({
+          title: "Falha",
+          subTitle:
+            "Não foi possível excluir o comentário, tente novamente mais tarde!",
+          buttons: [
+            {
+              text: "Ok",
+            },
+          ],
+        });
+      }
+    );
   }
 }
