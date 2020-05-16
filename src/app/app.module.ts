@@ -32,6 +32,8 @@ import { Camera } from "@ionic-native/camera";
 import { AniversarianteService } from "../services/domain/aniversariante.service";
 import { DomainBoletimProvider } from "../services/domain/domain-boletim";
 import { WebCamModule } from "ack-angular-webcam";
+import { BibliaReferenciaService } from "../services/domain/biblia-referencia.service";
+import { DevocionalComentarioService } from "../services/domain/devocional.comentario.service";
 @NgModule({
   declarations: [MyApp],
   imports: [
@@ -80,6 +82,8 @@ import { WebCamModule } from "ack-angular-webcam";
     Camera,
     AniversarianteService,
     DomainBoletimProvider,
+    BibliaReferenciaService,
+    DevocionalComentarioService,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

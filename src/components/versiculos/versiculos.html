@@ -1,0 +1,26 @@
+<ion-card>
+  <ion-card-header style="text-align: center;" (click)="toggleAccordion()">
+    <ion-label
+      position="stacked"
+      class="alinhamentoTexto"
+      style="font-size: large;"
+      ><strong>Versículos</strong>
+    </ion-label>
+    <ion-icon *ngIf="!accordionExpanded" name="ios-arrow-down"></ion-icon>
+    <ion-icon *ngIf="accordionExpanded" name="ios-arrow-up"></ion-icon>
+  </ion-card-header>
+  <ion-card-content #cc>
+    <ion-list>
+      <div *ngFor="let ver of versiculos" style="text-align: center;">
+        <p style="white-space: pre-line;">
+          <ion-icon
+            *ngIf="isDeleta"
+            name="md-trash"
+            (click)="sendDelete(ver)"
+          ></ion-icon
+          >&nbsp;{{ver.number}} - {{ver.text}}
+        </p>
+      </div>
+    </ion-list>
+  </ion-card-content>
+</ion-card>

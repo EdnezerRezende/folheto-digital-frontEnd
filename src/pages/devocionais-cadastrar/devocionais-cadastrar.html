@@ -5,24 +5,97 @@
 </ion-header>
 
 <ion-content padding>
-  <form  [formGroup]="formulario" >
-    <ion-item >
-      <ion-label stacked >Referência: </ion-label>
-      <ion-input [(ngModel)]="devocional.referencia" formControlName="referencia" name="referencia" ></ion-input>
+  <form [formGroup]="formulario">
+    <ion-item>
+      <ion-label stacked>Livro: </ion-label>
+      <ion-select
+        [(ngModel)]="livroSelecionado"
+        formControlName="livros"
+        [compareWith]="compareFn"
+        (ionChange)="totalCapitulos()"
+      >
+        <ion-option *ngFor="let livro of livros" [value]="livro"
+          >{{livro.name}}</ion-option
+        >
+      </ion-select>
     </ion-item>
-    <h6 class="error" *ngIf="!formulario.controls.referencia.valid && (formulario.controls.referencia.dirty || formulario.controls.referencia.touched)">
+    <ion-item>
+      <ion-label stacked>Capítulos: </ion-label>
+      <ion-select
+        [(ngModel)]="referencia.chapter.number"
+        formControlName="capitulo"
+        [compareWith]="compareFn"
+        (ionChange)="totalVersiculos()"
+      >
+        <ion-option *ngFor="let capitulo of capitulos" [value]="capitulo"
+          >{{capitulo}}</ion-option
+        >
+      </ion-select>
+    </ion-item>
+    <ion-item *ngIf="isVersiculos">
+      <!-- <ion-item > -->
+      <ion-label position="stacked">Versículos: </ion-label>
+      <ion-range
+        dualKnobs="true"
+        pin="true"
+        [(ngModel)]="versiculoSelecionado"
+        formControlName="versiculo"
+        snaps="true"
+        min="1"
+        max="{{referencia.verses.length}}"
+      >
+        <ion-icon range-left small>{{versiculoSelecionado.lower}}</ion-icon>
+        <ion-icon range-right>{{versiculoSelecionado.upper}}</ion-icon>
+      </ion-range>
+      <button
+        ion-button
+        clear
+        color="blue"
+        type="button"
+        item-right
+        (click)="inserirVersiculo()"
+        style="margin-top: 70px; font-size: 2.2rem !important;"
+      >
+        <ion-icon name="md-add-circle"></ion-icon>
+      </button>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Referência: </ion-label>
+      <ion-input
+        [(ngModel)]="devocional.textoReferencia"
+        formControlName="referencia"
+        name="referencia"
+        disabled
+      ></ion-input>
+    </ion-item>
+    <h6
+      class="error"
+      *ngIf="!formulario.controls.referencia.valid && (formulario.controls.referencia.dirty || formulario.controls.referencia.touched)"
+    >
       Por favor, informe a referência bíblica a ser lida.
     </h6>
-    <ion-item >
-      <ion-label stacked >Descrição: </ion-label>
-      <ion-input [(ngModel)]="devocional.descricao" formControlName="descricao" name="descricao" ></ion-input>
+    <ion-item>
+      <ion-label stacked>Descrição: </ion-label>
+      <ion-input
+        [(ngModel)]="devocional.descricao"
+        formControlName="descricao"
+        name="descricao"
+      ></ion-input>
     </ion-item>
-    <h6 class="error" *ngIf="!formulario.controls.descricao.valid && (formulario.controls.descricao.dirty || formulario.controls.descricao.touched)">
+    <h6
+      class="error"
+      *ngIf="!formulario.controls.descricao.valid && (formulario.controls.descricao.dirty || formulario.controls.descricao.touched)"
+    >
       Por favor, informe uma descrição, qual o teor da mensagem.
     </h6>
+    <versiculos
+      [versiculos]="versiculos"
+      [isDeleta]="true"
+      (sendDeleteEnvio)="deletaVer($event)"
+    ></versiculos>
   </form>
-  <ion-fab top right edge >
-    <button ion-fab (click)="salvar(item)" [disabled]="formulario.invalid">
+  <ion-fab top right edge>
+    <button ion-fab (click)="salvar()" [disabled]="formulario.invalid">
       <ion-icon name="send"></ion-icon>
     </button>
   </ion-fab>

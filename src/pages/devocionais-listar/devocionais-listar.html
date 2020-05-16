@@ -33,7 +33,7 @@
         >
         </ion-checkbox>
         <ion-label (click)="comentario(devocional,slidingCase)"
-          ><h4><strong>{{ devocional.referencia }}</strong></h4></ion-label
+          ><h4><strong>{{ devocional.textoReferencia }}</strong></h4></ion-label
         >
         <ion-label
           (click)="comentario(devocional,slidingCase)"
@@ -72,6 +72,7 @@
           (ionChange)="verificarLido($event,devocional)"
           checked="devocional.isLido"
           [(ngModel)]="devocional.isLido"
+          [disabled]="true"
         >
         </ion-checkbox>
         <ion-label (click)="comentario(devocional,slidingCase)">

@@ -2,27 +2,30 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { API_CONFIG } from "../../config/api.config";
 import { Observable } from "rxjs/Rx";
-import { DevocionalDTO } from "../../models/devocional.dto";
-import { DevocionalNewDTO } from "../../models/devocional-new.dto";
 import { StorageService } from "../storage.service";
+import { ComentarioDTO } from "../../models/comentarios";
+import { DevocionalComentarioNewDTO } from "../../models/devocional-comentario-new.dto";
 
 @Injectable()
-export class DevocionalService {
+export class DevocionalComentarioService {
   constructor(public http: HttpClient, private storage: StorageService) {}
 
-  buscaTodos(idIgreja: number, idMembro: number): Observable<DevocionalDTO[]> {
+  buscarPorReferenciaEMembro(
+    idMembro: number,
+    idReferencia: number
+  ): Observable<ComentarioDTO> {
     return this.http
-      .get<DevocionalDTO[]>(
-        `${API_CONFIG.baseUrl}/devocionais/igreja/${idIgreja}/${idMembro}`
+      .get<ComentarioDTO>(
+        `${API_CONFIG.baseUrl}/comentarios/${idMembro}/${idReferencia}`
       )
       .finally(() => {
         this.storage.loadOff("");
       });
   }
 
-  salvar(dto: DevocionalNewDTO) {
+  salvar(dto: DevocionalComentarioNewDTO) {
     return this.http
-      .post(`${API_CONFIG.baseUrl}/devocionais/`, dto, {
+      .post(`${API_CONFIG.baseUrl}/comentarios/`, dto, {
         observe: "response",
         responseType: "text",
       })
@@ -31,9 +34,9 @@ export class DevocionalService {
       });
   }
 
-  deletar(idPg: number) {
+  deletar(idComentario: number) {
     return this.http
-      .delete(`${API_CONFIG.baseUrl}/devocionais/${idPg}`, {
+      .delete(`${API_CONFIG.baseUrl}/comentarios/${idComentario}`, {
         observe: "response",
         responseType: "text",
       })
