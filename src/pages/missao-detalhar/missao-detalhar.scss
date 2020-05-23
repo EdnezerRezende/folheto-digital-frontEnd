@@ -1,9 +1,10 @@
 page-missao-detalhar {
-    .alinharDireita{
-        text-align: right;
-    }
-    ion-card-title{
-        font-size: larger !important;
-        text-align: center
-    }
+  .alinharDireita {
+    text-align: right;
+  }
+  ion-card-title {
+    font-size: larger !important;
+    text-align: center;
+    white-space: normal;
+  }
 }

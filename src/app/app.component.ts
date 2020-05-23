@@ -258,6 +258,19 @@ export class MyApp {
         icone: "md-paper",
         mostra: true,
       },
+      {
+        titulo: "Perfil",
+        subTitulo: [
+          {
+            submenu: "Alterar Foto",
+            iconeSub: "md-camera",
+            componente: "ProfilePage",
+            mostra: this.mostraOpcaoListar,
+          },
+        ],
+        icone: "md-cog",
+        mostra: true,
+      },
     ];
   }
 
@@ -367,6 +380,12 @@ export class MyApp {
         icone: "md-paper",
         mostra: true,
       },
+      {
+        titulo: "Perfil",
+        componente: "ProfilePage",
+        icone: "md-cog",
+        mostra: true,
+      },
     ];
   }
 
@@ -376,6 +395,7 @@ export class MyApp {
   }
 
   paginasPerfil = [{ titulo: "Perfil", componente: "ProfilePage" }];
+  paginaPerfil = { titulo: "Perfil", componente: "ProfilePage" };
 
   abrePagina(pagina): void {
     this.menuCtrl.close();
