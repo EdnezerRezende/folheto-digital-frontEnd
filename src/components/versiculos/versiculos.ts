@@ -30,6 +30,11 @@ export class VersiculosComponent implements OnInit {
   @ViewChild("cc")
   cardContent: any;
 
+  fonteMaior = 4;
+  fonteMenor = 4;
+  @Input("tamanhoFonte")
+  tamanhoFonte = 20;
+
   constructor(public renderer: Renderer) {}
 
   ngOnInit() {
@@ -40,6 +45,14 @@ export class VersiculosComponent implements OnInit {
       "max-height 500ms, padding 500ms"
     );
   }
+
+  fonteDiminuir() {
+    this.tamanhoFonte -= this.fonteMenor;
+  }
+  fonteAumentar() {
+    this.tamanhoFonte += this.fonteMaior;
+  }
+
   sendDelete(ver: VersiculoDTO) {
     this.sendDeleteEnvio.emit(ver);
   }

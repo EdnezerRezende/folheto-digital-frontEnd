@@ -7,10 +7,31 @@
             <img [src]="imagemTratada" />
           </ion-avatar>
         </div>
-        <button menuClose ion-button round (click)="logoff() " icon-start>
-          <ion-icon name="md-exit"></ion-icon> SAIR
-        </button>
-        <p style="color: white;">{{ membroLogado?.email }}</p>
+
+        <!-- <button
+          menuClose
+          ion-button
+          round
+          (click)="abrePagina(paginaPerfil)"
+          icon-start
+        >
+          <ion-icon name="md-cog"></ion-icon> ALTERAR
+        </button> -->
+        <div>
+          <button
+            menuClose
+            ion-button
+            round
+            (click)="logoff() "
+            icon-start
+            color="danger"
+          >
+            <ion-icon name="md-exit"></ion-icon> SAIR
+          </button>
+        </div>
+        <p style="color: white;">
+          {{ membroLogado?.email }}
+        </p>
       </ion-item>
 
       <ion-list sliding="false" id="aberturaMenu">
@@ -90,7 +111,8 @@
     </ion-content>
   </ion-menu>
 
-  <ion-menu side="right" [content]="conteudo" *ngIf="membroLogado">
+  <!-- <ion-menu side="right" [content]="conteudo" *ngIf="membroLogado"> -->
+  <ion-menu side="right" [content]="conteudo" *ngIf="false">
     <ion-content>
       <ion-item id="cabecalho-menu" class="cabecalho-menu">
         <div>

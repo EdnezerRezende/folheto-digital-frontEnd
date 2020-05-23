@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
 import {
   IonicPage,
   NavController,
@@ -25,6 +25,9 @@ export class DevocionaisComentarPage {
   formulario: FormGroup;
   membro: MembroInfo = new MembroInfo();
 
+  fonteMaior = 1;
+  fonteMenor = 1;
+  tamanhoFonte = 20;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -71,6 +74,12 @@ export class DevocionaisComentarPage {
 
   ionViewDidLoad() {}
 
+  fonteDiminuir() {
+    this.tamanhoFonte -= this.fonteMenor;
+  }
+  fonteAumentar() {
+    this.tamanhoFonte += this.fonteMaior;
+  }
   private criarFormulario() {
     this.formulario = this.fb.group({
       chamouAtencao: [""],

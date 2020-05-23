@@ -5,6 +5,23 @@
 </ion-header>
 
 <ion-content padding>
+  <div>
+    <p style="font-size: 20px;">
+      <strong>&nbsp;&nbsp;&nbsp;Ajustar Texto:</strong>
+      <button (click)="fonteDiminuir()" round large>
+        <ion-icon
+          class="fa-search-minus"
+          style="font-size: xx-large;"
+        ></ion-icon>
+      </button>
+      <button (click)="fonteAumentar()" round large>
+        <ion-icon
+          class="fa-search-plus"
+          style="font-size: xx-large;"
+        ></ion-icon>
+      </button>
+    </p>
+  </div>
   <form [formGroup]="formulario">
     <ion-item>
       <ion-label stacked class="alinharLabel tamanhoFonte"
@@ -14,13 +31,18 @@
       >
     </ion-item>
     <versiculos
+      [tamanhoFonte]="tamanhoFonte"
       [versiculos]="devocional.referencia.verses"
       [isDeleta]="false"
     ></versiculos>
     <div>
       <ion-item>
-        <ion-label stacked>O que me chamou a atenção? </ion-label>
+        <ion-label stacked [ngStyle]="{'font-size': tamanhoFonte+ 'px'}"
+          >O que me chamou a atenção?
+        </ion-label>
         <ion-textarea
+          [ngStyle]="{'font-size': tamanhoFonte+ 'px'}"
+          class="acessibilidade"
           autocomplete="true"
           autocorrect="on"
           spellcheck="true"
@@ -38,8 +60,11 @@
         Por favor, informe o que chamou a atenção no texto.
       </h6>
       <ion-item>
-        <ion-label stacked>O que o texto ensina sobre Deus? </ion-label>
+        <ion-label stacked [ngStyle]="{'font-size': tamanhoFonte+ 'px'}"
+          >O que o texto ensina sobre Deus?
+        </ion-label>
         <ion-textarea
+          [ngStyle]="{'font-size': tamanhoFonte+ 'px'}"
           autocorrect="on"
           spellcheck="true"
           rows="4"
@@ -56,8 +81,11 @@
         Por favor, informe o texto ensina sobre Deus.
       </h6>
       <ion-item>
-        <ion-label stacked>O que o texto ensina sobre a Humanidade? </ion-label>
+        <ion-label stacked [ngStyle]="{'font-size': tamanhoFonte+ 'px'}"
+          >O que o texto ensina sobre a Humanidade?
+        </ion-label>
         <ion-textarea
+          [ngStyle]="{'font-size': tamanhoFonte+ 'px'}"
           autocorrect="on"
           spellcheck="true"
           rows="4"
@@ -74,8 +102,11 @@
         Por favor, informe o texto ensina sobre a Humanidade.
       </h6>
       <ion-item>
-        <ion-label stacked>E como vou obedecer a essa passagem? </ion-label>
+        <ion-label stacked [ngStyle]="{'font-size': tamanhoFonte+ 'px'}"
+          >E como vou obedecer a essa passagem?
+        </ion-label>
         <ion-textarea
+          [ngStyle]="{'font-size': tamanhoFonte+ 'px'}"
           autocorrect="on"
           spellcheck="true"
           rows="4"
