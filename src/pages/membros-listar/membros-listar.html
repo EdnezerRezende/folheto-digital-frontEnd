@@ -38,21 +38,29 @@
         <ion-item-divider
           *ngIf="membro.telefones"
           color="light"
-          style="text-align:center;"
+          style="text-align: center;"
           >Contato:
         </ion-item-divider>
         <h6 *ngIf="membro.telefones">
           <p *ngFor="let telefone of membro.telefones">
-            <ion-icon name="md-call" style="color: #55acee"></ion-icon> {{
+            <ion-icon name="md-call" style="color: #55acee;"></ion-icon> {{
             telefone }}
           </p>
         </h6>
       </ion-item>
       <ion-item-options side="right" *ngIf="perfilLogado">
-        <button ion-button color="dark" (click)="mudarPerfil(membro,slidingCase)">
-          <ion-icon name="md-people"></ion-icon> Peril
+        <button
+          ion-button
+          color="dark"
+          (click)="mudarPerfil(membro,slidingCase)"
+        >
+          <ion-icon name="md-people"></ion-icon> Perfil
         </button>
-        <button ion-button color="primary" (click)="alterar(membro,slidingCase)">
+        <button
+          ion-button
+          color="primary"
+          (click)="alterar(membro,slidingCase)"
+        >
           <ion-icon name="md-create"></ion-icon> Alterar
         </button>
         <button ion-button color="danger" (click)="deletar(membro,slidingCase)">

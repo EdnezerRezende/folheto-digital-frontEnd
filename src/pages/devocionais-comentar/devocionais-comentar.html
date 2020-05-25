@@ -7,19 +7,22 @@
 <ion-content padding>
   <div>
     <p style="font-size: 20px;">
-      <strong>&nbsp;&nbsp;&nbsp;Ajustar Texto:</strong>
-      <button (click)="fonteDiminuir()" round large>
-        <ion-icon
-          class="fa-search-minus"
-          style="font-size: xx-large;"
-        ></ion-icon>
-      </button>
-      <button (click)="fonteAumentar()" round large>
-        <ion-icon
-          class="fa-search-plus"
-          style="font-size: xx-large;"
-        ></ion-icon>
-      </button>
+      <ion-buttons start style="position: absolute;">
+        <button (click)="fonteDiminuir()" round large>
+          <ion-icon
+            class="fa-search-minus"
+            style="font-size: xx-large;"
+          ></ion-icon>
+        </button>
+      </ion-buttons>
+      <ion-buttons end>
+        <button (click)="fonteAumentar()" round large item-end>
+          <ion-icon
+            class="fa-search-plus"
+            style="font-size: xx-large;"
+          ></ion-icon>
+        </button>
+      </ion-buttons>
     </p>
   </div>
   <form [formGroup]="formulario">
@@ -38,7 +41,7 @@
     <div>
       <ion-item>
         <ion-label stacked [ngStyle]="{'font-size': tamanhoFonte+ 'px'}"
-          >O que me chamou a atenção?
+          ><strong>O que me chamou a atenção?</strong>
         </ion-label>
         <ion-textarea
           [ngStyle]="{'font-size': tamanhoFonte+ 'px'}"
@@ -61,7 +64,7 @@
       </h6>
       <ion-item>
         <ion-label stacked [ngStyle]="{'font-size': tamanhoFonte+ 'px'}"
-          >O que o texto ensina sobre Deus?
+          ><strong> que o texto ensina sobre Deus?</strong>
         </ion-label>
         <ion-textarea
           [ngStyle]="{'font-size': tamanhoFonte+ 'px'}"
@@ -82,7 +85,7 @@
       </h6>
       <ion-item>
         <ion-label stacked [ngStyle]="{'font-size': tamanhoFonte+ 'px'}"
-          >O que o texto ensina sobre a Humanidade?
+          ><strong>O que o texto ensina sobre a Humanidade?</strong>
         </ion-label>
         <ion-textarea
           [ngStyle]="{'font-size': tamanhoFonte+ 'px'}"
@@ -103,7 +106,7 @@
       </h6>
       <ion-item>
         <ion-label stacked [ngStyle]="{'font-size': tamanhoFonte+ 'px'}"
-          >E como vou obedecer a essa passagem?
+          ><strong>E como vou obedecer a essa passagem?</strong>
         </ion-label>
         <ion-textarea
           [ngStyle]="{'font-size': tamanhoFonte+ 'px'}"
