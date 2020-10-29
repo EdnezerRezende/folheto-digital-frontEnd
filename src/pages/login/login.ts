@@ -109,6 +109,10 @@ export class LoginPage {
     this.navCtrl.push("SignupPage");
   }
 
+  resetarSenha(){
+    this.navCtrl.push("EsqueceuSenhaPage", { email: this.creds.email });
+  }
+
   blobToDataURL(blob) {
     return new Promise((fulfill, reject) => {
       let reader = new FileReader();
