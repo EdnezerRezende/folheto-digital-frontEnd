@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Alterar Senha</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-avatar>
+    <img class="circle" [src]="profileImage" />
+  </ion-avatar>
+  <h2 text-center>{{membro?.nome}}</h2>
+  <p text-center>{{membro?.email}}</p>
+
+  <form [formGroup]="formulario" (ngSubmit)="trocarSenha()">
+    <ion-item>
+      <ion-label stacked>E-mail: </ion-label>
+      <ion-input
+        [(ngModel)]="newPassWord.email"
+        formControlName="email"
+        name="email"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Nova Senha: </ion-label>
+      <ion-input
+        [(ngModel)]="newPassWord.password"
+        formControlName="password"
+        type="password"
+        name="password"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Confirme Nova Senha: </ion-label>
+      <ion-input
+        [(ngModel)]="confirmeNewPass"
+        formControlName="confirmeNewPass"
+        type="password"
+        name="confirmeNewPass"
+      ></ion-input>
+    </ion-item>
+    <span *ngIf="newPassWord.password != confirmeNewPass" class="error"> Valores devem ser iguais </span>
+    <button ion-button block type="submit" 
+      [disabled]="formulario.invalid && newPassWord.password == confirmeNewPass">
+      Alterar Senha
+    </button>
+  </form>
+
+</ion-content>

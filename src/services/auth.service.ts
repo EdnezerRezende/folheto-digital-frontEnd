@@ -9,6 +9,7 @@ import { Observable } from "rxjs";
 import { tap } from "rxjs/operators";
 import { Membro } from "../models/membro";
 import { RecuperarSenhaDTO } from "../models/recuperarSenha.dto";
+import { TrocarSenhaDTO } from "../models/trocarSenha.dto";
 
 @Injectable()
 export class AuthService {
@@ -78,6 +79,17 @@ export class AuthService {
   forgot(dto: RecuperarSenhaDTO){
     return this.http
       .post(`${API_CONFIG.baseUrl}/auth/forgot`, dto, {
+        observe: "response",
+        responseType: "text",
+      })
+      .finally(() => {
+        this.storage.loadOff("");
+      });
+  }
+
+  trocarSenha(dto: TrocarSenhaDTO){
+    return this.http
+      .post(`${API_CONFIG.baseUrl}/auth/forgot/newPasswor`, dto, {
         observe: "response",
         responseType: "text",
       })

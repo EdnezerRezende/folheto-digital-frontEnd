@@ -267,6 +267,12 @@ export class MyApp {
             componente: "ProfilePage",
             mostra: this.mostraOpcaoListar,
           },
+          {
+            submenu: "Alterar Senha",
+            iconeSub: "md-key",
+            componente: "AlterarSenhaPage",
+            mostra: this.mostraOpcaoListar,
+          },
         ],
         icone: "md-cog",
         mostra: true,
