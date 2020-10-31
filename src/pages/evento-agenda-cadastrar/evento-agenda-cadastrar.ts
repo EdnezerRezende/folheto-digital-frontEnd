@@ -44,6 +44,7 @@ export class EventoAgendaCadastrarPage {
       idIgreja: [1, Validators.required],
       dataInicio: [""],
       dataFim: [""],
+      link:[""]
     });
   }
 

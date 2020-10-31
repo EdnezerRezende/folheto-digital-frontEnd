@@ -160,8 +160,14 @@ export class MyApp {
             mostraCad: this.mostraOpcaoCadastro,
           },
           {
-            submenu: "Listar",
+            submenu: "Listar Atuais",
             componente: "DevocionaisListarPage",
+            iconeSub: "md-list-box",
+            mostra: this.mostraOpcaoListar,
+          },
+          {
+            submenu: "Listar Antigos",
+            componente: "DevocionaisListarAntigosPage",
             iconeSub: "md-list-box",
             mostra: this.mostraOpcaoListar,
           },
@@ -325,8 +331,14 @@ export class MyApp {
         titulo: "Devocionais",
         subTitulo: [
           {
-            submenu: "Listar",
+            submenu: "Listar Atuais",
             componente: "DevocionaisListarPage",
+            iconeSub: "md-list-box",
+            mostra: this.mostraOpcaoListar,
+          },
+          {
+            submenu: "Listar Antigos",
+            componente: "DevocionaisListarAntigosPage",
             iconeSub: "md-list-box",
             mostra: this.mostraOpcaoListar,
           },
@@ -386,13 +398,31 @@ export class MyApp {
         icone: "md-paper",
         mostra: true,
       },
+    ];
+  }
+
+  menuPerfilMembro(): any[] {
+    return [
       {
         titulo: "Perfil",
-        componente: "ProfilePage",
+        subTitulo: [
+          {
+            submenu: "Alterar Foto",
+            iconeSub: "md-camera",
+            componente: "ProfilePage",
+            mostra: this.mostraOpcaoListar,
+          },
+          {
+            submenu: "Alterar Senha",
+            iconeSub: "md-key",
+            componente: "AlterarSenhaPage",
+            mostra: this.mostraOpcaoListar,
+          },
+        ],
         icone: "md-cog",
         mostra: true,
       },
-    ];
+    ]
   }
 
   get membroLogado() {
@@ -488,6 +518,9 @@ export class MyApp {
       this.paginas = this.tratarMenuTela();
     } else {
       this.paginas = this.tratarMenuTelaSemCadastro();
+      if ( !this.storage.temPerfilVisitante ) {
+        this.paginas.push(this.menuPerfilMembro());
+      }
     }
     return this.paginas;
   }

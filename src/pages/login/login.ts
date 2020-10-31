@@ -27,6 +27,8 @@ export class LoginPage {
     senha: "",
   };
 
+  isVisitante: Boolean = false;
+
   membro: MembroInfo = new MembroInfo();
 
   constructor(
@@ -120,5 +122,16 @@ export class LoginPage {
       reader.onload = (e) => fulfill(reader.result);
       reader.readAsDataURL(blob);
     });
+  }
+
+  alteraLoginMembroVisitante(){
+    this.storage
+    if ( this.isVisitante ) {
+      this.creds.email = "visitante@gmail.com";
+      this.creds.senha = "12345678";
+    } else {
+      this.creds = new CredenciaisDTO();
+    }
+
   }
 }

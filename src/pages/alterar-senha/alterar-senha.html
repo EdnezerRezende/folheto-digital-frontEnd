@@ -8,13 +8,13 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-avatar>
-    <img class="circle" [src]="profileImage" />
+  <ion-avatar >
+    <img class="avatar" [src]="profileImage" />
   </ion-avatar>
   <h2 text-center>{{membro?.nome}}</h2>
   <p text-center>{{membro?.email}}</p>
 
-  <form [formGroup]="formulario" (ngSubmit)="trocarSenha()">
+  <form [formGroup]="formulario" >
     <ion-item>
       <ion-label stacked>E-mail: </ion-label>
       <ion-input
@@ -24,28 +24,34 @@
       ></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label stacked>Nova Senha: </ion-label>
+      <ion-label stacked>Digite a Nova Senha: </ion-label>
       <ion-input
         [(ngModel)]="newPassWord.password"
         formControlName="password"
-        type="password"
+        [type]="isTextFieldType ? 'text' : 'password' "
         name="password"
       ></ion-input>
+      <button ion-button clear class=" marginTop tamanhoFont" color="dark" type="button" item-right  (click)="togglePasswordFieldType($event)" >
+        <ion-icon [name]="isTextFieldType ? 'eye-off' : 'eye'"></ion-icon>
+      </button> 
     </ion-item>
     <ion-item>
       <ion-label stacked>Confirme Nova Senha: </ion-label>
       <ion-input
         [(ngModel)]="confirmeNewPass"
         formControlName="confirmeNewPass"
-        type="password"
+        [type]="isTextFieldType ? 'text' : 'password' "
         name="confirmeNewPass"
-      ></ion-input>
+        ></ion-input>
+        <button ion-button clear class="marginTop tamanhoFont" color="dark" type="button" item-right  (click)="togglePasswordFieldType($event)" >
+          <ion-icon [name]="isTextFieldType ? 'eye-off' : 'eye'"></ion-icon>
+        </button> 
     </ion-item>
     <span *ngIf="newPassWord.password != confirmeNewPass" class="error"> Valores devem ser iguais </span>
-    <button ion-button block type="submit" 
-      [disabled]="formulario.invalid && newPassWord.password == confirmeNewPass">
-      Alterar Senha
-    </button>
   </form>
+  <button ion-button block type="button" (click)="trocarSenha()"
+    [disabled]="formulario.invalid && newPassWord.password == confirmeNewPass">
+    Alterar Senha
+  </button>
 
 </ion-content>

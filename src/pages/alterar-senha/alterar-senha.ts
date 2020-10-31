@@ -23,6 +23,8 @@ export class AlterarSenhaPage {
   newPassWord: TrocarSenhaDTO = new TrocarSenhaDTO();
   confirmeNewPass: string = "";
 
+  isTextFieldType: boolean;
+
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public storage: StorageService,
@@ -161,4 +163,10 @@ export class AlterarSenhaPage {
       }
     );
   }
+
+  togglePasswordFieldType(input){
+    console.log(input);
+    this.isTextFieldType = !this.isTextFieldType;
+  }
+
 }

@@ -8,4 +8,5 @@ export class AgendaEventoDTO {
     isEvento:boolean;
     dataInicio:string;
     dataFim:string;
+    link:string;
 }

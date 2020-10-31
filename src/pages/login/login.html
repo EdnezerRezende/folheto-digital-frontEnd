@@ -7,15 +7,19 @@
     </div>
   </div>
   <div padding>
+    <ion-item >
+      <ion-label stacked >Sou Visitante </ion-label>
+      <ion-checkbox color="primary" [checked]="false" (click)="alteraLoginMembroVisitante()" [(ngModel)]="isVisitante" name="isEvento"></ion-checkbox>
+    </ion-item>
     <form #form="ngForm" (ngSubmit)="login(form.value)" novalidate>
       <ion-list>
-        <ion-item>
+        <ion-item *ngIf="!isVisitante">
           <ion-label floating>E-mail</ion-label>
           <ion-input type="email" [(ngModel)]="creds.email" name="email">
           </ion-input>
         </ion-item>
 
-        <ion-item>
+        <ion-item *ngIf="!isVisitante">
           <ion-label floating>Senha</ion-label>
           <ion-input [(ngModel)]="creds.senha" name="senha" type="password">
           </ion-input>
@@ -26,12 +30,13 @@
           color="primary"
           block
           type="submit"
-          [disabled]="!form.valid"
+          [disabled]="!form.valid && !isVisitante"
         >
           Login
         </button>
       </ion-list>
     </form>
+
     <div class="pull-right">
       <a  (click)="resetarSenha()">Esqueceu a senha?</a>
     </div>

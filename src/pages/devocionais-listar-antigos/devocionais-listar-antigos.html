@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Devocionais</ion-title>
+    <ion-title>Devocionais Anteriores</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -19,9 +19,9 @@
     placeholder="Pesquisar "
     (ionInput)="getItems($event)"
   ></ion-searchbar>
-  <label style="text-align: center;"
-    ><h3><strong>Devocionais da Semana</strong></h3></label
-  >
+  <label style="text-align: center; white-space: 'pre-line';">
+    <h3><strong>Devocionais Anteriores</strong></h3>
+  </label>
   <ion-list *ngFor="let devocional of devocionaisSearch">
     <ion-item-sliding #slidingCase >
       <ion-item detail>
@@ -32,14 +32,14 @@
           [(ngModel)]="devocional.isLido"
         >
         </ion-checkbox>
-        <ion-label (click)="comentario(devocional,slidingCase)"
-          ><h4><strong>{{ devocional.textoReferencia }}</strong></h4></ion-label
-        >
+        <ion-label (click)="comentario(devocional,slidingCase)">
+          <h4><strong>{{ devocional.textoReferencia }}</strong></h4>
+        </ion-label>
         <ion-label
           (click)="comentario(devocional,slidingCase)"
           style="white-space: normal;"
-          >{{ devocional.descricao }}</ion-label
-        >
+          >{{ devocional.descricao }}
+        </ion-label>
       </ion-item>
       <ion-item-options side="right" *ngIf="perfilLogado">
         <button
@@ -59,6 +59,4 @@
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
-  <br />  <br />
-  
 </ion-content>

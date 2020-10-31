@@ -20,6 +20,16 @@ export class DevocionalService {
       });
   }
 
+  buscaTodosAntigos(idIgreja: number, idMembro: number): Observable<DevocionalDTO[]> {
+    return this.http
+      .get<DevocionalDTO[]>(
+        `${API_CONFIG.baseUrl}/devocionais/antigos/igreja/${idIgreja}/${idMembro}`
+      )
+      .finally(() => {
+        this.storage.loadOff("");
+      });
+  }
+
   salvar(dto: DevocionalNewDTO) {
     return this.http
       .post(`${API_CONFIG.baseUrl}/devocionais/`, dto, {
