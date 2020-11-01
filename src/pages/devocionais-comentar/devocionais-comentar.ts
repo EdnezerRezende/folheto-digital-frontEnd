@@ -1,4 +1,4 @@
-import { Component, ViewChild } from "@angular/core";
+import { Component } from "@angular/core";
 import {
   IonicPage,
   NavController,
@@ -8,7 +8,7 @@ import {
 import { DevocionalDTO } from "../../models/devocional.dto";
 import { StorageService } from "../../services/storage.service";
 import { ComentarioDTO } from "../../models/comentarios";
-import { Validators, FormGroup, FormBuilder } from "@angular/forms";
+import { FormGroup, FormBuilder } from "@angular/forms";
 import { DevocionalComentarioService } from "../../services/domain/devocional.comentario.service";
 import { MembroInfo } from "../../models/membro-info";
 import { DevocionalComentarioNewDTO } from "../../models/devocional-comentario-new.dto";
@@ -24,6 +24,8 @@ export class DevocionaisComentarPage {
 
   formulario: FormGroup;
   membro: MembroInfo = new MembroInfo();
+  
+  perfilVisitante = this.storageComentaService.temPerfilVisitante();
   
   fonteMaior = 1;
   fonteMenor = 1;
@@ -164,7 +166,12 @@ export class DevocionaisComentarPage {
     );
   }
 
-  copiarTexto(texto){
-    navigator.clipboard.writeText(texto);
+  copiarTexto(item) {
+    document.addEventListener('copy', (e: ClipboardEvent) => {
+      e.clipboardData.setData('text/plain', (item));
+      e.preventDefault();
+      document.removeEventListener('copy', null);
+    });
+    document.execCommand('copy');
   }
 }
