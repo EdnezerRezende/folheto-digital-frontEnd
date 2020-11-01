@@ -1,4 +1,3 @@
-import { ReferenciaDTO } from "./referencia.dto";
 import { ReferenciaNewDTO } from "./referencia-new.dto";
 
 export class DevocionalDTO {

@@ -54,8 +54,10 @@
           [(ngModel)]="comentario.chamouAtencao"
           formControlName="chamouAtencao"
           name="chamouAtencao"
+          id="chamouAtencao"
+          #chamouAtencao
         ></ion-textarea>
-        <button class="tamanhoFonte" ion-button clear item-end (click)="copiarTexto(comentario.chamouAtencao)" >
+        <button class="tamanhoFonte"  ion-button clear item-end (click)="copiarTexto(comentario.chamouAtencao)" >
           <ion-icon name="md-copy"></ion-icon>
         </button>
       </ion-item>
@@ -78,6 +80,7 @@
           [(ngModel)]="comentario.sobreDeus"
           formControlName="sobreDeus"
           name="sobreDeus"
+          id="sobreDeus"
         >
         </ion-textarea>
         <button class="tamanhoFonte" ion-button clear item-end (click)="copiarTexto(comentario.sobreDeus)" >
@@ -102,6 +105,7 @@
           [(ngModel)]="comentario.sobreHumanidade"
           formControlName="sobreHumanidade"
           name="sobreHumanidade"
+          id="sobreHumanidade"
         >
         </ion-textarea>
         <button class="tamanhoFonte" ion-button clear item-end (click)="copiarTexto(comentario.sobreHumanidade)" >
@@ -126,6 +130,7 @@
           [(ngModel)]="comentario.oQueAprendi"
           formControlName="oQueAprendi"
           name="oQueAprendi"
+          id="oQueAprendi"
         >
         </ion-textarea>
         <button class="tamanhoFonte" ion-button clear item-end (click)="copiarTexto(comentario.oQueAprendi)" >

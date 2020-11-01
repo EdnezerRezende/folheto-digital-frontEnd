@@ -7,7 +7,7 @@ import { ComponentsModule } from "../../components/components.module";
   declarations: [DevocionaisComentarPage],
   imports: [
     IonicPageModule.forChild(DevocionaisComentarPage),
-    ComponentsModule,
+    ComponentsModule
   ],
 })
 export class DevocionaisComentarPageModule {}

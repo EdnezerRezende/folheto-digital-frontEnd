@@ -3,7 +3,6 @@ import {
   IonicPage,
   NavController,
   NavParams,
-  AlertController,
 } from "ionic-angular";
 import { DomainBoletimProvider } from "../../services/domain/domain-boletim";
 import { StorageService } from "../../services/storage.service";

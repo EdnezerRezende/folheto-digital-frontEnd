@@ -1,4 +1,3 @@
-import { AbreviacaoDTO } from "./abreviacao.dto";
 import { LivroDTO } from "./livro.dto";
 import { CapituloDTO } from "./capitulo.dto";
 import { VersiculoDTO } from "./versiculo.dto";
