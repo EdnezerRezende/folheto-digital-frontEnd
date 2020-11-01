@@ -89,7 +89,7 @@ export class AuthService {
 
   trocarSenha(dto: TrocarSenhaDTO){
     return this.http
-      .post(`${API_CONFIG.baseUrl}/auth/forgot/newPasswor`, dto, {
+      .post(`${API_CONFIG.baseUrl}/auth/forgot/newPassword`, dto, {
         observe: "response",
         responseType: "text",
       })

@@ -15,21 +15,16 @@
 </ion-header>
 
 <ion-content padding class="fundoImagem">
-  <!-- <ion-fab top right edge>
-    <button ion-button icon-only>
-      <button ion-fab mini>
-        <ion-icon name="md-person"></ion-icon>
-      </button>
-    </button>
-    <ion-fab-list>
-      <button ion-fab>
-        <ion-icon name="md-person" (click)="perfil() "></ion-icon>
-      </button>
-      <button ion-fab>
-        <ion-icon name="md-exit" (click)="logoff()"></ion-icon>
-      </button>
-    </ion-fab-list>
-  </ion-fab> -->
+  <ion-card *ngIf="perfilVisitante">
+    <ion-card-header>
+      Olá Visitante!
+    </ion-card-header>
+    <ion-card-content>
+      Que bom que você esta aqui! Seja muito bem vindo!
+      Para aproveitar melhor as funcionalidades da aplicação, faça o seu cadastro e fique por dentro das novidades da igreja PIC - Taguatinga.
+    </ion-card-content>
+  </ion-card>
+
   <ion-grid class="positionFixed">
     <ion-row>
       <ion-col class="textoIIgreja">

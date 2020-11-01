@@ -25,8 +25,6 @@ export class DevocionaisComentarPage {
   formulario: FormGroup;
   membro: MembroInfo = new MembroInfo();
   
-  perfilVisitante = this.storageComentaService.temPerfilVisitante();
-  
   fonteMaior = 1;
   fonteMenor = 1;
   tamanhoFonte = 20;

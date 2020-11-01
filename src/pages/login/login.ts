@@ -46,7 +46,6 @@ export class LoginPage {
   }
 
   createUser(user) {
-    console.log("User created! aqui");
     this.events.publish("user:created", user, Date.now());
   }
 
@@ -78,7 +77,8 @@ export class LoginPage {
             this.membro = resposta;
             this.storage.setMembro(this.membro);
             this.createUser(this.membro);
-
+            this.navCtrl.setRoot("TabsPage");
+            this.menu.enable(true);
             this.igrejaService.obterIgreja(this.membro.igrejaId).subscribe(
               (resposta) => {
                 this.storage.setIgreja(resposta);
@@ -101,7 +101,7 @@ export class LoginPage {
           },
           (error) => {}
         );
-        this.navCtrl.setRoot("TabsPage");
+        
       },
       (error) => {}
     );
