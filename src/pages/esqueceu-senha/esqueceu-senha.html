@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Resetar Senha</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card>
+    <ion-card-header>
+      <ion-icon name="ios-warning-outline" item-start></ion-icon>
+      Atenção!
+    </ion-card-header>
+    <ion-card-content>
+      Você receberá uma nova senha no e-mail informado abaixo.
+      <p>O Resete de senha só acontecerá caso já exista uma conta previamente cadastrada</p>
+    </ion-card-content>
+  </ion-card>
+  <form [formGroup]="formulario" (ngSubmit)="resetarSenha()">
+    <ion-item>
+      <ion-label stacked>E-mail: </ion-label>
+      <ion-input
+        [(ngModel)]="recuperarDto.email"
+        formControlName="email"
+        name="email"
+      ></ion-input>
+    </ion-item>
+    <button ion-button block type="submit" [disabled]="formulario.invalid">
+      Resetar Senha
+    </button>
+  </form>
+</ion-content>

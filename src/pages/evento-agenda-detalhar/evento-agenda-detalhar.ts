@@ -20,4 +20,8 @@ export class EventoAgendaDetalharPage {
 
   ionViewDidLoad() {
   }
+
+  copiarTexto(texto){
+    navigator.clipboard.writeText(texto);
+  }
 }

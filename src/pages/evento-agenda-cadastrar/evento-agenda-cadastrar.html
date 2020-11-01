@@ -40,7 +40,11 @@
             Por favor, informe a Descrição do Evento ou Agenda.
           </h6>
 
-
+          <ion-item >
+            <ion-label stacked >Link de Acesso: </ion-label>
+            <ion-input [(ngModel)]="agendaEvento.link" formControlName="link" name="link"  type="text"></ion-input>
+          </ion-item>
+     
           <ion-item >
             <ion-label stacked >Data de Início: </ion-label>
             <ion-datetime [(ngModel)]="agendaEvento.dataInicio" formControlName="dataInicio" name="dataInicio"
@@ -49,7 +53,6 @@
           <h6 class="error" *ngIf="!formulario.controls.dataInicio.valid && (formulario.controls.dataInicio.dirty || formulario.controls.dataInicio.touched)">
             Por favor, informe a data de início.
           </h6>
-
 
           <ion-item >
             <ion-label stacked >Data Fim: </ion-label>
@@ -61,17 +64,17 @@
           </h6>
 
           <ion-item >
-              <ion-label stacked >Tome nota </ion-label>
-              <ion-checkbox color="primary" [checked]="false" [(ngModel)]="agendaEvento.isEvento" formControlName="isEvento" name="isEvento"></ion-checkbox>
-            </ion-item>
-            <h6 class="error" *ngIf="!formulario.controls.isEvento.valid && (formulario.controls.isEvento.dirty || formulario.controls.isEvento.touched)">
-              Por favor, informe se é um evento ou não.
-            </h6>
+            <ion-label stacked >Tome nota </ion-label>
+            <ion-checkbox color="primary" [checked]="false" [(ngModel)]="agendaEvento.isEvento" formControlName="isEvento" name="isEvento"></ion-checkbox>
+          </ion-item>
+          <h6 class="error" *ngIf="!formulario.controls.isEvento.valid && (formulario.controls.isEvento.dirty || formulario.controls.isEvento.touched)">
+            Por favor, informe se é um evento ou não.
+          </h6>
 
         </form>
 
         <ion-fab top right edge >
-          <button ion-fab (click)="salvar(item)" [disabled]="formulario.invalid">
+          <button ion-fab (click)="salvar()" [disabled]="formulario.invalid">
             <ion-icon name="send"></ion-icon>
           </button>
         </ion-fab>

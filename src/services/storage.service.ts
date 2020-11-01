@@ -148,6 +148,22 @@ export class StorageService {
     return isPermite;
   }
 
+  temPerfilVisitante(): boolean {
+    let usr = JSON.parse(localStorage.getItem(STORAGE_KEYS.membro));
+    let isPermite = false;
+    if (usr == null) {
+      return false;
+    }
+
+    usr.perfis.forEach((perfil) => {
+      if (perfil == "VISITANTE") {
+        isPermite = true;
+      }
+    });
+
+    return isPermite;
+  }
+
   getIgreja() {
     let igreja = localStorage.getItem(STORAGE_KEYS.igreja);
 
@@ -185,4 +201,5 @@ export class StorageService {
       localStorage.removeItem(STORAGE_KEYS.igreja);
     }
   }
+  
 }

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from "@angular/core";
-import { Platform, MenuController, Nav, Events } from "ionic-angular";
+import { Platform, MenuController, Nav, Events, App } from "ionic-angular";
 import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { AuthService } from "../services/auth.service";
@@ -11,6 +11,7 @@ import { API_CONFIG } from "../config/api.config";
 import { DomSanitizer } from "@angular/platform-browser";
 import { IgrejaInfoDTO } from "../models/igreja_info.dto";
 import { DomainBoletimProvider } from "../services/domain/domain-boletim";
+import { LoginPage } from "../pages/login/login";
 
 @Component({
   templateUrl: "app.html",
@@ -42,7 +43,8 @@ export class MyApp {
     public events: Events,
     public sanitizer: DomSanitizer,
     public membroService: MembroService,
-    private boletimService: DomainBoletimProvider
+    private boletimService: DomainBoletimProvider,
+    private app: App
   ) {
     events.subscribe("user:created", (user, time) => {});
 
@@ -160,8 +162,14 @@ export class MyApp {
             mostraCad: this.mostraOpcaoCadastro,
           },
           {
-            submenu: "Listar",
+            submenu: "Listar Atuais",
             componente: "DevocionaisListarPage",
+            iconeSub: "md-list-box",
+            mostra: this.mostraOpcaoListar,
+          },
+          {
+            submenu: "Listar Antigos",
+            componente: "DevocionaisListarAntigosPage",
             iconeSub: "md-list-box",
             mostra: this.mostraOpcaoListar,
           },
@@ -267,6 +275,12 @@ export class MyApp {
             componente: "ProfilePage",
             mostra: this.mostraOpcaoListar,
           },
+          {
+            submenu: "Alterar Senha",
+            iconeSub: "md-key",
+            componente: "AlterarSenhaPage",
+            mostra: this.mostraOpcaoListar,
+          },
         ],
         icone: "md-cog",
         mostra: true,
@@ -319,8 +333,14 @@ export class MyApp {
         titulo: "Devocionais",
         subTitulo: [
           {
-            submenu: "Listar",
+            submenu: "Listar Atuais",
             componente: "DevocionaisListarPage",
+            iconeSub: "md-list-box",
+            mostra: this.mostraOpcaoListar,
+          },
+          {
+            submenu: "Listar Antigos",
+            componente: "DevocionaisListarAntigosPage",
             iconeSub: "md-list-box",
             mostra: this.mostraOpcaoListar,
           },
@@ -380,13 +400,31 @@ export class MyApp {
         icone: "md-paper",
         mostra: true,
       },
+    ];
+  }
+
+  menuPerfilMembro(): any[] {
+    return [
       {
         titulo: "Perfil",
-        componente: "ProfilePage",
+        subTitulo: [
+          {
+            submenu: "Alterar Foto",
+            iconeSub: "md-camera",
+            componente: "ProfilePage",
+            mostra: this.mostraOpcaoListar,
+          },
+          {
+            submenu: "Alterar Senha",
+            iconeSub: "md-key",
+            componente: "AlterarSenhaPage",
+            mostra: this.mostraOpcaoListar,
+          },
+        ],
         icone: "md-cog",
         mostra: true,
       },
-    ];
+    ]
   }
 
   get membroLogado() {
@@ -447,7 +485,7 @@ export class MyApp {
   }
 
   get imagemTratada() {
-    if (!this.picture) {
+    if (!this.picture && this.membroLogado != undefined) {
       this.membroService.getImageFromBucket(this.dadosMembro.id + "").subscribe(
         (response) => {
           this.dadosMembro.imageUrl = `${API_CONFIG.bucketBaseUrl}/membro${this.dadosMembro.id}.jpg`;
@@ -463,7 +501,7 @@ export class MyApp {
         }
       );
       // return this.storage.getMembro().imageUrl;
-    }
+    } 
     return this.picture;
   }
 
@@ -482,6 +520,9 @@ export class MyApp {
       this.paginas = this.tratarMenuTela();
     } else {
       this.paginas = this.tratarMenuTelaSemCadastro();
+      if ( !this.storage.temPerfilVisitante ) {
+        this.paginas.push(this.menuPerfilMembro());
+      }
     }
     return this.paginas;
   }
@@ -490,8 +531,8 @@ export class MyApp {
     this.mostraOpcaoCadastro = false;
     this.mostraOpcaoListar = true;
     this.picture = undefined;
+    this.menuCtrl.enable(false);
     this.auth.logout();
-    this.menuCtrl.close();
     this.nav.setRoot("LoginPage");
   }
 

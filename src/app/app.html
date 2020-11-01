@@ -1,5 +1,5 @@
 <ion-split-pane>
-  <ion-menu [content]="conteudo" id="cabecalho-menu" *ngIf="membroLogado">
+  <ion-menu [content]="conteudo" id="cabecalho-menu">
     <ion-content>
       <ion-item id="cabecalho-menu" class="cabecalho-menu">
         <div>
@@ -8,15 +8,6 @@
           </ion-avatar>
         </div>
 
-        <!-- <button
-          menuClose
-          ion-button
-          round
-          (click)="abrePagina(paginaPerfil)"
-          icon-start
-        >
-          <ion-icon name="md-cog"></ion-icon> ALTERAR
-        </button> -->
         <div>
           <button
             menuClose
@@ -111,33 +102,7 @@
     </ion-content>
   </ion-menu>
 
-  <!-- <ion-menu side="right" [content]="conteudo" *ngIf="membroLogado"> -->
-  <ion-menu side="right" [content]="conteudo" *ngIf="false">
-    <ion-content>
-      <ion-item id="cabecalho-menu" class="cabecalho-menu">
-        <div>
-          <ion-avatar item-start>
-            <img [src]="imagemTratada" />
-          </ion-avatar>
-        </div>
-        <button menuClose ion-button round (click)="logoff() " icon-start>
-          <ion-icon name="md-exit"></ion-icon> SAIR
-        </button>
-        <p style="color: white;">Olá {{ membroLogado?.nome }}</p>
-      </ion-item>
-      <ion-list>
-        <button
-          menuClose
-          ion-item
-          *ngFor="let pagina of paginasPerfil"
-          (click)="abrePagina(pagina)"
-        >
-          {{pagina.titulo}}
-        </button>
-      </ion-list>
-    </ion-content>
-  </ion-menu>
-
+  
   <ion-nav [root]="rootPage" main #conteudo swipeBackEnabled="false"></ion-nav>
 </ion-split-pane>
 

@@ -24,7 +24,7 @@ export class DevocionaisComentarPage {
 
   formulario: FormGroup;
   membro: MembroInfo = new MembroInfo();
-
+  
   fonteMaior = 1;
   fonteMenor = 1;
   tamanhoFonte = 20;
@@ -162,5 +162,9 @@ export class DevocionaisComentarPage {
         });
       }
     );
+  }
+
+  copiarTexto(texto){
+    navigator.clipboard.writeText(texto);
   }
 }
