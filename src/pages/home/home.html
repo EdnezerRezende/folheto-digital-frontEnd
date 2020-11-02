@@ -1,44 +1,48 @@
 <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title class="alinharLabel"> Seja Bem Vindo </ion-title>
+    <ion-navbar>
+        <button
+            ion-button
+            menuToggle
+        >
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title class="alinharLabel">Seja Bem Vindo</ion-title>
 
-    <!-- <ion-buttons end>
-      <button ion-button icon-only (click)="toggleRightMenu() ">
-        <ion-icon name="md-contact"></ion-icon>
-      </button>
-    </ion-buttons> -->
-    <!-- <ion-icon name="md-person" (click)="toggleRightMenu() "></ion-icon> -->
-  </ion-navbar>
+
+    </ion-navbar>
 </ion-header>
 
-<ion-content padding class="fundoImagem">
-  <ion-card *ngIf="perfilVisitante">
-    <ion-card-header>
-      Olá Visitante!
-    </ion-card-header>
-    <ion-card-content>
-      Que bom que você esta aqui! Seja muito bem vindo!
-      Para aproveitar melhor as funcionalidades da aplicação, faça o seu cadastro e fique por dentro das novidades da igreja PIC - Taguatinga.
-    </ion-card-content>
-  </ion-card>
 
-  <ion-grid class="positionFixed">
-    <ion-row>
-      <ion-col class="textoIIgreja">
-        <div>1ª Igreja de Cristo</div>
-      </ion-col>
-      <ion-col> </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col class="textoITaguatinga" align-self-start>
-        <div>Taguatinga</div>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <!-- <p class="textoIIgreja">1ª Igreja
+<ion-content
+    padding
+    class="fundoImagem"
+>
+    <ion-card *ngIf="perfilVisitante">
+        <ion-card-header>Olá Visitante!</ion-card-header>
+        <ion-card-content>
+            Que bom que você esta aqui! Seja muito bem vindo!
+      Para aproveitar melhor as funcionalidades da aplicação, faça o seu cadastro e fique por dentro das novidades da igreja PIC - Taguatinga.
+        </ion-card-content>
+    </ion-card>
+
+
+    <ion-grid class="positionFixed">
+        <ion-row>
+            <ion-col class="textoIIgreja">
+                <div>1ª Igreja de Cristo</div>
+            </ion-col>
+            <ion-col></ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col
+                class="textoITaguatinga"
+                align-self-start
+            >
+                <div>Taguatinga</div>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <!-- <p class="textoIIgreja">1ª Igreja
     de Cristo </p>
   <p class="">Taguatinga</p> -->
 </ion-content>

@@ -3,15 +3,12 @@ import { Injectable } from "@angular/core";
 
 @Injectable()
 export class DominiosService {
-
-  constructor() {
-  }
+  constructor() {}
 
   static getValueDominioTodosValor(enumeracao) {
     let lista = [];
-    for (let key in enumeracao)
-    {
-      lista.push( enumeracao[key] );  
+    for (let key in enumeracao) {
+      lista.push(enumeracao[key]);
     }
     return lista;
   }
@@ -22,27 +19,26 @@ export class DominiosService {
     }
   }
 
-  static getValueDominioPassandoKey(enumeracao, entidadeRecebida:any[]) {
+  static getValueDominioPassandoKey(enumeracao, entidadeRecebida: any[]) {
     let lista = [];
-    for( let item of entidadeRecebida){
-      if ( item in enumeracao ){
-        lista.push( enumeracao[item] ); 
+    for (let item of entidadeRecebida) {
+      if (item in enumeracao) {
+        lista.push(enumeracao[item]);
       }
-    };
+    }
     return lista;
   }
- 
-  static getKeyDominioPassandoValor(enumeracao, entidadeRecebida:any[]) {
+
+  static getKeyDominioPassandoValor(enumeracao, entidadeRecebida: any[]) {
     let lista = [];
 
-    for( let item of entidadeRecebida){
-      for (let key in enumeracao){
-        if ( item == enumeracao[key] ){
-          lista.push( key ); 
+    for (let item of entidadeRecebida) {
+      for (let key in enumeracao) {
+        if (item == enumeracao[key]) {
+          lista.push(key);
         }
       }
-    };
+    }
     return lista;
   }
-
 }

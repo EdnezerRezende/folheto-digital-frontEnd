@@ -160,7 +160,6 @@ export class StorageService {
         isPermite = true;
       }
     });
-
     return isPermite;
   }
 
@@ -201,5 +200,4 @@ export class StorageService {
       localStorage.removeItem(STORAGE_KEYS.igreja);
     }
   }
-  
 }

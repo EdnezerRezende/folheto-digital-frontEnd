@@ -42,6 +42,8 @@ export class LoginPage {
     public igrejaService: IgrejaService,
     public sanitizer: DomSanitizer
   ) {
+    this.menu.enable(false);
+    this.menu.close();
     this.creds = new CredenciaisDTO();
   }
 
@@ -101,7 +103,6 @@ export class LoginPage {
           },
           (error) => {}
         );
-        
       },
       (error) => {}
     );
@@ -111,7 +112,7 @@ export class LoginPage {
     this.navCtrl.push("SignupPage");
   }
 
-  resetarSenha(){
+  resetarSenha() {
     this.navCtrl.push("EsqueceuSenhaPage", { email: this.creds.email });
   }
 
@@ -124,14 +125,13 @@ export class LoginPage {
     });
   }
 
-  alteraLoginMembroVisitante(){
-    this.storage
-    if ( this.isVisitante ) {
+  alteraLoginMembroVisitante() {
+    this.storage;
+    if (this.isVisitante) {
       this.creds.email = "visitante@gmail.com";
       this.creds.senha = "12345678";
     } else {
       this.creds = new CredenciaisDTO();
     }
-
   }
 }
